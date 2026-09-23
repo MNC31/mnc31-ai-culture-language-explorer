@@ -96,7 +96,7 @@ const imageRecords = [
       similarities:
         "Both readings identify Zi-hua as going to Qi, identify Ran Zi as the person requesting grain, and preserve the reason for the request: grain for his mother. The core event and relationships are the same.",
       differences:
-        "The AI reading uses modern pinyin-style names and smoother contemporary English, while the Wikisource translation uses older Wade-Giles-style spellings such as “Tsze-hwa” and “Ch'i” and the older phrasing “being employed on a mission.” The traditional source text also makes forms such as 華, 齊, 爲, and 請 visible, which should be distinguished from their modern simplified forms 华, 齐, 为, and 请."
+        "The AI reading preserves the main event and relationships, but the reference screenshot uses traditional forms and classical wording. In particular, 華、齊、爲、請 correspond to the simplified forms 华、齐、为、请. The English reference also uses older Wade-Giles spellings such as “Tsze-hwa” and “Ch'i,” so differences in romanization and translation style should not be mistaken for differences in the underlying Chinese passage."
     }
   }
 ];
