@@ -9,6 +9,12 @@ const imageRecords = [
     translation: "“Jinglong welcomes Heaven” (literal reading)",
     culture:
       "This appears to be a decorative inscription rather than a widely recognized fixed idiom. “景龙” may function as a name or title, so the surrounding location and historical context would be needed before giving it a more specific cultural interpretation.",
+    sources: [
+      {
+        label: "Reference: 景龙 as a Tang dynasty reign title",
+        url: "https://zh.wikipedia.org/wiki/%E6%99%AF%E9%BE%99"
+      }
+    ],
     note:
       "Working transcription from the photograph. The final system should verify stylized characters with OCR plus human review before presenting this as authoritative."
   },
@@ -21,9 +27,19 @@ const imageRecords = [
     pinyin: "Mǎ ruò tè jiāng chán fāng",
     translation: "“Ma Ruote Jiang Chan Fang” — treated as a proper name",
     culture:
-      "The wording appears to function as a place or organization name, so a transliteration is safer than inventing a literal English meaning. “禅” (chán) refers to Chan/Zen Buddhist practice, while “坊” (fāng) can describe a place, workshop, district, or named establishment depending on context.",
+      "The wording appears to function as a place or organization name, so a transliteration is safer than inventing a literal English meaning. “禅” (chán) can refer to Chan Buddhist practice, while “坊” (fāng) can refer to a lane, neighborhood, shop, workshop, or other named place depending on context.",
+    sources: [
+      {
+        label: "Chinese Text Project dictionary: 坊",
+        url: "https://ctext.org/dictionary.pl?char=%E5%9D%8A&if=en"
+      },
+      {
+        label: "Reference: Chan Buddhism / 禅",
+        url: "https://en.wikipedia.org/wiki/Chan_Buddhism"
+      }
+    ],
     note:
-      "The sign is visually stylized and some characters are difficult to verify from the photograph. This prototype intentionally exposes that uncertainty instead of hiding it."
+      "The sign is visually stylized and some characters are difficult to verify from the photograph. No authoritative source for the full photographed name has been identified, so the reading and interpretation remain provisional."
   },
   {
     image: "public/images/chinese-text-3.jpg",
@@ -32,9 +48,19 @@ const imageRecords = [
     sourceText: "尊師重道",
     standard: "尊师重道",
     pinyin: "Zūn shī zhòng dào",
-    translation: "To respect teachers and value learning / the Way.",
+    translation: "To respect teachers and value their teachings / the Way.",
     culture:
-      "尊师重道 is a well-established phrase associated with respect for teachers, learning, and moral or intellectual traditions. In a cultural explanation, it is useful to distinguish the phrase's broad value from any particular institution or site where it appears.",
+      "尊师重道 is a well-established Chinese expression associated with respecting teachers and valuing the teachings or principles they transmit. The phrase has historical textual sources, but its presence at a particular site does not by itself establish the site's history or religious meaning.",
+    sources: [
+      {
+        label: "Chinese Thought and Culture Terms: 尊师重道",
+        url: "https://www.chinesethought.cn/shuyu_show.aspx?shuyu_id=4357"
+      },
+      {
+        label: "Ministry of Education: 尊师重道",
+        url: "https://www.moe.gov.cn/jyb_xwfb/moe_2082/2025/2025_zl02/202509/t20250911_1412966.html"
+      }
+    ],
     note:
       "The selected region focuses on the upper four characters of the vertical inscription. The complete inscription should be transcribed separately when the project moves beyond this prototype."
   }
@@ -52,10 +78,24 @@ const standard = document.getElementById("standard-text");
 const pinyin = document.getElementById("pinyin");
 const translation = document.getElementById("translation");
 const culture = document.getElementById("culture");
+const sources = document.getElementById("sources");
 const readingNote = document.getElementById("reading-note");
 const resetButton = document.getElementById("reset-button");
 const imageTabs = document.querySelectorAll(".image-tab");
 const hotspots = document.querySelectorAll(".hotspot");
+
+function renderSources(record) {
+  sources.innerHTML = "";
+
+  record.sources.forEach((source) => {
+    const link = document.createElement("a");
+    link.href = source.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = source.label;
+    sources.appendChild(link);
+  });
+}
 
 function resetText() {
   selectedRecord = null;
@@ -74,6 +114,7 @@ function showText(index, hotspot) {
   translation.textContent = record.translation;
   culture.textContent = record.culture;
   readingNote.textContent = record.note;
+  renderSources(record);
 
   emptyResult.hidden = true;
   resultContent.hidden = false;
