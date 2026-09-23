@@ -69,7 +69,7 @@ const imageRecords = [
     alt: "Wikisource screenshot showing traditional Chinese text from Analects Book VI, section 3",
     title: "Wikisource baseline · Book VI, section 3",
     sourceText: "六之三",
-    standard: "子華使於齊，冉子爲其母請粟。",
+    standard: "子华使于齐，冉子为其母请粟。",
     pinyin: "Zǐhuá shǐ yú Qí, Rǎn zǐ wéi qí mǔ qǐng sù.",
     translation:
       "Zi-hua was sent on a mission to Qi, and Ran Zi requested grain for his mother.",
@@ -90,13 +90,13 @@ const imageRecords = [
     analysis: {
       aiReading:
         "Zi-hua was sent to Qi, and Ran Zi asked for grain for his mother.",
-      referenceText: "子華使於齊，冉子爲其母請粟。",
+      referenceText: "子华使于齐，冉子为其母请粟。",
       referenceTranslation:
         "Tsze-hwa being employed on a mission to Ch'i, the disciple Zan requested grain for his mother.",
       similarities:
         "Both readings identify Zi-hua as going to Qi, identify Ran Zi as the person requesting grain, and preserve the reason for the request: grain for his mother. The core event and relationships are the same.",
       differences:
-        "The AI reading preserves the main event and relationships, but the reference screenshot uses traditional forms and classical wording. In particular, 華、齊、爲、請 correspond to the simplified forms 华、齐、为、请. The English reference also uses older Wade-Giles spellings such as “Tsze-hwa” and “Ch'i,” so differences in romanization and translation style should not be mistaken for differences in the underlying Chinese passage."
+        "The standardized text shown by the website uses the Simplified Chinese form from the Simplified Chinese Wikisource page. The photograph itself preserves the traditional forms, so the display distinguishes the photographed source form from the standardized Simplified Chinese form. In particular, 華、齊、爲、請 correspond to the simplified forms 华、齐、为、请. The English reference also uses older Wade-Giles spellings such as “Tsze-hwa” and “Ch'i,” so differences in romanization and translation style should not be mistaken for differences in the underlying Chinese passage."
     }
   }
 ];
