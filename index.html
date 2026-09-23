@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Culture & Language Explorer — an interactive prototype for reading Chinese characters in photographs.">
+  <title>AI Culture & Language Explorer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <b>AI</b>
+      <span>
+        <strong>Culture & Language Explorer</strong>
+        <small>Interactive prototype</small>
+      </span>
+    </div>
+    <nav>
+      <a href="#image-demo">Image demo</a>
+      <a href="#explore">Dataset</a>
+      <a href="#methodology">Methodology</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <label>01 · FIRST INTERACTION PROTOTYPE</label>
+      <h1>What does this<br><i>Chinese text say?</i></h1>
+      <p>
+        Select a marked text region in a photograph. The prototype converts
+        traditional or handwritten-looking characters into a standardized
+        form, gives the pinyin pronunciation and an English translation,
+        then explains why the phrase may matter culturally.
+      </p>
+      <a href="#image-demo">Try the image translator ↓</a>
+    </section>
+
+    <section id="image-demo" class="image-demo">
+      <div class="heading">
+        <div>
+          <label>IMAGE → TEXT → CONTEXT</label>
+          <h2>Click the writing in the photograph.</h2>
+        </div>
+        <small id="selection-status">Nothing selected</small>
+      </div>
+
+      <div class="demo-layout">
+        <div class="photo-stage" id="photo-stage">
+          <img id="demo-image" src="public/images/chinese-text-1.jpg" alt="Photograph containing Chinese characters">
+          <button class="hotspot hotspot-one" data-record="0" aria-label="Select text region 1">
+            <span>1</span>
+          </button>
+          <button class="hotspot hotspot-two" data-record="1" aria-label="Select text region 2" hidden>
+            <span>2</span>
+          </button>
+          <button class="hotspot hotspot-three" data-record="2" aria-label="Select text region 3" hidden>
+            <span>3</span>
+          </button>
+          <div class="photo-help">Click a highlighted text region · click the photograph outside it to reset</div>
+        </div>
+
+        <aside class="translation-panel" id="translation-panel" aria-live="polite">
+          <div class="panel-kicker">TRANSLATION RESULT</div>
+          <div id="result-empty">
+            <h3>Select a character region</h3>
+            <p>The standardized text, pinyin, translation, and cultural context will appear here.</p>
+          </div>
+
+          <div id="result-content" hidden>
+            <div class="result-label">Standardized form</div>
+            <div class="standard-text" id="standard-text"></div>
+
+            <div class="result-block">
+              <span>Pinyin</span>
+              <strong id="pinyin"></strong>
+            </div>
+
+            <div class="result-block">
+              <span>English translation</span>
+              <strong id="translation"></strong>
+            </div>
+
+            <div class="culture-note">
+              <span>Cultural importance / context</span>
+              <p id="culture"></p>
+            </div>
+
+            <div class="source-note">
+              <span>Context / reference used</span>
+              <div id="sources"></div>
+            </div>
+
+            <div class="reading-note" id="reading-note"></div>
+          </div>
+
+          <div class="ai-disclaimer">
+            <strong>AI interpretation notice</strong>
+            <p>
+              These translations and cultural interpretations are AI-assisted
+              working interpretations and may contain OCR, reading, translation,
+              or context errors. Further testing and external references should
+              be used to determine an accurate translation, especially for
+              historical, regional, religious, or site-specific text.
+            </p>
+          </div>
+
+          <button class="reset-button" id="reset-button" type="button">Reset selection</button>
+        </aside>
+      </div>
+
+      <div class="image-picker" role="tablist" aria-label="Choose a photograph">
+        <button class="image-tab active" data-image="0" role="tab" aria-selected="true">
+          <span>01</span>
+          Gate inscription
+        </button>
+        <button class="image-tab" data-image="1" role="tab" aria-selected="false">
+          <span>02</span>
+          Signboard
+        </button>
+        <button class="image-tab" data-image="2" role="tab" aria-selected="false">
+          <span>03</span>
+          Stone inscription
+        </button>
+      </div>
+
+      <p class="prototype-note">
+        <b>Prototype note:</b> these are hand-defined demonstration hotspots, not
+        automatic OCR. The next version can let a visitor draw a box around any
+        text region and send that crop through an OCR/translation pipeline.
+      </p>
+    </section>
+
+    <section id="explore">
+      <div class="heading">
+        <div>
+          <label>02 · NEXT DATA LAYER</label>
+          <h2>Connect the image to evidence.</h2>
+        </div>
+      </div>
+      <div class="methods">
+        <div>
+          <b>01</b>
+          <h3>Visual text</h3>
+          <p>The visitor starts with a photograph rather than a clean dataset row.</p>
+        </div>
+        <div>
+          <b>02</b>
+          <h3>Standardized reading</h3>
+          <p>Traditional, stylized, or handwritten-looking characters can be normalized for an international learner.</p>
+        </div>
+        <div>
+          <b>03</b>
+          <h3>Cultural context</h3>
+          <p>The explanation should distinguish literal translation from the cultural meaning or use of a phrase.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="methodology">
+      <label>03 · DESIGN PRINCIPLE</label>
+      <h2>Translation should reveal context, not hide it.</h2>
+      <p class="method-copy">
+        A later version can connect this interaction to the project's multilingual
+        evaluation work: the same text could be represented in the source script,
+        standardized Chinese, pinyin, English, and a documented cultural-context
+        record. That keeps the translation visible as an interpretation rather
+        than treating it as a perfect one-to-one conversion.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <span>AI Culture & Language Explorer · Prototype</span>
+    <span>Plain HTML · CSS · JavaScript</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
