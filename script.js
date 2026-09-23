@@ -1,280 +1,126 @@
-const records = [
+const imageRecords = [
   {
-    id: "demo-01",
-    subject: "World Religions",
-    category: "Humanities",
-    sensitivity: "CS",
-    culture: "Western Culture",
-    region: "Europe",
-    country: "Italy",
-    en: {
-      q: "Which city is traditionally associated with Vatican City?",
-      o: ["Rome", "Milan", "Venice", "Florence"],
-      a: "A",
-      m: "A — Rome",
-      match: true
-    },
-    zh: {
-      q: "哪个城市通常被认为与梵蒂冈城有关？",
-      o: ["罗马", "米兰", "威尼斯", "佛罗伦萨"],
-      a: "A",
-      m: "A — 罗马",
-      match: true
-    }
+    image: "public/images/chinese-text-1.jpg",
+    alt: "Stone gate with a four-character Chinese inscription",
+    title: "Gate inscription",
+    sourceText: "景龍迎天",
+    standard: "景龙迎天",
+    pinyin: "Jǐng lóng yíng tiān",
+    translation: "“Jinglong welcomes Heaven” (literal reading)",
+    culture:
+      "This appears to be a decorative inscription rather than a widely recognized fixed idiom. “景龙” may function as a name or title, so the surrounding location and historical context would be needed before giving it a more specific cultural interpretation.",
+    note:
+      "Working transcription from the photograph. The final system should verify stylized characters with OCR plus human review before presenting this as authoritative."
   },
   {
-    id: "demo-02",
-    subject: "Geography",
-    category: "Social Sciences",
-    sensitivity: "CA",
-    culture: "Global",
-    region: "East Asia",
-    country: "China",
-    en: {
-      q: "Which river is the longest in China?",
-      o: ["Yellow River", "Yangtze River", "Pearl River", "Mekong River"],
-      a: "B",
-      m: "B — Yangtze River",
-      match: true
-    },
-    zh: {
-      q: "中国最长的河流是哪一条？",
-      o: ["黄河", "长江", "珠江", "湄公河"],
-      a: "B",
-      m: "C — 珠江",
-      match: false
-    }
+    image: "public/images/chinese-text-2.jpg",
+    alt: "Traditional Chinese signboard above a doorway",
+    title: "Signboard",
+    sourceText: "馬若特江禪坊",
+    standard: "马若特江禅坊",
+    pinyin: "Mǎ ruò tè jiāng chán fāng",
+    translation: "“Ma Ruote Jiang Chan Fang” — treated as a proper name",
+    culture:
+      "The wording appears to function as a place or organization name, so a transliteration is safer than inventing a literal English meaning. “禅” (chán) refers to Chan/Zen Buddhist practice, while “坊” (fāng) can describe a place, workshop, district, or named establishment depending on context.",
+    note:
+      "The sign is visually stylized and some characters are difficult to verify from the photograph. This prototype intentionally exposes that uncertainty instead of hiding it."
   },
   {
-    id: "demo-03",
-    subject: "Cultural Knowledge",
-    category: "Humanities",
-    sensitivity: "CS",
-    culture: "Chinese Culture",
-    region: "East Asia",
-    country: "China",
-    en: {
-      q: "Which festival is traditionally associated with mooncakes?",
-      o: ["Spring Festival", "Mid-Autumn Festival", "Dragon Boat Festival", "Qingming Festival"],
-      a: "B",
-      m: "B — Mid-Autumn Festival",
-      match: true
-    },
-    zh: {
-      q: "哪一个节日通常与月饼联系在一起？",
-      o: ["春节", "中秋节", "端午节", "清明节"],
-      a: "B",
-      m: "B — 中秋节",
-      match: true
-    }
+    image: "public/images/chinese-text-3.jpg",
+    alt: "Stone pillar with a vertical Chinese inscription",
+    title: "Stone inscription",
+    sourceText: "尊師重道",
+    standard: "尊师重道",
+    pinyin: "Zūn shī zhòng dào",
+    translation: "To respect teachers and value learning / the Way.",
+    culture:
+      "尊师重道 is a well-established phrase associated with respect for teachers, learning, and moral or intellectual traditions. In a cultural explanation, it is useful to distinguish the phrase's broad value from any particular institution or site where it appears.",
+    note:
+      "The selected region focuses on the upper four characters of the vertical inscription. The complete inscription should be transcribed separately when the project moves beyond this prototype."
   }
 ];
 
-let currentIndex = 0;
-let language = "both";
-let sensitivity = "all";
+let activeImage = 0;
+let selectedRecord = null;
 
-function optionsHTML(item) {
-  return item.o.map((value, index) => `
-    <div class="option">
-      <b>${String.fromCharCode(65 + index)}</b>${value}
-    </div>
-  `).join("");
+const image = document.getElementById("demo-image");
+const stage = document.getElementById("photo-stage");
+const emptyResult = document.getElementById("result-empty");
+const resultContent = document.getElementById("result-content");
+const status = document.getElementById("selection-status");
+const standard = document.getElementById("standard-text");
+const pinyin = document.getElementById("pinyin");
+const translation = document.getElementById("translation");
+const culture = document.getElementById("culture");
+const readingNote = document.getElementById("reading-note");
+const resetButton = document.getElementById("reset-button");
+const imageTabs = document.querySelectorAll(".image-tab");
+const hotspots = document.querySelectorAll(".hotspot");
+
+function resetText() {
+  selectedRecord = null;
+  emptyResult.hidden = false;
+  resultContent.hidden = true;
+  status.textContent = "Nothing selected";
+  hotspots.forEach((spot) => spot.classList.remove("selected"));
 }
 
-function questionCard(item, title) {
-  return `
-    <article class="card">
-      <small>● ${title}</small>
-      <h3>${item.q}</h3>
-      <div>${optionsHTML(item)}</div>
-      <p class="key">Benchmark answer: <b>${item.a}</b></p>
-    </article>
-  `;
+function showText(index, hotspot) {
+  const record = imageRecords[index];
+  selectedRecord = index;
+
+  standard.textContent = record.standard;
+  pinyin.textContent = record.pinyin;
+  translation.textContent = record.translation;
+  culture.textContent = record.culture;
+  readingNote.textContent = record.note;
+
+  emptyResult.hidden = true;
+  resultContent.hidden = false;
+  status.textContent = `Selected: ${record.title}`;
+
+  hotspots.forEach((spot) => spot.classList.remove("selected"));
+  hotspot.classList.add("selected");
 }
 
-function responseCard(item, title) {
-  return `
-    <article class="response">
-      <div class="rh">
-        <b>${title}</b>
-        <span class="${item.match ? "match" : "mismatch"}">
-          ${item.match ? "Matches key" : "Does not match key"}
-        </span>
-      </div>
-      <p>${item.m}</p>
-      <small>Extracted answer: <b>${item.match ? item.a : "C"}</b></small>
-    </article>
-  `;
+function showImage(index) {
+  activeImage = index;
+  image.src = imageRecords[index].image;
+  image.alt = imageRecords[index].alt;
+
+  hotspots.forEach((spot, hotspotIndex) => {
+    spot.hidden = hotspotIndex !== index;
+    spot.classList.remove("selected");
+  });
+
+  imageTabs.forEach((tab, tabIndex) => {
+    const isActive = tabIndex === index;
+    tab.classList.toggle("active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+  });
+
+  resetText();
 }
 
-function render() {
-  const record = records[currentIndex];
-  const matchesFilter =
-    sensitivity === "all" || record.sensitivity === sensitivity;
-
-  document.querySelector("#app").innerHTML = `
-    <header>
-      <div class="brand">
-        <b>AI</b>
-        <span>
-          <strong>Culture & Language Explorer</strong>
-          <small>Interactive evaluation prototype</small>
-        </span>
-      </div>
-      <nav>
-        <a href="#explore">Explore</a>
-        <a href="#comparator">Comparator</a>
-        <a href="#methodology">Methodology</a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero">
-        <label>MULTILINGUAL AI EVALUATION</label>
-        <h1>Does changing the language<br><i>change the context?</i></h1>
-        <p>
-          A starting point for exploring matched English and Simplified Chinese
-          evaluation examples, cultural metadata, and precomputed model responses.
-        </p>
-        <a href="#explore">Explore the demo ↓</a>
-      </section>
-
-      <section id="explore">
-        <div class="heading">
-          <div>
-            <label>01 · PAIRED EXPLORATION</label>
-            <h2>Explore matched questions</h2>
-          </div>
-          <small>${currentIndex + 1} / ${records.length}</small>
-        </div>
-
-        <div class="toolbar">
-          <label>
-            Language
-            <select id="language">
-              <option value="both">English + Chinese</option>
-              <option value="en">English only</option>
-              <option value="zh">Simplified Chinese only</option>
-            </select>
-          </label>
-
-          <label>
-            Cultural sensitivity
-            <select id="sensitivity">
-              <option value="all">All</option>
-              <option value="CS">Culturally sensitive (CS)</option>
-              <option value="CA">Culturally agnostic (CA)</option>
-            </select>
-          </label>
-
-          <button id="previous" type="button">←</button>
-          <button id="next" type="button">→</button>
-        </div>
-
-        ${matchesFilter ? `
-          <div class="meta">
-            <span><b>Subject</b> ${record.subject}</span>
-            <span><b>Category</b> ${record.category}</span>
-            <span><b>Label</b> ${record.sensitivity}</span>
-            <span><b>Culture</b> ${record.culture}</span>
-            <span><b>Region</b> ${record.region}</span>
-          </div>
-
-          <div class="grid">
-            ${language !== "zh" ? questionCard(record.en, "English") : ""}
-            ${language !== "en" ? questionCard(record.zh, "简体中文 · Simplified Chinese") : ""}
-          </div>
-        ` : `
-          <div class="empty">
-            This record does not match the selected sensitivity filter.
-            Try another example.
-          </div>
-        `}
-      </section>
-
-      <section id="comparator" class="dark">
-        <div class="heading">
-          <div>
-            <label>02 · PRECOMPUTED COMPARATOR</label>
-            <h2>What did the model output?</h2>
-          </div>
-          <small>NOT A LIVE CHATBOT</small>
-        </div>
-
-        <p>
-          These demo outputs show the future comparison interface.
-          Production records will include model, version, prompt, date,
-          and decoding metadata.
-        </p>
-
-        <div class="grid">
-          ${responseCard(record.en, "English prompt")}
-          ${responseCard(record.zh, "Simplified Chinese prompt")}
-        </div>
-      </section>
-
-      <section id="methodology">
-        <label>03 · NEXT PHASE</label>
-        <h2>Keep the evidence visible.</h2>
-
-        <div class="methods">
-          <div>
-            <b>01</b>
-            <h3>Source metadata</h3>
-            <p>
-              Dataset, record ID, language, subject, culture, region,
-              and sensitivity stay attached to each example.
-            </p>
-          </div>
-          <div>
-            <b>02</b>
-            <h3>Model outputs</h3>
-            <p>
-              Saved responses will be separate from source records and
-              documented with evaluation conditions.
-            </p>
-          </div>
-          <div>
-            <b>03</b>
-            <h3>Comparison notes</h3>
-            <p>
-              Later visualizations can distinguish benchmark matches
-              from descriptive observations.
-            </p>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <span>AI Culture & Language Explorer · Prototype</span>
-      <span>Data and methodology will be added later.</span>
-    </footer>
-  `;
-
-  document.querySelector("#language").value = language;
-  document.querySelector("#sensitivity").value = sensitivity;
-
-  document.querySelector("#language").addEventListener("change", (event) => {
-    language = event.target.value;
-    render();
+hotspots.forEach((spot) => {
+  spot.addEventListener("click", (event) => {
+    event.stopPropagation();
+    showText(Number(spot.dataset.record), spot);
   });
+});
 
-  document.querySelector("#sensitivity").addEventListener("change", (event) => {
-    sensitivity = event.target.value;
-    render();
+stage.addEventListener("click", (event) => {
+  if (!event.target.closest(".hotspot")) {
+    resetText();
+  }
+});
+
+resetButton.addEventListener("click", resetText);
+
+imageTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    showImage(Number(tab.dataset.image));
   });
+});
 
-  document.querySelector("#previous").addEventListener("click", () => {
-    if (currentIndex > 0) currentIndex -= 1;
-    render();
-  });
-
-  document.querySelector("#next").addEventListener("click", () => {
-    if (currentIndex < records.length - 1) currentIndex += 1;
-    render();
-  });
-}
-
-render();
+showImage(0);
