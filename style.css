@@ -99,6 +99,37 @@ section{border-top:1px solid var(--line);padding:75px 0}
   background:#f1eee8;border-left:3px solid var(--blue);padding:11px 12px;
   color:#5f6870;font-size:11px;line-height:1.5;margin-top:10px
 }
+.baseline-analysis{
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--line)
+}
+.baseline-kicker{
+  color:var(--blue);font-size:10px;letter-spacing:.12em;font-weight:800
+}
+.baseline-analysis h3{
+  font-size:21px;margin:7px 0 14px
+}
+.comparison-block{
+  padding:12px 0;border-top:1px solid var(--line)
+}
+.comparison-block>span,.comparison-grid span{
+  display:block;color:var(--muted);font-size:10px;text-transform:uppercase;
+  letter-spacing:.1em;margin-bottom:6px
+}
+.comparison-block p,.comparison-grid p{
+  margin:0;font-size:12px;line-height:1.55
+}
+.comparison-script{
+  font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:22px!important
+}
+.comparison-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px
+}
+.comparison-grid>div{
+  background:#f7f4ee;padding:12px
+}
+.comparison-note{
+  color:var(--muted);font-size:10px;line-height:1.5;margin:12px 0 0
+}
 .ai-disclaimer{
   background:#eef3f5;border-left:3px solid var(--blue);padding:12px 13px;margin-top:14px;
   color:#53616b;font-size:11px;line-height:1.55
