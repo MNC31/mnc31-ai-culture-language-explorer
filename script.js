@@ -63,6 +63,29 @@ const imageRecords = [
     ],
     note:
       "The selected region focuses on the upper four characters of the vertical inscription. The complete inscription should be transcribed separately when the project moves beyond this prototype."
+  },
+  {
+    image: "https://raw.githubusercontent.com/dku-infosci301-Autumn2026/mnc31-ai-culture-language-explorer/main/public/images/chinese-text-4.jpg",
+    alt: "Screenshot of the Wikisource page for the Analects, Book VI",
+    title: "Wikisource baseline",
+    sourceText: "論語／雍也第六",
+    standard: "論語／雍也第六",
+    pinyin: "Lún yǔ / Yōng yě dì liù",
+    translation: "The Analects — Book VI (Yong Ye / 雍也第六)",
+    culture:
+      "This image is a reference baseline rather than another handwriting-reading target. The linked Wikisource page provides readable traditional Chinese text for Book VI of the Analects, along with an English translation. It lets visitors compare an AI-assisted reading of photographed text against a source that already presents the characters in a readable textual form.",
+    sources: [
+      {
+        label: "Wikisource source: 論語/雍也第六",
+        url: "https://zh.wikisource.org/wiki/%E8%AB%96%E8%AA%9E/%E9%9B%8D%E4%B9%9F%E7%AC%AC%E5%85%AD"
+      },
+      {
+        label: "Wikisource English translation: The Chinese Classics / Confucian Analects VI",
+        url: "https://en.wikisource.org/wiki/The_Chinese_Classics/Volume_1/Confucian_Analects/VI"
+      }
+    ],
+    note:
+      "Use this as a comparison baseline, not as proof that an AI reading of a historical photograph is correct. The screenshot is the project-provided reference image described in public/images/README.md."
   }
 ];
 
@@ -81,6 +104,7 @@ const culture = document.getElementById("culture");
 const sources = document.getElementById("sources");
 const readingNote = document.getElementById("reading-note");
 const resetButton = document.getElementById("reset-button");
+const photoHelp = document.getElementById("photo-help");
 const imageTabs = document.querySelectorAll(".image-tab");
 const hotspots = document.querySelectorAll(".hotspot");
 
@@ -121,13 +145,21 @@ function showText(index, hotspot) {
   status.textContent = `Selected: ${record.title}`;
 
   hotspots.forEach((spot) => spot.classList.remove("selected"));
-  hotspot.classList.add("selected");
+  if (hotspot) {
+    hotspot.classList.add("selected");
+  }
 }
 
 function showImage(index) {
   activeImage = index;
   image.src = imageRecords[index].image;
   image.alt = imageRecords[index].alt;
+
+  const isBaseline = index === 3;
+  stage.classList.toggle("reference-mode", isBaseline);
+  photoHelp.textContent = isBaseline
+    ? "Reference image · compare with the linked Wikisource source"
+    : "Click a highlighted text region · click the photograph outside it to reset";
 
   hotspots.forEach((spot, hotspotIndex) => {
     spot.hidden = hotspotIndex !== index;
@@ -141,6 +173,10 @@ function showImage(index) {
   });
 
   resetText();
+
+  if (isBaseline) {
+    showText(index, null);
+  }
 }
 
 hotspots.forEach((spot) => {
