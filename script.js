@@ -66,17 +66,18 @@ const imageRecords = [
   },
   {
     image: "https://raw.githubusercontent.com/dku-infosci301-Autumn2026/mnc31-ai-culture-language-explorer/main/public/images/chinese-text-4.jpg",
-    alt: "Screenshot of the Wikisource page for the Analects, Book VI",
-    title: "Wikisource baseline",
-    sourceText: "論語／雍也第六",
-    standard: "論語／雍也第六",
-    pinyin: "Lún yǔ / Yōng yě dì liù",
-    translation: "The Analects — Book VI (Yong Ye / 雍也第六)",
+    alt: "Wikisource screenshot showing traditional Chinese text from Analects Book VI, section 3",
+    title: "Wikisource baseline · Book VI, section 3",
+    sourceText: "六之三",
+    standard: "子華使於齊，冉子爲其母請粟。",
+    pinyin: "Zǐhuá shǐ yú Qí, Rǎn zǐ wéi qí mǔ qǐng sù.",
+    translation:
+      "Zi-hua was sent on a mission to Qi, and Ran Zi requested grain for his mother.",
     culture:
-      "This image is a reference baseline rather than another handwriting-reading target. The linked Wikisource page provides readable traditional Chinese text for Book VI of the Analects, along with an English translation. It lets visitors compare an AI-assisted reading of photographed text against a source that already presents the characters in a readable textual form.",
+      "This excerpt comes from Book VI, section 3 of the Analects. It introduces a discussion about providing grain to the family of a disciple and then expands into a distinction between helping people in need and adding to the wealth of someone already well supplied. The screenshot is useful here because the source preserves traditional forms such as 華、齊、爲、請 alongside the surrounding classical Chinese.",
     sources: [
       {
-        label: "Wikisource source: 論語/雍也第六",
+        label: "Wikisource source: 論語/雍也第六 · 六之三",
         url: "https://zh.wikisource.org/wiki/%E8%AB%96%E8%AA%9E/%E9%9B%8D%E4%B9%9F%E7%AC%AC%E5%85%AD"
       },
       {
@@ -85,16 +86,17 @@ const imageRecords = [
       }
     ],
     note:
-      "Use this as a comparison baseline, not as proof that an AI reading of a historical photograph is correct. The screenshot is the project-provided reference image described in public/images/README.md.",
+      "The highlighted phrase is a fixed comparison target. The AI reading is a prototype interpretation of the traditional characters, not a live model result or proof of general AI accuracy. The Wikisource wording is used as the reference translation for this example.",
     analysis: {
-      aiReading: "The Master says: Yong could serve as a ruler.",
-      referenceText: "子曰：「雍也，可使南面。」",
+      aiReading:
+        "Zi-hua was sent to Qi, and Ran Zi asked for grain for his mother.",
+      referenceText: "子華使於齊、冉子爲其母請粟。",
       referenceTranslation:
-        "The Master said, “There is Yung!—He might occupy the place of a prince.”",
+        "Tsze-hwa being employed on a mission to Ch'i, the disciple Zan requested grain for his mother.",
       similarities:
-        "Both readings identify the speaker as the Master, identify 雍 (Yong/Yung), and interpret 南面 as a statement about occupying a position of political authority.",
+        "Both readings identify Zi-hua as going to Qi, identify Ran Zi as the person requesting grain, and preserve the reason for the request: grain for his mother. The core event and relationships are the same.",
       differences:
-        "The AI reading uses modern English and interprets 南面 as “serve as a ruler,” while the Wikisource translation renders it more literally as “occupy the place of a prince.” The Wikisource English also uses the older Wade-Giles-style spelling “Yung,” whereas the pinyin-style reading is “Yong.”"
+        "The AI reading uses modern pinyin-style names and smoother contemporary English, while the Wikisource translation uses older Wade-Giles-style spellings such as “Tsze-hwa” and “Ch'i” and the older phrasing “being employed on a mission.” The traditional source text also makes forms such as 華, 齊, 爲, and 請 visible, which should be distinguished from their modern simplified forms 华, 齐, 为, and 请."
     }
   }
 ];
