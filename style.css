@@ -67,7 +67,8 @@ section{border-top:1px solid var(--line);padding:75px 0}
 /* Hotspot positions are deliberately approximate for this first hand-annotated prototype. */
 .hotspot-one{left:18%;top:29%;width:67%;height:22%}
 .hotspot-two{left:18%;top:29%;width:80%;height:28%}
-.hotspot-three{left:38%;top:5%;width:34%;height:86%}
+/* Image 3: the selected region is only the upper four characters. */
+.hotspot-three{left:41%;top:5%;width:28%;height:43%}
 .photo-help{
   position:absolute;left:14px;bottom:14px;background:rgba(23,33,43,.82);color:white;
   padding:9px 11px;font-size:11px;z-index:3
@@ -84,14 +85,26 @@ section{border-top:1px solid var(--line);padding:75px 0}
   padding:12px 0 20px;border-bottom:1px solid var(--line)
 }
 .result-block{padding:16px 0;border-bottom:1px solid var(--line)}
-.result-block span,.culture-note>span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+.result-block span,.culture-note>span,.source-note>span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
 .result-block strong{font-size:17px;line-height:1.4}
 .culture-note{padding:18px 0 8px}
 .culture-note p{font-size:13px;line-height:1.6;margin:0}
+.source-note{padding:12px 0 4px;border-top:1px solid var(--line)}
+.source-note a{
+  display:block;color:var(--blue);font-size:11px;line-height:1.5;margin:5px 0;
+  text-decoration:underline;text-underline-offset:2px
+}
+.source-note a:hover{color:var(--ink)}
 .reading-note{
   background:#f1eee8;border-left:3px solid var(--blue);padding:11px 12px;
   color:#5f6870;font-size:11px;line-height:1.5;margin-top:10px
 }
+.ai-disclaimer{
+  background:#eef3f5;border-left:3px solid var(--blue);padding:12px 13px;margin-top:14px;
+  color:#53616b;font-size:11px;line-height:1.55
+}
+.ai-disclaimer strong{display:block;color:var(--ink);font-size:11px;margin-bottom:4px}
+.ai-disclaimer p{margin:0}
 .reset-button{
   margin-top:auto;width:100%;padding:11px;border:1px solid var(--line);background:white;color:var(--ink);cursor:pointer
 }
