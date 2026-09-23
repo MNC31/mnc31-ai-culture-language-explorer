@@ -1,0 +1,6 @@
+{
+  "status": "prototype",
+  "note": "Small demo records. Replace with documented website-ready exports later.",
+  "source": "Global-MMLU-Lite",
+  "languages": ["en", "zh"]
+}
