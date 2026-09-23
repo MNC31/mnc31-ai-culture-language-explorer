@@ -115,6 +115,9 @@ const sources = document.getElementById("sources");
 const readingNote = document.getElementById("reading-note");
 const resetButton = document.getElementById("reset-button");
 const photoHelp = document.getElementById("photo-help");
+const referenceHighlight = document.getElementById("reference-highlight");
+const demoLayout = document.querySelector(".demo-layout");
+const sourceNoteLabel = document.getElementById("source-note-label");
 const baselineAnalysis = document.getElementById("baseline-analysis");
 const aiReading = document.getElementById("ai-reading");
 const referenceText = document.getElementById("reference-text");
@@ -154,6 +157,9 @@ function showText(index, hotspot) {
   translation.textContent = record.translation;
   culture.textContent = record.culture;
   readingNote.textContent = record.note;
+  sourceNoteLabel.textContent = record.analysis
+    ? "Wikisource reference"
+    : "Context / reference used";
   renderSources(record);
 
   if (record.analysis) {
@@ -184,9 +190,10 @@ function showImage(index) {
 
   const isBaseline = index === 3;
   stage.classList.toggle("reference-mode", isBaseline);
-  photoHelp.textContent = isBaseline
-    ? "Reference image · compare with the linked Wikisource source"
-    : "Click a highlighted text region · click the photograph outside it to reset";
+  demoLayout.classList.toggle("reference-layout", isBaseline);
+  referenceHighlight.hidden = !isBaseline;
+  photoHelp.hidden = isBaseline;
+  photoHelp.textContent = "Click a highlighted text region · click the photograph outside it to reset";
 
   hotspots.forEach((spot, hotspotIndex) => {
     spot.hidden = hotspotIndex !== index;
@@ -214,6 +221,10 @@ hotspots.forEach((spot) => {
 });
 
 stage.addEventListener("click", (event) => {
+  if (activeImage === 3) {
+    return;
+  }
+
   if (!event.target.closest(".hotspot")) {
     resetText();
   }
