@@ -65,7 +65,7 @@ const imageRecords = [
       "The selected region focuses on the upper four characters of the vertical inscription. The complete inscription should be transcribed separately when the project moves beyond this prototype."
   },
   {
-    image: "https://raw.githubusercontent.com/dku-infosci301-Autumn2026/mnc31-ai-culture-language-explorer/main/public/images/chinese-text-4.jpg",
+    image: "public/images/chinese-text-4.jpg",
     alt: "Wikisource screenshot showing traditional Chinese text from Analects Book VI, section 3",
     title: "Wikisource baseline · Book VI, section 3",
     sourceText: "六之三",
@@ -74,7 +74,7 @@ const imageRecords = [
     translation:
       "Zi-hua was sent on a mission to Qi, and Ran Zi requested grain for his mother.",
     culture:
-      "This excerpt comes from Book VI, section 3 of the Analects. It introduces a discussion about providing grain to the family of a disciple and then expands into a distinction between helping people in need and adding to the wealth of someone already well supplied. The screenshot is useful here because the source preserves traditional forms such as 華、齊、爲、請 alongside the surrounding classical Chinese.",
+      "This excerpt comes from Book VI, section 3 of the Analects. It introduces a discussion about providing grain to the family of a disciple and then expands into a distinction between helping people in need and adding to the wealth of someone already well supplied. The corrected screenshot shows the full Book VI, section 3 passage in traditional Chinese. The visible text includes traditional forms such as 華、齊、爲、請、與、裘、鄉、黨, which makes it useful for comparing a readable source transcription with an AI-assisted reading.",
     sources: [
       {
         label: "Wikisource source: 論語/雍也第六 · 六之三",
@@ -90,7 +90,7 @@ const imageRecords = [
     analysis: {
       aiReading:
         "Zi-hua was sent to Qi, and Ran Zi asked for grain for his mother.",
-      referenceText: "子華使於齊、冉子爲其母請粟。",
+      referenceText: "子華使於齊，冉子爲其母請粟。",
       referenceTranslation:
         "Tsze-hwa being employed on a mission to Ch'i, the disciple Zan requested grain for his mother.",
       similarities:
