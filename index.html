@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AI Culture & Language Explorer — an interactive prototype for reading Chinese characters in photographs.">
+  <meta name="description" content="AI Culture & Language Explorer">
   <title>AI Culture & Language Explorer</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -25,8 +25,8 @@
 
   <main>
     <section class="hero">
-      <label>01 · FIRST INTERACTION PROTOTYPE</label>
-      <h1>What does this<br><i>Chinese text say?</i></h1>
+      <label>01 · FIRST INTERACTION PROTOTYPE: <i>Reading Chinese Characters In Photographs</i></label>
+      <h1>Can an AI<br><i>Translate This Correctly?</i></h1>
       <p>
         Select a marked text region in a photograph. The prototype converts
         traditional or handwritten-looking characters into a standardized
@@ -57,6 +57,9 @@
           <button class="hotspot hotspot-three" data-record="2" aria-label="Select text region 3" hidden>
             <span>3</span>
           </button>
+          <div class="reference-highlight" id="reference-highlight" aria-hidden="true">
+            <span>Phrase being compared</span>
+          </div>
           <div class="photo-help" id="photo-help">Click a highlighted text region · click the photograph outside it to reset</div>
         </div>
 
@@ -84,11 +87,6 @@
             <div class="culture-note">
               <span>Cultural importance / context</span>
               <p id="culture"></p>
-            </div>
-
-            <div class="source-note">
-              <span>Context / reference used</span>
-              <div id="sources"></div>
             </div>
 
             <div class="reading-note" id="reading-note"></div>
@@ -128,6 +126,11 @@
                 measurement of general AI accuracy. The AI reading shown here
                 is a fixed demonstration output rather than a live model call.
               </p>
+            </div>
+
+            <div class="source-note">
+              <span id="source-note-label">Context / reference used</span>
+              <div id="sources"></div>
             </div>
           </div>
 
