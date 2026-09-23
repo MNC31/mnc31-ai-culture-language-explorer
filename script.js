@@ -85,7 +85,17 @@ const imageRecords = [
       }
     ],
     note:
-      "Use this as a comparison baseline, not as proof that an AI reading of a historical photograph is correct. The screenshot is the project-provided reference image described in public/images/README.md."
+      "Use this as a comparison baseline, not as proof that an AI reading of a historical photograph is correct. The screenshot is the project-provided reference image described in public/images/README.md.",
+    analysis: {
+      aiReading: "The Master says: Yong could serve as a ruler.",
+      referenceText: "子曰：「雍也，可使南面。」",
+      referenceTranslation:
+        "The Master said, “There is Yung!—He might occupy the place of a prince.”",
+      similarities:
+        "Both readings identify the speaker as the Master, identify 雍 (Yong/Yung), and interpret 南面 as a statement about occupying a position of political authority.",
+      differences:
+        "The AI reading uses modern English and interprets 南面 as “serve as a ruler,” while the Wikisource translation renders it more literally as “occupy the place of a prince.” The Wikisource English also uses the older Wade-Giles-style spelling “Yung,” whereas the pinyin-style reading is “Yong.”"
+    }
   }
 ];
 
@@ -105,6 +115,12 @@ const sources = document.getElementById("sources");
 const readingNote = document.getElementById("reading-note");
 const resetButton = document.getElementById("reset-button");
 const photoHelp = document.getElementById("photo-help");
+const baselineAnalysis = document.getElementById("baseline-analysis");
+const aiReading = document.getElementById("ai-reading");
+const referenceText = document.getElementById("reference-text");
+const referenceTranslation = document.getElementById("reference-translation");
+const comparisonSimilarities = document.getElementById("comparison-similarities");
+const comparisonDifferences = document.getElementById("comparison-differences");
 const imageTabs = document.querySelectorAll(".image-tab");
 const hotspots = document.querySelectorAll(".hotspot");
 
@@ -139,6 +155,17 @@ function showText(index, hotspot) {
   culture.textContent = record.culture;
   readingNote.textContent = record.note;
   renderSources(record);
+
+  if (record.analysis) {
+    baselineAnalysis.hidden = false;
+    aiReading.textContent = record.analysis.aiReading;
+    referenceText.textContent = record.analysis.referenceText;
+    referenceTranslation.textContent = record.analysis.referenceTranslation;
+    comparisonSimilarities.textContent = record.analysis.similarities;
+    comparisonDifferences.textContent = record.analysis.differences;
+  } else {
+    baselineAnalysis.hidden = true;
+  }
 
   emptyResult.hidden = true;
   resultContent.hidden = false;
