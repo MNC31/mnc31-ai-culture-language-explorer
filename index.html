@@ -6,6 +6,7 @@
   <meta name="description" content="AI Culture & Language Explorer">
   <title>AI Culture & Language Explorer</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="explorer.css">
 </head>
 <body>
   <header>
@@ -18,7 +19,7 @@
     </div>
     <nav>
       <a href="#image-demo">Image demo</a>
-      <a href="#explore">Dataset</a>
+      <a href="#dataset-explorer">Explorer</a>
       <a href="#methodology">Methodology</a>
     </nav>
   </header>
@@ -201,8 +202,178 @@
       </div>
     </section>
 
+    <section id="dataset-explorer">
+      <div class="heading">
+        <div>
+          <label>03 · DATASET EXPLORER</label>
+          <h2>Compare what each dataset lets you ask.</h2>
+        </div>
+        <small id="explorer-status">Loading datasets…</small>
+      </div>
+
+      <p class="dataset-explorer-intro">
+        The image prototype stays separate. This second layer turns the project's
+        datasets into an interactive research space: explore matched English and
+        Simplified Chinese questions, inspect Chinese-context examples, and use
+        the same question to compare a documented model response with the dataset's
+        benchmark or reference material.
+      </p>
+
+      <div class="dataset-cards">
+        <article class="dataset-card">
+          <span class="dataset-type">MATCHED MULTIPLE CHOICE</span>
+          <h3>Global-MMLU-Lite</h3>
+          <p>English and Simplified Chinese versions of evaluation questions matched by <code>sample_id</code>.</p>
+          <ul>
+            <li>Best for language-to-language comparison</li>
+            <li>CS vs. CA cultural-sensitivity labels</li>
+            <li>Benchmark answer-key comparison</li>
+          </ul>
+        </article>
+
+        <article class="dataset-card">
+          <span class="dataset-type">BILINGUAL OPEN-ENDED</span>
+          <h3>CC-Eval · value alignment</h3>
+          <p>Parallel Chinese and English prompts designed to examine whether responses shift when the same value-oriented question is posed in different languages.</p>
+          <ul>
+            <li>Compare response framing across languages</li>
+            <li>Useful for saved model-output analysis</li>
+            <li>Needs a disclosed scoring rubric</li>
+          </ul>
+        </article>
+
+        <article class="dataset-card">
+          <span class="dataset-type">CHINESE-CONTEXT TASKS</span>
+          <h3>CC-Eval · cultural context</h3>
+          <p>Separate task families for classical Chinese, folk culture, aesthetics/philosophy, internet slang, and pragmatic intent.</p>
+          <ul>
+            <li>Explore meaning beyond literal translation</li>
+            <li>Test indirect intent and cultural references</li>
+            <li>Compare task types without treating them as one score</li>
+          </ul>
+        </article>
+      </div>
+
+      <p class="dataset-note">
+        <strong>Important:</strong> these datasets should not be collapsed into one
+        accuracy number. Their question formats, reference material, labels, and
+        evaluation purposes differ. The explorer keeps those structures visible.
+      </p>
+
+      <div class="dataset-selector">
+        <div class="explorer-control">
+          <label for="dataset-select">Explore dataset</label>
+          <select id="dataset-select">
+            <option value="global">Global-MMLU-Lite · matched questions</option>
+            <option value="cc">CC-Eval · Chinese-context tasks</option>
+          </select>
+        </div>
+        <div class="explorer-control">
+          <label>Research use</label>
+          <div id="explorer-use" class="dataset-note">
+            Compare equivalent questions in English and Simplified Chinese.
+          </div>
+        </div>
+      </div>
+
+      <div class="dataset-view" data-view="global">
+        <div class="explorer-toolbar">
+          <div class="explorer-control">
+            <label for="global-split">Split</label>
+            <select id="global-split">
+              <option value="test">Test</option>
+              <option value="dev">Dev</option>
+            </select>
+          </div>
+          <div class="explorer-control">
+            <label for="global-category">Subject category</label>
+            <select id="global-category">
+              <option value="all">All subject categories</option>
+            </select>
+          </div>
+          <div class="explorer-control">
+            <label for="global-search">Search</label>
+            <input id="global-search" type="search" placeholder="Search question, subject, culture, region…">
+          </div>
+        </div>
+
+        <div class="explorer-toolbar">
+          <div class="explorer-control">
+            <label for="global-sensitivity">Cultural sensitivity</label>
+            <select id="global-sensitivity">
+              <option value="all">All</option>
+              <option value="CS">Culturally Sensitive (CS)</option>
+              <option value="CA">Culturally Agnostic (CA)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="explorer-layout">
+          <div id="global-question-list" class="question-list" aria-label="Global-MMLU-Lite questions"></div>
+          <div id="global-detail" class="explorer-detail" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="dataset-view" data-view="cc" hidden>
+        <div class="explorer-toolbar">
+          <div class="explorer-control">
+            <label for="cc-task">CC-Eval task</label>
+            <select id="cc-task">
+              <option value="bilingual">Bilingual parallel value alignment</option>
+              <option value="pragmatic">Pragmatic intent understanding</option>
+              <option value="classical">Classical Chinese</option>
+              <option value="folk">Folk culture</option>
+              <option value="aesthetics">Chinese aesthetics & philosophy</option>
+              <option value="slang">Modern Chinese internet slang</option>
+            </select>
+          </div>
+          <div class="explorer-control">
+            <label for="cc-search">Search task records</label>
+            <input id="cc-search" type="search" placeholder="Search the selected CC-Eval task…">
+          </div>
+        </div>
+
+        <div class="explorer-layout">
+          <div id="cc-question-list" class="question-list" aria-label="CC-Eval records"></div>
+          <div id="cc-detail" class="explorer-detail" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="question-lab">
+        <span class="dataset-type">QUESTION LAB · CONTROLLED MODEL COMPARISON</span>
+        <h3>Ask a fixed question, then compare the response.</h3>
+        <p class="lab-intro">
+          This is intentionally a controlled question selector rather than an
+          unrestricted chatbot. Each choice maps to a dataset record so the
+          question, language, reference answer, and eventual model output can be
+          traced back to a source record.
+        </p>
+
+        <div class="lab-controls">
+          <div class="explorer-control">
+            <label for="lab-dataset">Question source</label>
+            <select id="lab-dataset">
+              <option value="global">Global-MMLU-Lite · English + Chinese</option>
+              <option value="cc">CC-Eval · pragmatic intent</option>
+            </select>
+          </div>
+          <div class="explorer-control">
+            <label for="lab-question">Choose a question</label>
+            <select id="lab-question"></select>
+          </div>
+        </div>
+
+        <div class="lab-panel">
+          <div class="lab-chat" id="lab-conversation" aria-live="polite"></div>
+          <div class="lab-reference" id="lab-reference" aria-live="polite"></div>
+        </div>
+
+        <div id="lab-response-status" class="lab-response-status"></div>
+      </div>
+    </section>
+
     <section id="methodology">
-      <label>03 · DESIGN PRINCIPLE</label>
+      <label>04 · DESIGN PRINCIPLE</label>
       <h2>Translation should reveal context, not hide it.</h2>
       <p class="method-copy">
         A later version can connect this interaction to the project's multilingual
@@ -220,5 +391,6 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="explorer.js"></script>
 </body>
 </html>
