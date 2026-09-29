@@ -1,0 +1,75 @@
+{
+  "dataset_name": "perplexity_image_translation_dataset",
+  "schema_version": "1.0",
+  "source_language": "Classical Chinese and Traditional Chinese",
+  "target_language": "Simplified Chinese and English",
+  "items": [
+    {
+      "image_filename": "chinese-text-4.jpg",
+      "image_description": "A screenshot of a Classical Chinese passage titled 六之三.",
+      "source_text_traditional": "子華使於齊，冉子為其母請粟。子曰：「與之釜。」請益，曰：「與之庾。」冉子與之粟五秉。子曰：「赤之適齊也，乘肥馬，衣輕裘；吾聞之也：君子周急不繼富。」原思為之宰，與之粟九百，辭。子曰：「毋！以與爾鄰里鄉黨乎！」",
+      "simplified_chinese": "子华出使到齐国，冉子替他的母亲请求粮食。孔子说：“给她一釜。”冉子请求多给一些，孔子说：“给她一庾。”冉子却给了她五秉粮食。孔子说：“公西赤到齐国去的时候，乘坐肥壮的马，穿着轻暖的皮衣；我听说过：君子救济急难的人，不接济富有的人。”原思担任孔子的家宰，孔子给他九百（斗）粮食，他辞谢不受。孔子说：“不要辞谢！把它给你的邻居、乡里和同乡的人吧！”",
+      "pinyin": "Zǐ Huá shǐ yú Qí, Rǎn Zǐ wèi qí mǔ qǐng sù. Zǐ yuē: ‘Yǔ zhī fǔ.’ Qǐng yì, yuē: ‘Yǔ zhī yǔ.’ Rǎn Zǐ yǔ zhī sù wǔ bǐng. Zǐ yuē: ‘Chì zhī shì Qí yě, chéng féi mǎ, yì qīng qiú; wú wén zhī yě: jūnzǐ zhōu jí bù jì fù.’ Yuán Sī wèi zhī zǎi, yǔ zhī sù jiǔ bǎi, cí. Zǐ yuē: ‘Wú! Yǐ yǔ ěr línlǐ xiāngdǎng hū!’",
+      "english_translation": "When Zihua was sent on a mission to Qi, Ran Qiu asked Confucius for grain on behalf of Zihua’s mother. The Master said, ‘Give her one fu.’ When Ran Qiu asked for more, the Master said, ‘Give her one yu.’ Yet Ran Qiu gave her five bing of grain. The Master said, ‘When Gongxi Chi went to Qi, he rode sturdy horses and wore light fur garments. I have heard that a gentleman relieves those in urgent need, but does not add to the wealth of the already rich.’ Yuan Si served as Confucius’s steward. Confucius gave him nine hundred measures of grain, but he declined them. The Master said, ‘Do not refuse them! Give them to your neighbors and fellow villagers.’",
+      "meaning_in_english": "Confucius distinguishes charitable relief from giving extra resources to people who are already well provided for. Assistance should address genuine hardship; if one does not personally need an offered reward, it can be shared with the wider community.",
+      "notes": [
+        "The passage is from the Analects (Lunyu), Yong Ye chapter (6.5 in a common numbering).",
+        "Several ancient measures appear: 釜 (fu), 庾 (yu), and 秉 (bing). Their exact modern-volume equivalents varied by historical period, so they are retained as transliterated measures rather than converted into liters or kilograms.",
+        "粟九百 literally means ‘nine hundred [units] of grain.’ The omitted unit is commonly glossed as 斗 (dou) in traditional commentary/translation, but the image itself does not state it explicitly.",
+        "周急不繼富 is rendered as ‘relieves urgent need, but does not add to the wealth of the rich.’ 繼 here has the sense of supplementing or adding to, rather than simply ‘continuing.’",
+        "The names 子華, 冉子, 赤, and 原思 are historical courtesy/personal names and are transliterated rather than translated. 赤 refers to Gongxi Chi (公西赤), also called Zihua."
+      ]
+    },
+    {
+      "image_filename": "chinese-text-1.jpg",
+      "image_description": "A stone entrance plaque with four right-to-left traditional Chinese characters.",
+      "source_text_traditional": "文聖館",
+      "source_reading_direction": "right to left",
+      "simplified_chinese": "文圣馆",
+      "pinyin": "Wénshèng Guǎn",
+      "english_translation": "Hall of the Literary Sage",
+      "meaning_in_english": "A hall named in honor of the ‘Literary Sage,’ an honorific commonly associated with Confucius in Chinese cultural and educational contexts.",
+      "notes": [
+        "The inscription is arranged in the traditional right-to-left order. Read from the rightmost character to the leftmost: 文聖館.",
+        "館/馆 means hall, building, or establishment. 聖/圣 means sage or saintly figure.",
+        "The English rendering is a name translation; it does not establish the building’s official English name."
+      ]
+    },
+    {
+      "image_filename": "chinese-text-2.jpg",
+      "image_description": "A black calligraphic plaque above a doorway.",
+      "source_text_traditional": "功禪沼特若馬",
+      "source_reading_direction": "right to left",
+      "simplified_chinese": "马若特沼禅功",
+      "pinyin": "Mǎ ruò tè zhǎo chán gōng",
+      "english_translation": "‘Ma Ruote Marsh Zen Merit’ (literal/phonetic reading only; no reliable idiomatic translation established).",
+      "meaning_in_english": "The photographed inscription cannot be translated confidently as a coherent Classical Chinese phrase. It may be an unconventional commemorative inscription, a proper name, a calligraphic/photographic misreading, or characters intended to be read in another order or context.",
+      "notes": [
+        "This is the least certain transcription in the set. The large visible characters appear, from left to right in the photograph, to be 馬 若 特 沼 禪 功. If the plaque follows conventional right-to-left plaque order, the reading becomes 功禪沼特若馬; neither direction yields a clear standard phrase.",
+        "The image is affected by glare, perspective, and stylized brush calligraphy. In particular, the apparent character 沼 could plausibly be a different character, and the grouping of the central characters is uncertain.",
+        "The small signature at the far right is also not transcribed because it is not legible enough to do so reliably.",
+        "Only character-level exploratory readings are supplied here; this entry should not be treated as a verified translation. A straight-on, higher-resolution photograph or the location/context of the building would be needed for a dependable reading."
+      ]
+    },
+    {
+      "image_filename": "chinese-text-3.jpg",
+      "image_description": "A vertical green inscription carved into a stone gatepost.",
+      "source_text_traditional": "格於天庭化成天下",
+      "simplified_chinese": "格于天庭化成天下",
+      "pinyin": "Gé yú tiāntíng, huà chéng tiānxià",
+      "english_translation": "Reaching the heavenly court, its transforming influence spreads throughout all under heaven.",
+      "meaning_in_english": "The inscription expresses the ideal of a moral, cultural, or ritual influence so elevated that it reaches Heaven and transforms the whole realm/world.",
+      "notes": [
+        "The vertical inscription is read from top to bottom: 格於天庭化成天下.",
+        "格 is an elevated Classical Chinese verb with senses including ‘reach,’ ‘arrive at,’ or ‘attain.’ 天庭 literally means ‘Heavenly Court’ and can also evoke the celestial/heavenly realm.",
+        "化成天下 is interpreted idiomatically as transformative influence being accomplished throughout ‘all under heaven’ (天下), rather than a literal physical transformation of the world.",
+        "The exact literary source has not been verified from the image alone."
+      ]
+    }
+  ],
+  "general_notes": [
+    "Traditional characters from the images are preserved where the reading is sufficiently clear; each is paired with a Simplified Chinese rendering.",
+    "Pinyin uses tone marks and follows the proposed readings, including conventional readings for Classical Chinese names.",
+    "Translations favor meaning over word-for-word equivalence. Where the image does not support a reliable character identification or phrase-level interpretation, uncertainty is stated explicitly rather than resolved by guesswork."
+  ]
+}
