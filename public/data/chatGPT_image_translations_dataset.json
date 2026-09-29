@@ -1,0 +1,105 @@
+{
+  "dataset_name": "ChatGPT Image Translations",
+  "filename": "chatGPT_image_translations_dataset.json",
+  "description": "Image-specific translation and cultural-context records created for the AI Culture & Language Explorer prototype. These records correspond to the four images in public/images and are kept separate from the interactive demo code.",
+  "source_images": [
+    "public/images/chinese-text-1.jpg",
+    "public/images/chinese-text-2.jpg",
+    "public/images/chinese-text-3.jpg",
+    "public/images/chinese-text-4.jpg"
+  ],
+  "method_note": "These are AI-assisted working interpretations based on the project images and available contextual references. They should not be treated as authoritative OCR or definitive translations. Stylized, historical, regional, and site-specific inscriptions may require human review and additional sources.",
+  "records": [
+    {
+      "id": "IMG-01",
+      "image": "public/images/chinese-text-1.jpg",
+      "title": "Gate inscription",
+      "source_text": "景龍迎天",
+      "standardized_simplified": "景龙迎天",
+      "pinyin": "Jǐng lóng yíng tiān",
+      "english_translation": "“Jinglong welcomes Heaven” (literal reading)",
+      "meaning": "This appears to be a decorative inscription rather than a widely recognized fixed idiom. “景龙” may function as a name or title, so the surrounding location and historical context would be needed before giving it a more specific cultural interpretation.",
+      "cultural_context": "The phrase is treated conservatively as a literal reading. “景龙” can have historical associations, including the Tang dynasty reign title Jinglong, but that association alone does not establish what the photographed inscription means at this particular site.",
+      "reading_note": "Working transcription from the photograph. The final system should verify stylized characters with OCR plus human review before presenting this as authoritative.",
+      "references": [
+        {
+          "label": "Reference: 景龙 as a Tang dynasty reign title",
+          "url": "https://zh.wikipedia.org/wiki/%E6%99%AF%E9%BE%99"
+        }
+      ]
+    },
+    {
+      "id": "IMG-02",
+      "image": "public/images/chinese-text-2.jpg",
+      "title": "Signboard",
+      "source_text": "馬若特江禪坊",
+      "standardized_simplified": "马若特江禅坊",
+      "pinyin": "Mǎ ruò tè jiāng chán fāng",
+      "english_translation": "“Ma Ruote Jiang Chan Fang” — treated as a proper name",
+      "meaning": "The wording appears to function as a place or organization name, so a transliteration is safer than inventing a literal English meaning. “禅” (chán) can refer to Chan Buddhist practice, while “坊” (fāng) can refer to a lane, neighborhood, shop, workshop, or other named place depending on context.",
+      "cultural_context": "Because the sign is visually stylized and some characters are difficult to verify from the photograph, the full name is treated provisionally. The interpretation avoids assigning a specific institutional or religious identity without an authoritative source for the photographed name.",
+      "reading_note": "The sign is visually stylized and some characters are difficult to verify from the photograph. No authoritative source for the full photographed name has been identified, so the reading and interpretation remain provisional.",
+      "references": [
+        {
+          "label": "Chinese Text Project dictionary: 坊",
+          "url": "https://ctext.org/dictionary.pl?char=%E5%9D%8A&if=en"
+        },
+        {
+          "label": "Reference: Chan Buddhism / 禅",
+          "url": "https://en.wikipedia.org/wiki/Chan_Buddhism"
+        }
+      ]
+    },
+    {
+      "id": "IMG-03",
+      "image": "public/images/chinese-text-3.jpg",
+      "title": "Stone inscription",
+      "source_text": "尊師重道",
+      "standardized_simplified": "尊师重道",
+      "pinyin": "Zūn shī zhòng dào",
+      "english_translation": "To respect teachers and value their teachings / the Way.",
+      "meaning": "尊师重道 is a well-established Chinese expression associated with respecting teachers and valuing the teachings or principles they transmit.",
+      "cultural_context": "The phrase has historical textual sources and expresses the cultural value placed on teachers, learning, and the transmission of knowledge or principles. Its presence at a particular site does not by itself establish the site's history or religious meaning.",
+      "reading_note": "The selected region focuses on the upper four characters of the vertical inscription. The complete inscription should be transcribed separately when the project moves beyond this prototype.",
+      "references": [
+        {
+          "label": "Chinese Thought and Culture Terms: 尊师重道",
+          "url": "https://www.chinesethought.cn/shuyu_show.aspx?shuyu_id=4357"
+        },
+        {
+          "label": "Ministry of Education: 尊师重道",
+          "url": "https://www.moe.gov.cn/jyb_xwfb/moe_2082/2025/2025_zl02/202509/t20250911_1412966.html"
+        }
+      ]
+    },
+    {
+      "id": "IMG-04",
+      "image": "public/images/chinese-text-4.jpg",
+      "title": "Wikisource baseline · Book VI, section 3",
+      "source_text": "子華使於齊，冉子爲其母請粟。",
+      "standardized_simplified": "子华使于齐，冉子为其母请粟。",
+      "pinyin": "Zǐhuá shǐ yú Qí, Rǎn zǐ wéi qí mǔ qǐng sù.",
+      "english_translation": "Zi-hua was sent on a mission to Qi, and Ran Zi requested grain for his mother.",
+      "meaning": "This excerpt comes from Book VI, section 3 of the Analects. It introduces a discussion about providing grain to the family of a disciple and then expands into a distinction between helping people in need and adding to the wealth of someone already well supplied.",
+      "cultural_context": "The corrected screenshot provides a readable traditional-Chinese source passage that can be compared with an AI-assisted reading. The passage is useful for examining how an AI interpretation handles historical Chinese, names, classical grammar, and culturally specific concepts. The standardized form here uses Simplified Chinese for comparison, while the photographed source preserves Traditional Chinese.",
+      "reading_note": "The highlighted phrase is a fixed comparison target. The AI reading is a prototype interpretation of the traditional characters, not a live model result or proof of general AI accuracy. The Wikisource wording is used as the reference translation for this example.",
+      "comparison": {
+        "ai_reading": "Zi-hua was sent to Qi, and Ran Zi asked for grain for his mother.",
+        "reference_standardized_text": "子华使于齐，冉子为其母请粟。",
+        "reference_translation": "Tsze-hwa being employed on a mission to Ch'i, the disciple Zan requested grain for his mother.",
+        "similarities": "Both readings identify Zi-hua as going to Qi, identify Ran Zi as the person requesting grain, and preserve the reason for the request: grain for his mother. The core event and relationships are the same.",
+        "differences": "The standardized text shown by the website uses the Simplified Chinese form for comparison, while the photograph preserves Traditional Chinese forms. In particular, 華、齊、爲、請 correspond to 华、齐、为、请. The English reference also uses older Wade-Giles spellings such as “Tsze-hwa” and “Ch'i,” so differences in romanization and translation style should not be mistaken for differences in the underlying Chinese passage."
+      },
+      "references": [
+        {
+          "label": "Wikisource source: 論語/雍也第六 · 六之三",
+          "url": "https://zh.wikisource.org/wiki/%E8%AB%96%E8%AA%9E/%E9%9B%8D%E4%B9%9F%E7%AC%AC%E5%85%AD"
+        },
+        {
+          "label": "Wikisource English translation: The Chinese Classics / Confucian Analects VI",
+          "url": "https://en.wikisource.org/wiki/The_Chinese_Classics/Volume_1/Confucian_Analects/VI"
+        }
+      ]
+    }
+  ]
+}
