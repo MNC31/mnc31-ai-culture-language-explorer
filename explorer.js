@@ -59,11 +59,29 @@ if (explorerRoot) {
   }
 
   async function loadText(path) {
-    const response = await fetch(path);
-    if (!response.ok) {
-      throw new Error("Could not load " + path + " (" + response.status + ")");
+    // Vercel is serving this as a plain static site, so files inside
+    // public/ are requested from /public/... rather than through a
+    // framework-specific public-folder rewrite.
+    const candidates = [
+      "/" + path.replace(/^\\/+/, ""),
+      path
+    ];
+    let lastError = null;
+
+    for (const candidate of candidates) {
+      try {
+        const response = await fetch(candidate, { cache: "no-store" });
+        if (response.ok) return response.text();
+        lastError = new Error("HTTP " + response.status);
+      } catch (error) {
+        lastError = error;
+      }
     }
-    return response.text();
+
+    throw new Error(
+      "Could not load " + path + ". Tried " + candidates.join(" and ") +
+      ". " + (lastError ? lastError.message : "")
+    );
   }
 
   function parseJsonl(text) {
@@ -94,8 +112,8 @@ if (explorerRoot) {
       } else if (char === "," && !quoted) {
         row.push(cell);
         cell = "";
-      } else if ((char === "\\n" || char === "\\r") && !quoted) {
-        if (char === "\\r" && next === "\\n") i += 1;
+      } else if ((char === "\n" || char === "\r") && !quoted) {
+        if (char === "\r" && next === "\n") i += 1;
         row.push(cell);
         rows.push(row);
         row = [];
@@ -538,5 +556,7 @@ if (explorerRoot) {
 
   loadGlobal("test").catch((error) => setStatus(error.message, true));
   refreshCc();
-  refreshLabQuestions();
+  // The lab waits for the same Global-MMLU load instead of starting a
+  // second competing request during page initialization.
+  refreshLabQuestions().catch((error) => setStatus(error.message, true));
 }
