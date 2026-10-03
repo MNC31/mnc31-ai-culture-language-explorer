@@ -59,28 +59,39 @@ if (explorerRoot) {
   }
 
   async function loadText(path) {
-    // Vercel is serving this as a plain static site, so files inside
-    // public/ are requested from /public/... rather than through a
-    // framework-specific public-folder rewrite.
+    // The project is a plain static site. Try the exact repository path first,
+    // then the same file without the public/ prefix, and finally a relative
+    // path. All candidates point to the downloaded files committed here.
+    const cleanPath = path.replace(/^\\/+/, "");
     const candidates = [
-      "/" + path.replace(/^\/+/, ""),
+      "/" + cleanPath,
+      "/" + cleanPath.replace(/^public\\//, ""),
+      "./" + cleanPath,
       path
-    ];
-    let lastError = null;
+    ].filter((candidate, index, list) => list.indexOf(candidate) === index);
+
+    const failures = [];
 
     for (const candidate of candidates) {
       try {
         const response = await fetch(candidate, { cache: "no-store" });
-        if (response.ok) return response.text();
-        lastError = new Error("HTTP " + response.status);
+        if (response.ok) {
+          const text = await response.text();
+          if (!text.trim()) {
+            failures.push(candidate + " returned an empty file");
+            continue;
+          }
+          return text;
+        }
+        failures.push(candidate + " → HTTP " + response.status);
       } catch (error) {
-        lastError = error;
+        failures.push(candidate + " → " + error.message);
       }
     }
 
     throw new Error(
-      "Could not load " + path + ". Tried " + candidates.join(" and ") +
-      ". " + (lastError ? lastError.message : "")
+      "Could not load the repository dataset file " + path +
+      ". Tried: " + failures.join("; ")
     );
   }
 
@@ -530,7 +541,9 @@ if (explorerRoot) {
 
   ccTask.addEventListener("change", () => {
     explorerState.selectedCc = 0;
-    refreshCc();
+    refreshCc().catch((error) => {
+    setStatus("CC-Eval loading failed: " + error.message, true);
+  });
   });
   ccSearch.addEventListener("input", async () => {
     try {
@@ -554,7 +567,9 @@ if (explorerRoot) {
     view.hidden = view.dataset.view !== datasetSelect.value;
   });
 
-  loadGlobal("test").catch((error) => setStatus(error.message, true));
+  loadGlobal("test").catch((error) => {
+    setStatus("Dataset loading failed: " + error.message, true);
+  });
   refreshCc();
   // The lab waits for the same Global-MMLU load instead of starting a
   // second competing request during page initialization.
