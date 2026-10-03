@@ -14,10 +14,10 @@
   // Individual AI readings can then shrink the box to the amount of text that
   // particular response claims to have read.
   const imagePositions = [
-    { left: "18%", top: "27%", width: "67%", height: "25%", direction: "horizontal", maxChars: 4 },
-    { left: "18%", top: "27%", width: "80%", height: "30%", direction: "horizontal", maxChars: 10 },
-    { left: "39%", top: "4%", width: "31%", height: "47%", direction: "vertical", maxChars: 4 },
-    { left: "4%", top: "24%", width: "68%", height: "22%", direction: "horizontal", maxChars: 40 }
+    { left: "18%", top: "29%", width: "67%", height: "22%", direction: "horizontal", maxChars: 4 },
+    { left: "18%", top: "29%", width: "80%", height: "28%", direction: "horizontal", maxChars: 10 },
+    { left: "41%", top: "5%", width: "28%", height: "43%", direction: "vertical", maxChars: 4 },
+    { left: "4%", top: "12%", width: "92%", height: "74%", direction: "horizontal", maxChars: 40 }
   ];
 
   const escapeHtml = (value) => String(value ?? "")
