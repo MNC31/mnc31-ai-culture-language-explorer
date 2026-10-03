@@ -42,27 +42,31 @@
       <div class="heading">
         <div>
           <label>IMAGE → TEXT → CONTEXT</label>
-          <h2>Click the writing in the photograph.</h2>
+          <h2>Compare what each AI sees in the same photograph.</h2>
         </div>
         <small id="selection-status">Nothing selected</small>
       </div>
 
-      <div class="demo-layout">
+      <div class="image-picker image-picker-top" role="tablist" aria-label="Choose a photograph">
+        <button class="image-tab active" data-image="0" role="tab" aria-selected="true"><span>01</span>Gate inscription</button>
+        <button class="image-tab" data-image="1" role="tab" aria-selected="false"><span>02</span>Signboard</button>
+        <button class="image-tab" data-image="2" role="tab" aria-selected="false"><span>03</span>Stone inscription</button>
+        <button class="image-tab" data-image="3" role="tab" aria-selected="false"><span>04</span>Wikisource baseline</button>
+      </div>
+
+      <div class="demo-layout ai-demo-layout">
         <div class="photo-stage" id="photo-stage">
           <img id="demo-image" src="public/images/chinese-text-1.jpg" alt="Photograph containing Chinese characters">
-          <button class="hotspot hotspot-one" data-record="0" aria-label="Select text region 1">
-            <span>1</span>
-          </button>
-          <button class="hotspot hotspot-two" data-record="1" aria-label="Select text region 2" hidden>
-            <span>2</span>
-          </button>
-          <button class="hotspot hotspot-three" data-record="2" aria-label="Select text region 3" hidden>
-            <span>3</span>
-          </button>
-          <div class="reference-highlight" id="reference-highlight" aria-hidden="true">
-            <span>Phrase being compared</span>
+          <button class="hotspot hotspot-one" data-record="0" aria-label="Select text region 1"><span>1</span></button>
+          <button class="hotspot hotspot-two" data-record="1" aria-label="Select text region 2" hidden><span>2</span></button>
+          <button class="hotspot hotspot-three" data-record="2" aria-label="Select text region 3" hidden><span>3</span></button>
+          <div class="reference-highlight" id="reference-highlight" aria-hidden="true"><span>Phrase being compared</span></div>
+          <div class="ai-recognition-overlay" id="ai-recognition-overlay" aria-live="polite">
+            <span class="ai-recognition-label">AI READING</span>
+            <strong id="ai-recognition-ai">Select an AI response</strong>
+            <span id="ai-recognition-text">The selected AI's recognized characters will appear here.</span>
           </div>
-          <div class="photo-help" id="photo-help">Click a highlighted text region · click the photograph outside it to reset</div>
+          <div class="photo-help" id="photo-help">Click the highlighted text region · click an AI response to see what it recognized</div>
         </div>
 
         <aside class="translation-panel ai-response-panel" id="translation-panel" aria-live="polite">
@@ -71,53 +75,23 @@
             <h3 class="ai-panel-title" id="ai-response-title">Gate inscription · different AI readings</h3>
             <span id="ai-response-count" class="ai-response-count">Loading responses…</span>
           </div>
-          <p class="ai-panel-intro">
-            The photograph stays fixed while you compare four stored AI responses.
-            Each card identifies the AI system and shows its reading, translation,
-            and interpretation.
-          </p>
-          <div class="ai-panel-legend">
-            <span><b>01</b> AI system</span>
-            <span><b>02</b> Reading</span>
-            <span><b>03</b> Translation + meaning</span>
-          </div>
+          <p class="ai-panel-intro">Keep the photograph fixed while you move through the four stored AI responses. Click a card to highlight the text region that response was trying to read.</p>
           <div class="ai-carousel ai-carousel-inline" aria-label="Different AI responses for the selected photograph">
             <div id="ai-carousel-track" class="ai-carousel-track"></div>
           </div>
-          <div class="ai-response-panel-note">
-            <strong>Important:</strong> these are stored AI interpretations, not
-            a single authoritative translation or an accuracy ranking.
-          </div>
-          <button class="reset-button" id="reset-button" type="button">Reset selection</button>
+          <div class="ai-response-panel-note"><strong>How to read this:</strong> the highlighted area shows the approximate text region being interpreted. The different readings are stored AI outputs, not a single authoritative translation.</div>
+          <button class="reset-button" id="reset-ai-button" type="button">Reset selection</button>
         </aside>
       </div>
 
-      <div class="image-picker" role="tablist" aria-label="Choose a photograph">
-        <button class="image-tab active" data-image="0" role="tab" aria-selected="true">
-          <span>01</span>
-          Gate inscription
-        </button>
-        <button class="image-tab" data-image="1" role="tab" aria-selected="false">
-          <span>02</span>
-          Signboard
-        </button>
-        <button class="image-tab" data-image="2" role="tab" aria-selected="false">
-          <span>03</span>
-          Stone inscription
-        </button>
-        <button class="image-tab" data-image="3" role="tab" aria-selected="false">
-          <span>04</span>
-          Wikisource baseline
-        </button>
+      <!-- Keep the original translation elements in the DOM for script.js compatibility. -->
+      <div class="legacy-translation-data" hidden aria-hidden="true">
+        <div id="result-empty"><h3>Select a character region</h3><p></p></div>
+        <div id="result-content"><div id="standard-text"></div><div id="pinyin"></div><div id="translation"></div><div id="culture"></div><div id="reading-note"></div><div id="baseline-analysis"><div id="ai-reading"></div><div id="reference-text"></div><div id="reference-translation"></div><div id="comparison-similarities"></div><div id="comparison-differences"></div></div><div id="source-note-label"></div><div id="sources"></div></div>
+        <button id="reset-button" type="button">Reset</button>
       </div>
 
-
-
-      <p class="prototype-note">
-        <b>Prototype note:</b> these are hand-defined demonstration hotspots, not
-        automatic OCR. The next version can let a visitor draw a box around any
-        text region and send that crop through an OCR/translation pipeline.
-      </p>
+      <p class="prototype-note"><b>Prototype note:</b> these are hand-defined demonstration hotspots, not automatic OCR. The next version can let a visitor draw a box around any text region and send that crop through an OCR/translation pipeline.</p>
     </section>
 
     <section id="explore">
