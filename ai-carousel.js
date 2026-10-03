@@ -1,9 +1,8 @@
 (() => {
-  const section = document.getElementById("ai-response-comparison");
   const track = document.getElementById("ai-carousel-track");
   const count = document.getElementById("ai-response-count");
   const title = document.getElementById("ai-response-title");
-  if (!section || !track) return;
+  if (!track) return;
 
   const imageNames = ["Gate inscription", "Signboard", "Stone inscription", "Wikisource baseline / Analects passage"];
 
