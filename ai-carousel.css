@@ -126,3 +126,93 @@
   @keyframes ai-card-reveal{from{opacity:.55;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
 }
 .baseline-source-note{margin:0 0 10px;padding:9px 11px;background:#f1eee8;border-left:3px solid var(--blue);color:var(--muted);font-size:10px;line-height:1.5}
+/* Clear selected state for the photograph tabs. */
+.image-picker-top .image-tab{
+  position:relative;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--ink);
+  transition:background .16s ease,color .16s ease,border-color .16s ease,transform .16s ease;
+}
+.image-picker-top .image-tab:hover{
+  border-color:var(--ink);
+}
+.image-picker-top .image-tab.active,
+.image-picker-top .image-tab[aria-selected="true"]{
+  background:var(--ink);
+  color:var(--paper);
+  border-color:var(--ink);
+  box-shadow:0 4px 12px rgba(23,33,43,.14);
+}
+.image-picker-top .image-tab.active span,
+.image-picker-top .image-tab[aria-selected="true"] span{
+  color:var(--paper);
+}
+.image-picker-top .image-tab.active::after,
+.image-picker-top .image-tab[aria-selected="true"]::after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:-5px;
+  height:3px;
+  background:var(--accent);
+}
+@media(min-width:981px){
+  .ai-demo-layout.is-wikisource{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto auto;
+    align-items:start;
+  }
+  .ai-demo-layout.is-wikisource .photo-stage{
+    grid-column:1 / -1;
+    min-height:0;
+    width:100%;
+  }
+  .ai-demo-layout.is-wikisource .photo-stage>img{
+    min-height:0;
+    width:100%;
+    height:auto;
+    max-height:none;
+    object-fit:contain;
+    display:block;
+  }
+  .ai-demo-layout.is-wikisource .ai-response-panel{
+    grid-column:1 / -1;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:22px;
+    min-height:0;
+    padding:22px;
+    overflow:visible;
+  }
+  .ai-demo-layout.is-wikisource .wikisource-baseline{
+    grid-column:1;
+    margin:0;
+    padding:0 22px 0 0;
+    border-bottom:0;
+    border-right:1px solid var(--line);
+  }
+  .ai-demo-layout.is-wikisource .ai-comparison-heading{
+    grid-column:2;
+    grid-row:1;
+    margin:0;
+  }
+  .ai-demo-layout.is-wikisource .ai-panel-kicker,
+  .ai-demo-layout.is-wikisource .ai-panel-heading-row,
+  .ai-demo-layout.is-wikisource .ai-panel-intro,
+  .ai-demo-layout.is-wikisource .ai-carousel,
+  .ai-demo-layout.is-wikisource .ai-response-panel-note,
+  .ai-demo-layout.is-wikisource .reset-button{
+    grid-column:2;
+  }
+  .ai-demo-layout.is-wikisource .ai-comparison-heading + .ai-panel-kicker{
+    margin-top:0;
+  }
+}
+@media(max-width:980px){
+  .ai-demo-layout.is-wikisource .photo-stage>img{
+    min-height:0;
+    height:auto;
+  }
+}
