@@ -169,7 +169,9 @@
    panel that previously presented a single translation result. */
 .ai-response-panel{min-width:0;overflow:hidden}
 .ai-panel-kicker{color:var(--accent);font-size:11px;letter-spacing:.14em;font-weight:800}
+.ai-panel-heading-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .ai-panel-title{font-size:24px;line-height:1.15;letter-spacing:-.02em;margin:8px 0 9px}
+.ai-panel-heading-row .ai-response-count{margin-top:10px}
 .ai-panel-intro{color:var(--muted);font-size:12px;line-height:1.55;margin:0 0 14px}
 .ai-panel-legend{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
 .ai-panel-legend span{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:#f7f4ee;padding:5px 7px;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.06em}
