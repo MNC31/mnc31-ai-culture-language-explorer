@@ -6,6 +6,7 @@
   const overlayAi = document.getElementById("ai-recognition-ai");
   const overlayText = document.getElementById("ai-recognition-text");
   const resetButton = document.getElementById("reset-ai-button");
+  const imageTabs = document.querySelectorAll(".image-tab");
   if (!track) return;
 
   const imageNames = ["Gate inscription", "Signboard", "Stone inscription", "Wikisource baseline"];
@@ -37,6 +38,13 @@
     overlayText.textContent = item.source_text || "No source reading supplied.";
   }
 
+  function showPrompt(imageIndex) {
+    positionRecognition(imageIndex);
+    overlay.classList.add("is-active");
+    overlayAi.textContent = "Ready to compare";
+    overlayText.textContent = "Click the box to see how different AI systems read these characters.";
+  }
+
   function render(imageIndex) {
     const current = responses.filter((item) => Number(item.image) === Number(imageIndex));
 
@@ -65,10 +73,21 @@
 
     // Do not activate a response automatically. The image first shows one
     // instruction box; the visitor must click it before an AI reading appears.
-    overlay.classList.remove("is-active");
-    overlayAi.textContent = "Ready to compare";
-    overlayText.textContent = "Click the highlighted box on the photograph to see how the AIs read it.";
+    showPrompt(imageIndex);
   }
+
+  overlay?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const selected = track.querySelector(".ai-carousel-card.is-selected");
+    if (selected) {
+      const current = responses.filter((item) => Number(item.image) === Number(window.__activeAiImage || 0));
+      const item = current[Number(selected.dataset.responseIndex)];
+      if (item) selectResponse(item, Number(window.__activeAiImage || 0));
+    } else {
+      const current = responses.filter((item) => Number(item.image) === Number(window.__activeAiImage || 0));
+      if (current[0]) selectResponse(current[0], Number(window.__activeAiImage || 0));
+    }
+  });
 
   resetButton?.addEventListener("click", () => {
     overlay.classList.remove("is-active");
@@ -84,10 +103,15 @@
     })
     .then((data) => {
       responses = data.responses || [];
+      window.__activeAiImage = 0;
       render(0);
-      document.querySelectorAll(".image-tab").forEach((tab) => {
-        tab.addEventListener("click", () => render(Number(tab.dataset.image)));
+      imageTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          window.__activeAiImage = Number(tab.dataset.image);
+          render(window.__activeAiImage);
+        });
       });
+      showPrompt(0);
     })
     .catch((error) => {
       count.textContent = "Comparison data could not be loaded";
