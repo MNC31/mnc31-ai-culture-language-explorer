@@ -14,7 +14,7 @@
   // Individual AI readings can then shrink the box to the amount of text that
   // particular response claims to have read.
   const imagePositions = [
-    { left: "18%", top: "29%", width: "67%", height: "22%", direction: "horizontal", maxChars: 4 },
+    { left: "12%", top: "34%", width: "74%", height: "24%", direction: "horizontal", maxChars: 4 },
     { left: "18%", top: "29%", width: "80%", height: "28%", direction: "horizontal", maxChars: 10 },
     { left: "41%", top: "5%", width: "28%", height: "43%", direction: "vertical", maxChars: 4 },
     { left: "4%", top: "12%", width: "92%", height: "74%", direction: "horizontal", maxChars: 40 }
@@ -40,9 +40,11 @@
   function positionRecognition(index, item = null) {
     const p = basePosition(index);
     const highlight = item?.highlight || {};
-    const ratio = highlight.ratio
-      ? Math.max(0.12, Math.min(1, Number(highlight.ratio)))
-      : Math.max(0.12, Math.min(1, characterCount(item?.source_text) / p.maxChars));
+    const ratio = item
+      ? (highlight.ratio
+        ? Math.max(0.12, Math.min(1, Number(highlight.ratio)))
+        : Math.max(0.12, Math.min(1, characterCount(item.source_text) / p.maxChars)))
+      : 1;
 
     overlay.style.left = highlight.left || p.left;
     overlay.style.top = highlight.top || p.top;
