@@ -124,6 +124,7 @@
         track.innerHTML = current.map((item, index) =>
           '<button class="ai-carousel-card" type="button" data-response-index="' + index + '" aria-label="Show ' + escapeHtml(item.ai) + ' reading">' +
             '<div class="ai-card-top"><div><span class="ai-card-number">0' + (index + 1) + '</span><div class="ai-name">' + escapeHtml(item.ai) + '</div></div><span class="ai-card-action">View on image →</span></div>' +
+            (imageIndex === 3 ? '<div class="ai-field"><span class="ai-field-label">Passage coverage</span><div class="ai-coverage">' + (characterCount(item.source_text) >= 35 ? 'Full passage' : 'Partial passage') + '</div></div>' : '') +
             '<div class="ai-field ai-field-reading"><span class="ai-field-label">Recognized characters</span><div class="ai-script" lang="zh">' + escapeHtml(item.source_text) + '</div></div>' +
             '<div class="ai-field"><span class="ai-field-label">Standardized / simplified</span><div class="ai-script ai-script-small" lang="zh">' + escapeHtml(item.standardized) + '</div></div>' +
             '<div class="ai-field"><span class="ai-field-label">Pinyin</span><div>' + escapeHtml(item.pinyin || "Not supplied.") + '</div></div>' +
