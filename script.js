@@ -128,6 +128,7 @@ const comparisonSimilarities = document.getElementById("comparison-similarities"
 const comparisonDifferences = document.getElementById("comparison-differences");
 const imageTabs = document.querySelectorAll(".image-tab");
 const hotspots = document.querySelectorAll(".hotspot");
+const aiRecognitionOverlay = document.getElementById("ai-recognition-overlay");
 
 function renderSources(record) {
   sources.innerHTML = "";
@@ -148,6 +149,9 @@ function resetText() {
   resultContent.hidden = true;
   status.textContent = "Nothing selected";
   hotspots.forEach((spot) => spot.classList.remove("selected"));
+  if (aiRecognitionOverlay) {
+    aiRecognitionOverlay.classList.remove("is-active");
+  }
 }
 
 function showText(index, hotspot) {
@@ -191,6 +195,9 @@ function showImage(index) {
   image.alt = imageRecords[index].alt;
 
   const isBaseline = index === 3;
+  if (aiRecognitionOverlay) {
+    aiRecognitionOverlay.classList.remove("is-active");
+  }
   stage.classList.toggle("reference-mode", isBaseline);
   demoLayout.classList.toggle("reference-layout", isBaseline);
   referenceHighlight.hidden = !isBaseline;
