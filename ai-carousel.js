@@ -31,25 +31,6 @@
     return imagePositions[index] || imagePositions[0];
   }
 
-  function syncStageToImage(index) {
-    const stage = document.getElementById("photo-stage");
-    const image = document.getElementById("demo-image");
-    if (!stage || !image) return;
-
-    if (Number(index) === 3) {
-      stage.style.aspectRatio = "auto";
-      stage.style.height = "560px";
-      image.style.objectFit = "contain";
-      return;
-    }
-
-    if (image.naturalWidth && image.naturalHeight) {
-      stage.style.aspectRatio = image.naturalWidth + " / " + image.naturalHeight;
-      stage.style.height = "auto";
-      image.style.objectFit = "fill";
-    }
-  }
-
   function characterCount(text) {
     // Count visible Chinese/Japanese/Korean characters plus letters/numbers,
     // ignoring punctuation and whitespace.
@@ -58,7 +39,6 @@
 
   function positionRecognition(index, item = null) {
     const p = basePosition(index);
-    syncStageToImage(index);
     const highlight = item?.highlight || {};
     const ratio = highlight.ratio
       ? Math.max(0.12, Math.min(1, Number(highlight.ratio)))
@@ -182,15 +162,6 @@
         });
       });
 
-      const demoImage = document.getElementById("demo-image");
-      demoImage?.addEventListener("load", () => {
-        syncStageToImage(Number(window.__activeAiImage || 0));
-        positionRecognition(Number(window.__activeAiImage || 0), null);
-      });
-      window.addEventListener("resize", () => {
-        positionRecognition(Number(window.__activeAiImage || 0), null);
-      });
-      syncStageToImage(0);
     })
     .catch((error) => {
       count.textContent = "Comparison data could not be loaded";
