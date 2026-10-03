@@ -64,6 +64,7 @@
 .ai-script-small{font-size:20px}
 .ai-translation{font-size:12px;line-height:1.45}
 .ai-meaning{font-size:11px;line-height:1.45;color:#53616b}
+.ai-coverage{font-size:12px;font-weight:800;color:var(--ink)}
 
 .ai-response-panel-note{margin-top:10px;padding:10px 11px;background:#eef3f5;border-left:3px solid var(--blue);color:#53616b;font-size:10px;line-height:1.5}
 .ai-response-panel-note strong{color:var(--ink)}
