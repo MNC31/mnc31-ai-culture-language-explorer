@@ -1,194 +1,122 @@
-/* AI response carousel — inspired by the scroll-based, CSS-first approach of Codrops' CSS-Only Carousels. */
-.ai-response-section {
-  margin-top: 2.5rem;
-  padding: 2rem;
-  border: 1px solid rgba(20, 25, 30, 0.14);
-  background: rgba(255, 255, 255, 0.72);
-  overflow: hidden;
+/* Image-first AI response carousel. Inspired by Codrops CSS-only scroll behavior. */
+.image-demo{overflow:visible}
+.image-picker-top{margin:0 0 16px}
+.ai-demo-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);
+  gap:18px;
+  align-items:stretch;
 }
+.ai-demo-layout .photo-stage{min-height:560px}
+.ai-demo-layout .photo-stage>img{min-height:560px}
 
-.ai-response-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  align-items: flex-end;
-  margin-bottom: 1rem;
+.ai-response-panel{
+  min-width:0;
+  min-height:560px;
+  padding:22px;
+  overflow:hidden;
+  background:var(--paper);
 }
-
-.ai-response-heading h3 {
-  margin: 0.2rem 0 0;
-}
-
-.ai-response-heading p {
-  max-width: 48rem;
-  margin: 0;
-  color: rgba(20, 25, 30, 0.68);
-}
-
-.ai-response-count {
-  white-space: nowrap;
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.ai-carousel {
-  position: relative;
-}
-
-.ai-carousel-track {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(19rem, 34rem);
-  gap: 1rem;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 0.25rem;
-  padding: 0.35rem 0.25rem 1.25rem;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
-}
-
-.ai-carousel-track::-webkit-scrollbar {
-  height: 0.45rem;
-}
-
-.ai-carousel-card {
-  min-height: 25rem;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem;
-  border: 1px solid rgba(20, 25, 30, 0.14);
-  background: #fff;
-  box-shadow: 0 0.8rem 2rem rgba(20, 25, 30, 0.07);
-  container-type: inline-size;
-}
-
-.ai-card-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: flex-start;
-  padding-bottom: 0.9rem;
-  border-bottom: 1px solid rgba(20, 25, 30, 0.1);
-}
-
-.ai-name {
-  font-size: 1.25rem;
-  font-weight: 750;
-}
-
-.ai-source {
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(20, 25, 30, 0.58);
-  text-align: right;
-}
-
-.ai-field {
-  margin-top: 1rem;
-}
-
-.ai-field-label {
-  display: block;
-  margin-bottom: 0.28rem;
-  font-size: 0.7rem;
-  font-weight: 750;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(20, 25, 30, 0.55);
-}
-
-.ai-script {
-  font-size: clamp(1.35rem, 3vw, 2.2rem);
-  line-height: 1.25;
-}
-
-.ai-translation {
-  font-size: 1.02rem;
-  line-height: 1.5;
-}
-
-.ai-meaning {
-  line-height: 1.55;
-  color: rgba(20, 25, 30, 0.78);
-}
-
-.ai-dataset-link {
-  margin-top: auto;
-  padding-top: 1rem;
-  font-size: 0.78rem;
-}
-
-.ai-carousel-tip {
-  margin: 0.65rem 0 0;
-  font-size: 0.78rem;
-  color: rgba(20, 25, 30, 0.56);
-}
-
-@supports (animation-timeline: scroll(x)) {
-  .ai-carousel-card {
-    animation: ai-card-reveal linear both;
-    animation-timeline: view(inline);
-    animation-range: entry 0% cover 35%;
-  }
-
-  @keyframes ai-card-reveal {
-    from { opacity: 0.48; transform: translateX(1.5rem) scale(0.98); }
-    to { opacity: 1; transform: translateX(0) scale(1); }
-  }
-}
-
-@media (max-width: 720px) {
-  .ai-response-section {
-    padding: 1.1rem;
-  }
-
-  .ai-response-heading {
-    display: block;
-  }
-
-  .ai-response-count {
-    display: block;
-    margin-top: 0.7rem;
-  }
-
-  .ai-carousel-track {
-    grid-auto-columns: minmax(17rem, 86vw);
-  }
-
-  .ai-carousel-card {
-    min-height: 23rem;
-  }
-}
-
-/* Inline placement: the AI comparison now occupies the same right-hand
-   panel that previously presented a single translation result. */
-.ai-response-panel{min-width:0;overflow:hidden}
 .ai-panel-kicker{color:var(--accent);font-size:11px;letter-spacing:.14em;font-weight:800}
-.ai-panel-heading-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.ai-panel-title{font-size:24px;line-height:1.15;letter-spacing:-.02em;margin:8px 0 9px}
-.ai-panel-heading-row .ai-response-count{margin-top:10px}
-.ai-panel-intro{color:var(--muted);font-size:12px;line-height:1.55;margin:0 0 14px}
-.ai-panel-legend{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
-.ai-panel-legend span{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:#f7f4ee;padding:5px 7px;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.06em}
-.ai-panel-legend b{color:var(--accent)}
-.ai-carousel-inline{min-width:0;margin:0 -4px}
-.ai-carousel-inline .ai-carousel-track{grid-auto-columns:minmax(255px,100%);gap:10px;padding:2px 4px 12px;scroll-snap-type:x mandatory}
-.ai-carousel-inline .ai-carousel-card{min-width:0;min-height:0;height:auto;padding:15px;box-shadow:0 .55rem 1.3rem rgba(20,25,30,.06)}
-.ai-carousel-inline .ai-name{font-size:1.08rem}
-.ai-carousel-inline .ai-source{max-width:48%;overflow-wrap:anywhere;font-size:.62rem}
-.ai-carousel-inline .ai-field{margin-top:.72rem}
-.ai-carousel-inline .ai-script{font-size:1.28rem}
-.ai-carousel-inline .ai-translation{font-size:.92rem}
-.ai-carousel-inline .ai-meaning{font-size:.83rem;line-height:1.45}
-.ai-carousel-inline .ai-dataset-link{font-size:.68rem}
+.ai-panel-heading-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.ai-panel-title{font-size:24px;line-height:1.12;letter-spacing:-.02em;margin:8px 0 7px}
+.ai-panel-heading-row .ai-response-count{margin-top:10px;color:var(--muted)}
+.ai-panel-intro{color:var(--muted);font-size:12px;line-height:1.5;margin:0 0 12px}
+
+.ai-carousel-inline{min-width:0}
+.ai-carousel-inline .ai-carousel-track{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:100%;
+  gap:10px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  scrollbar-width:thin;
+  padding:3px 3px 11px;
+}
+.ai-carousel-inline .ai-carousel-track::-webkit-scrollbar{height:6px}
+
+.ai-carousel-card{
+  appearance:none;
+  text-align:left;
+  min-width:0;
+  padding:15px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  cursor:pointer;
+  scroll-snap-align:start;
+  box-shadow:none;
+  transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+  font:inherit;
+}
+.ai-carousel-card:hover{border-color:var(--ink);transform:translateY(-1px)}
+.ai-carousel-card.is-selected{border:2px solid var(--accent);box-shadow:0 8px 22px rgba(23,33,43,.08)}
+.ai-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.ai-card-number{display:block;color:var(--accent);font-size:9px;letter-spacing:.1em;font-weight:800;margin-bottom:3px}
+.ai-name{font-size:18px;font-weight:800}
+.ai-card-action{color:var(--blue);font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.ai-field{margin-top:10px}
+.ai-field-label{display:block;margin-bottom:4px;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.ai-script{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:28px;line-height:1.2}
+.ai-script-small{font-size:20px}
+.ai-translation{font-size:12px;line-height:1.45}
+.ai-meaning{font-size:11px;line-height:1.45;color:#53616b}
+
 .ai-response-panel-note{margin-top:10px;padding:10px 11px;background:#eef3f5;border-left:3px solid var(--blue);color:#53616b;font-size:10px;line-height:1.5}
 .ai-response-panel-note strong{color:var(--ink)}
-.ai-response-panel .reset-button{margin-top:12px}
-.demo-layout.reference-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(310px,.7fr);gap:18px}
-.reference-layout .translation-panel{margin-top:0;min-height:520px}
-@media(max-width:860px){.ai-carousel-inline .ai-carousel-track{grid-auto-columns:minmax(260px,82vw)}}
+.ai-response-panel .reset-button{margin-top:10px;width:100%}
+
+.ai-recognition-overlay{
+  position:absolute;
+  z-index:4;
+  border:3px solid var(--accent);
+  background:rgba(201,79,50,.12);
+  box-shadow:0 0 0 2px rgba(255,255,255,.9),0 10px 26px rgba(0,0,0,.18);
+  pointer-events:none;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:flex-start;
+  padding:7px 8px;
+  opacity:0;
+  transition:opacity .16s ease;
+}
+.ai-recognition-overlay.is-active{opacity:1}
+.ai-recognition-label{background:var(--accent);color:#fff;padding:3px 5px;font-size:8px;font-weight:800;letter-spacing:.08em}
+.ai-recognition-overlay strong{margin-top:5px;background:rgba(23,33,43,.9);color:#fff;padding:3px 5px;font-size:9px}
+.ai-recognition-overlay>span:last-child{
+  margin-top:3px;
+  max-width:100%;
+  background:rgba(255,255,255,.94);
+  color:var(--ink);
+  padding:4px 6px;
+  font-family:"Noto Serif SC","Songti SC","STSong",serif;
+  font-size:14px;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+.legacy-translation-data{display:none!important}
+.prototype-note{margin-top:16px}
+
+@media(max-width:980px){
+  .ai-demo-layout{grid-template-columns:1fr}
+  .ai-demo-layout .photo-stage,.ai-demo-layout .photo-stage>img{min-height:520px}
+  .ai-response-panel{min-height:0}
+}
+@media(max-width:620px){
+  .image-picker-top{grid-template-columns:1fr 1fr}
+  .ai-demo-layout .photo-stage,.ai-demo-layout .photo-stage>img{min-height:380px}
+  .ai-panel-heading-row{display:block}
+  .ai-panel-heading-row .ai-response-count{display:block;margin-top:3px}
+  .ai-response-panel{padding:17px}
+  .ai-script{font-size:24px}
+  .ai-script-small{font-size:18px}
+  .ai-card-action{display:none}
+}
+@supports (animation-timeline:scroll(x)){
+  .ai-carousel-card{animation:ai-card-reveal linear both;animation-timeline:view(inline);animation-range:entry 0% cover 28%}
+  @keyframes ai-card-reveal{from{opacity:.55;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
+}
