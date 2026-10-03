@@ -4,6 +4,8 @@
   const title = document.getElementById("ai-response-title");
   const panel = document.getElementById("translation-panel");
   const overlay = document.getElementById("ai-recognition-overlay");
+  const demoImage = document.getElementById("demo-image");
+  const photoStage = document.getElementById("photo-stage");
   const resetButton = document.getElementById("reset-ai-button");
   const imageTabs = document.querySelectorAll(".image-tab");
   if (!track) return;
@@ -15,9 +17,9 @@
   // particular response claims to have read.
   const imagePositions = [
     // Image 1: all four green characters across the stone panel.
-    { left: "17%", top: "29%", width: "50%", height: "17%", direction: "horizontal", maxChars: 4 },
+    { left: "13%", top: "27%", width: "58%", height: "23%", direction: "horizontal", maxChars: 4 },
     // Image 2: the gold characters form one short horizontal line on the signboard.
-    { left: "23%", top: "32%", width: "43%", height: "15%", direction: "horizontal", maxChars: 10 },
+    { left: "20%", top: "28%", width: "48%", height: "22%", direction: "horizontal", maxChars: 10 },
     // Image 3: the inscription is a long vertical column running almost the full height.
     { left: "49%", top: "7%", width: "17%", height: "90%", direction: "vertical", maxChars: 12 },
     // Image 4: the full long Wikisource passage.
@@ -50,24 +52,28 @@
         : Math.max(0.12, Math.min(1, characterCount(item.source_text) / p.maxChars)))
       : 1;
 
-    overlay.style.left = highlight.left || p.left;
-    overlay.style.top = highlight.top || p.top;
+    const stageRect = photoStage?.getBoundingClientRect();
+    const imageRect = demoImage?.getBoundingClientRect();
 
-    if (highlight.width) {
-      overlay.style.width = highlight.width;
-    } else if (p.direction === "vertical") {
-      overlay.style.width = p.width;
-    } else {
-      overlay.style.width = `${parseFloat(p.width) * ratio}%`;
-    }
+    // Coordinates are percentages of the actual displayed photograph, not the surrounding stage.
+    if (!stageRect || !imageRect || !imageRect.width || !imageRect.height) return;
 
-    if (highlight.height) {
-      overlay.style.height = highlight.height;
-    } else if (p.direction === "vertical") {
-      overlay.style.height = `${parseFloat(p.height) * ratio}%`;
-    } else {
-      overlay.style.height = p.height;
-    }
+    const leftPct = parseFloat(highlight.left || p.left);
+    const topPct = parseFloat(highlight.top || p.top);
+    const baseWidthPct = parseFloat(highlight.width || p.width);
+    const baseHeightPct = parseFloat(highlight.height || p.height);
+
+    const widthPct = highlight.width
+      ? baseWidthPct
+      : (p.direction === "vertical" ? baseWidthPct : baseWidthPct * ratio);
+    const heightPct = highlight.height
+      ? baseHeightPct
+      : (p.direction === "vertical" ? baseHeightPct * ratio : baseHeightPct);
+
+    overlay.style.left = ((imageRect.left - stageRect.left) + (imageRect.width * leftPct / 100)) + "px";
+    overlay.style.top = ((imageRect.top - stageRect.top) + (imageRect.height * topPct / 100)) + "px";
+    overlay.style.width = (imageRect.width * widthPct / 100) + "px";
+    overlay.style.height = (imageRect.height * heightPct / 100) + "px";
   }
 
   function selectResponse(item, imageIndex) {
