@@ -104,11 +104,6 @@
 .ai-comparison-heading{margin-bottom:12px}
 .ai-comparison-heading .ai-panel-kicker{margin-bottom:5px}
 .ai-comparison-heading p{color:var(--muted);font-size:11px;line-height:1.5;margin:0}
-.reference-highlight{
-  z-index:4;
-  pointer-events:none;
-}
-
 .prototype-note{margin-top:16px}
 
 @media(max-width:980px){
