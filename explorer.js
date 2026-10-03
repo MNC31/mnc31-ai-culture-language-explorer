@@ -59,15 +59,18 @@ if (explorerRoot) {
   }
 
   async function loadText(path) {
-    // The project is a plain static site. Try the exact repository path first,
-    // then the same file without the public/ prefix, and finally a relative
-    // path. All candidates point to the downloaded files committed here.
-    const cleanPath = path.replace(/^\\/+/, "");
+    // Load the exact dataset files committed to this project. The first
+    // candidates are the files served by the deployed site; if the static
+    // host does not expose the /public/ directory, fall back to the raw file
+    // from THIS GitHub repository. This is not an upstream dataset/API copy.
+    const cleanPath = path.replace(/^\/+/, "");
+    const repoRawPath = cleanPath.replace(/^public\//, "");
     const candidates = [
       "/" + cleanPath,
-      "/" + cleanPath.replace(/^public\\//, ""),
+      "/" + repoRawPath,
       "./" + cleanPath,
-      path
+      path,
+      "https://raw.githubusercontent.com/MNC31/mnc31-ai-culture-language-explorer/main/" + cleanPath
     ].filter((candidate, index, list) => list.indexOf(candidate) === index);
 
     const failures = [];
@@ -75,15 +78,25 @@ if (explorerRoot) {
     for (const candidate of candidates) {
       try {
         const response = await fetch(candidate, { cache: "no-store" });
-        if (response.ok) {
-          const text = await response.text();
-          if (!text.trim()) {
-            failures.push(candidate + " returned an empty file");
-            continue;
-          }
-          return text;
+        if (!response.ok) {
+          failures.push(candidate + " → HTTP " + response.status);
+          continue;
         }
-        failures.push(candidate + " → HTTP " + response.status);
+
+        const text = await response.text();
+
+        // A static host may return index.html with HTTP 200 for a missing
+        // asset. Do not mistake that HTML fallback for the dataset file.
+        if (!text.trim()) {
+          failures.push(candidate + " returned an empty file");
+          continue;
+        }
+        if (/^\s*<!doctype html|^\s*<html[\s>]/i.test(text)) {
+          failures.push(candidate + " returned HTML instead of the dataset file");
+          continue;
+        }
+
+        return text;
       } catch (error) {
         failures.push(candidate + " → " + error.message);
       }
