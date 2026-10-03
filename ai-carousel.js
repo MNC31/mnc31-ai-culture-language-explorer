@@ -63,10 +63,11 @@
       });
     });
 
-    if (current[0]) {
-      track.querySelector(".ai-carousel-card")?.classList.add("is-selected");
-      selectResponse(current[0], imageIndex);
-    }
+    // Do not activate a response automatically. The image first shows one
+    // instruction box; the visitor must click it before an AI reading appears.
+    overlay.classList.remove("is-active");
+    overlayAi.textContent = "Ready to compare";
+    overlayText.textContent = "Click the highlighted box on the photograph to see how the AIs read it.";
   }
 
   resetButton?.addEventListener("click", () => {
