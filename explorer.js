@@ -68,7 +68,7 @@ if (explorerRoot) {
 
   function parseJsonl(text) {
     return text
-      .split(/\\r?\\n/)
+      .split(/\r?\n/)
       .map((line) => line.trim())
       .filter(Boolean)
       .map((line) => JSON.parse(line));
