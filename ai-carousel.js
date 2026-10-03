@@ -2,19 +2,22 @@
   const track = document.getElementById("ai-carousel-track");
   const count = document.getElementById("ai-response-count");
   const title = document.getElementById("ai-response-title");
+  const panel = document.getElementById("translation-panel");
   const overlay = document.getElementById("ai-recognition-overlay");
-  const overlayAi = document.getElementById("ai-recognition-ai");
-  const overlayText = document.getElementById("ai-recognition-text");
   const resetButton = document.getElementById("reset-ai-button");
   const imageTabs = document.querySelectorAll(".image-tab");
   if (!track) return;
 
   const imageNames = ["Gate inscription", "Signboard", "Stone inscription", "Wikisource baseline"];
+
+  // These are the approximate bounds of ALL visible characters for each image.
+  // Individual AI readings can then shrink the box to the amount of text that
+  // particular response claims to have read.
   const imagePositions = [
-    { left: "18%", top: "27%", width: "67%", height: "25%" },
-    { left: "18%", top: "27%", width: "80%", height: "30%" },
-    { left: "39%", top: "4%", width: "31%", height: "47%" },
-    { left: "4%", top: "24%", width: "68%", height: "22%" }
+    { left: "18%", top: "27%", width: "67%", height: "25%", direction: "horizontal", maxChars: 4 },
+    { left: "18%", top: "27%", width: "80%", height: "30%", direction: "horizontal", maxChars: 10 },
+    { left: "39%", top: "4%", width: "31%", height: "47%", direction: "vertical", maxChars: 4 },
+    { left: "4%", top: "24%", width: "68%", height: "22%", direction: "horizontal", maxChars: 40 }
   ];
 
   const escapeHtml = (value) => String(value ?? "")
@@ -22,81 +25,121 @@
     .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
 
   let responses = [];
+  let hasSelection = false;
 
-  function positionRecognition(index) {
-    const p = imagePositions[index] || imagePositions[0];
-    overlay.style.left = p.left;
-    overlay.style.top = p.top;
-    overlay.style.width = p.width;
-    overlay.style.height = p.height;
+  function basePosition(index) {
+    return imagePositions[index] || imagePositions[0];
+  }
+
+  function characterCount(text) {
+    // Count visible Chinese/Japanese/Korean characters plus letters/numbers,
+    // ignoring punctuation and whitespace.
+    return Array.from(String(text || "")).filter((char) => /[\p{L}\p{N}]/u.test(char)).length;
+  }
+
+  function positionRecognition(index, item = null) {
+    const p = basePosition(index);
+    const highlight = item?.highlight || {};
+    const ratio = highlight.ratio
+      ? Math.max(0.12, Math.min(1, Number(highlight.ratio)))
+      : Math.max(0.12, Math.min(1, characterCount(item?.source_text) / p.maxChars));
+
+    overlay.style.left = highlight.left || p.left;
+    overlay.style.top = highlight.top || p.top;
+
+    if (highlight.width) {
+      overlay.style.width = highlight.width;
+    } else if (p.direction === "vertical") {
+      overlay.style.width = p.width;
+    } else {
+      overlay.style.width = `${parseFloat(p.width) * ratio}%`;
+    }
+
+    if (highlight.height) {
+      overlay.style.height = highlight.height;
+    } else if (p.direction === "vertical") {
+      overlay.style.height = `${parseFloat(p.height) * ratio}%`;
+    } else {
+      overlay.style.height = p.height;
+    }
   }
 
   function selectResponse(item, imageIndex) {
-    positionRecognition(imageIndex);
+    hasSelection = true;
+    panel?.classList.remove("is-awaiting-selection");
+    positionRecognition(imageIndex, item);
     overlay.classList.add("is-active", "has-reading");
-    if (overlayAi) overlayAi.textContent = item.ai;
-    if (overlayText) overlayText.textContent = item.source_text || "No source reading supplied.";
   }
 
   function showPrompt(imageIndex) {
+    hasSelection = false;
+    panel?.classList.add("is-awaiting-selection");
     positionRecognition(imageIndex);
     overlay.classList.add("is-active");
     overlay.classList.remove("has-reading");
-    if (overlayAi) overlayAi.textContent = "Ready to compare";
-    if (overlayText) overlayText.textContent = "Click the box to see how different AI systems read these characters.";
+    track.innerHTML = "";
+    title.textContent = "Select the highlighted characters";
+    count.textContent = "Nothing selected";
   }
 
   function render(imageIndex) {
     const current = responses.filter((item) => Number(item.image) === Number(imageIndex));
 
-    track.innerHTML = current.map((item, index) =>
-      '<button class="ai-carousel-card" type="button" data-response-index="' + index + '" aria-label="Show ' + escapeHtml(item.ai) + ' reading">' +
-        '<div class="ai-card-top"><div><span class="ai-card-number">0' + (index + 1) + '</span><div class="ai-name">' + escapeHtml(item.ai) + '</div></div><span class="ai-card-action">View on image →</span></div>' +
-        '<div class="ai-field ai-field-reading"><span class="ai-field-label">Recognized characters</span><div class="ai-script" lang="zh">' + escapeHtml(item.source_text) + '</div></div>' +
-        '<div class="ai-field"><span class="ai-field-label">Standardized / simplified</span><div class="ai-script ai-script-small" lang="zh">' + escapeHtml(item.standardized) + '</div></div>' +
-        '<div class="ai-field"><span class="ai-field-label">Pinyin</span><div>' + escapeHtml(item.pinyin || "Not supplied.") + '</div></div>' +
-        '<div class="ai-field"><span class="ai-field-label">English translation</span><div class="ai-translation">' + escapeHtml(item.translation) + '</div></div>' +
-        '<div class="ai-field"><span class="ai-field-label">Meaning / interpretation</span><div class="ai-meaning">' + escapeHtml(item.meaning) + '</div></div>' +
-      '</button>'
-    ).join("");
-
-    title.textContent = (imageNames[imageIndex] || "Selected image") + " · AI responses";
-    count.textContent = current.length + " AI responses · scroll";
-    track.scrollTo({ left: 0, behavior: "smooth" });
-
-    track.querySelectorAll(".ai-carousel-card").forEach((card, index) => {
-      card.addEventListener("click", () => {
-        track.querySelectorAll(".ai-carousel-card").forEach((other) => other.classList.remove("is-selected"));
-        card.classList.add("is-selected");
-        selectResponse(current[index], imageIndex);
-      });
-    });
-
-    // Do not activate a response automatically. The image first shows one
-    // instruction box; the visitor must click it before an AI reading appears.
+    // Before the user clicks the box, deliberately show no AI translations.
     showPrompt(imageIndex);
-  }
 
-  overlay?.addEventListener("click", (event) => {
-    event.stopPropagation();
-    const selected = track.querySelector(".ai-carousel-card.is-selected");
-    if (selected) {
-      const current = responses.filter((item) => Number(item.image) === Number(window.__activeAiImage || 0));
-      const item = current[Number(selected.dataset.responseIndex)];
-      if (item) selectResponse(item, Number(window.__activeAiImage || 0));
-    } else {
-      const current = responses.filter((item) => Number(item.image) === Number(window.__activeAiImage || 0));
-      if (current[0]) selectResponse(current[0], Number(window.__activeAiImage || 0));
-    }
-  });
+    track.innerHTML = "";
+
+    const activateFirstResponse = () => {
+      if (!current[0]) return;
+      const firstCard = track.querySelector(".ai-carousel-card");
+      firstCard?.classList.add("is-selected");
+      selectResponse(current[0], imageIndex);
+    };
+
+    // The response cards are prepared only after the user activates the box.
+    overlay.onclick = (event) => {
+      event.stopPropagation();
+
+      if (!hasSelection) {
+        track.innerHTML = current.map((item, index) =>
+          '<button class="ai-carousel-card" type="button" data-response-index="' + index + '" aria-label="Show ' + escapeHtml(item.ai) + ' reading">' +
+            '<div class="ai-card-top"><div><span class="ai-card-number">0' + (index + 1) + '</span><div class="ai-name">' + escapeHtml(item.ai) + '</div></div><span class="ai-card-action">View on image →</span></div>' +
+            '<div class="ai-field ai-field-reading"><span class="ai-field-label">Recognized characters</span><div class="ai-script" lang="zh">' + escapeHtml(item.source_text) + '</div></div>' +
+            '<div class="ai-field"><span class="ai-field-label">Standardized / simplified</span><div class="ai-script ai-script-small" lang="zh">' + escapeHtml(item.standardized) + '</div></div>' +
+            '<div class="ai-field"><span class="ai-field-label">Pinyin</span><div>' + escapeHtml(item.pinyin || "Not supplied.") + '</div></div>' +
+            '<div class="ai-field"><span class="ai-field-label">English translation</span><div class="ai-translation">' + escapeHtml(item.translation) + '</div></div>' +
+            '<div class="ai-field"><span class="ai-field-label">Meaning / interpretation</span><div class="ai-meaning">' + escapeHtml(item.meaning) + '</div></div>' +
+          '</button>'
+        ).join("");
+
+        title.textContent = (imageNames[imageIndex] || "Selected image") + " · AI responses";
+        count.textContent = current.length + " AI responses · scroll";
+        track.querySelectorAll(".ai-carousel-card").forEach((card, index) => {
+          card.addEventListener("click", () => {
+            track.querySelectorAll(".ai-carousel-card").forEach((other) => other.classList.remove("is-selected"));
+            card.classList.add("is-selected");
+            selectResponse(current[index], imageIndex);
+          });
+        });
+
+        activateFirstResponse();
+        return;
+      }
+
+      const selected = track.querySelector(".ai-carousel-card.is-selected");
+      if (selected) {
+        const item = current[Number(selected.dataset.responseIndex)];
+        if (item) selectResponse(item, imageIndex);
+      }
+    };
+  }
 
   resetButton?.addEventListener("click", () => {
     track.querySelectorAll(".ai-carousel-card").forEach((card) => card.classList.remove("is-selected"));
     showPrompt(Number(window.__activeAiImage || 0));
   });
 
-  // The photograph itself is the reset target: clicking outside the one
-  // recognition box returns to the temporary prompt state.
   document.getElementById("photo-stage")?.addEventListener("click", (event) => {
     if (event.target.closest("#ai-recognition-overlay")) return;
     showPrompt(Number(window.__activeAiImage || 0));
@@ -111,13 +154,13 @@
       responses = data.responses || [];
       window.__activeAiImage = 0;
       render(0);
+
       imageTabs.forEach((tab) => {
         tab.addEventListener("click", () => {
           window.__activeAiImage = Number(tab.dataset.image);
           render(window.__activeAiImage);
         });
       });
-      showPrompt(0);
     })
     .catch((error) => {
       count.textContent = "Comparison data could not be loaded";
