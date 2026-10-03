@@ -6,6 +6,9 @@
   const overlay = document.getElementById("ai-recognition-overlay");
   const demoImage = document.getElementById("demo-image");
   const photoStage = document.getElementById("photo-stage");
+  const referenceHighlight = document.getElementById("reference-highlight");
+  const baselinePanel = document.getElementById("wikisource-baseline");
+  const aiComparisonHeading = document.getElementById("ai-comparison-heading");
   const resetButton = document.getElementById("reset-ai-button");
   const imageTabs = document.querySelectorAll(".image-tab");
   if (!track) return;
@@ -78,6 +81,10 @@
 
   function selectResponse(item, imageIndex) {
     hasSelection = true;
+    if (imageIndex === 3) {
+      if (referenceHighlight) referenceHighlight.hidden = true;
+      overlay.style.display = "block";
+    }
     panel?.classList.remove("is-awaiting-selection");
     positionRecognition(imageIndex, item);
     overlay.classList.add("is-active", "has-reading");
@@ -85,12 +92,19 @@
 
   function showPrompt(imageIndex) {
     hasSelection = false;
+    if (baselinePanel) baselinePanel.hidden = imageIndex !== 3;
+    if (aiComparisonHeading) aiComparisonHeading.hidden = imageIndex !== 3;
+    if (referenceHighlight) referenceHighlight.hidden = imageIndex !== 3;
+    if (imageIndex === 3) overlay.style.display = "none";
+    else overlay.style.display = "block";
     panel?.classList.add("is-awaiting-selection");
     positionRecognition(imageIndex);
     overlay.classList.add("is-active");
     overlay.classList.remove("has-reading");
     track.innerHTML = "";
-    title.textContent = "Select the highlighted characters";
+    title.textContent = imageIndex === 3
+      ? "AI readings against the Wikisource baseline"
+      : "Select the highlighted characters";
     count.textContent = "Nothing selected";
   }
 
