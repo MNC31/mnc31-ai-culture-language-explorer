@@ -73,36 +73,59 @@
   position:absolute;
   z-index:5;
   border:3px solid var(--accent);
-  background:rgba(201,79,50,.08);
+  background:rgba(201,79,50,.10);
   box-shadow:0 0 0 2px rgba(255,255,255,.9),0 10px 26px rgba(0,0,0,.18);
   cursor:pointer;
   display:flex;
   flex-direction:column;
-  justify-content:flex-start;
-  align-items:flex-start;
-  padding:8px;
+  justify-content:center;
+  align-items:center;
+  padding:18px;
   opacity:1;
   transition:background .16s ease,border-color .16s ease,box-shadow .16s ease;
-  text-align:left;
+  text-align:center;
   font:inherit;
   color:var(--ink);
 }
 .ai-recognition-overlay:hover{
-  background:rgba(201,79,50,.18);
+  background:rgba(201,79,50,.16);
   box-shadow:0 0 0 3px rgba(255,255,255,.9),0 12px 30px rgba(0,0,0,.22);
 }
-.ai-recognition-label{background:var(--accent);color:#fff;padding:4px 6px;font-size:8px;font-weight:800;letter-spacing:.08em}
-.ai-recognition-overlay strong{margin-top:5px;background:rgba(23,33,43,.9);color:#fff;padding:4px 6px;font-size:10px}
-.ai-recognition-overlay>span:last-child{
-  margin-top:4px;
-  max-width:100%;
-  background:rgba(255,255,255,.96);
+.ai-recognition-label{
+  margin:0 0 8px;
+  color:var(--accent);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+.ai-recognition-overlay strong{
+  margin:0 0 6px;
   color:var(--ink);
-  padding:5px 7px;
-  font-family:"Noto Serif SC","Songti SC","STSong",serif;
   font-size:13px;
-  line-height:1.25;
+  font-weight:800;
+}
+.ai-recognition-overlay>span:last-child{
+  margin:0;
+  max-width:90%;
+  color:var(--ink);
+  font-size:12px;
+  line-height:1.4;
   overflow-wrap:anywhere;
+}
+.ai-recognition-overlay.has-reading>span:last-child{
+  font-family:"Noto Serif SC","Songti SC","STSong",serif;
+  font-size:28px;
+  line-height:1.2;
+  font-weight:700;
+}
+.ai-recognition-overlay:not(.has-reading) strong{
+  font-size:15px;
+}
+.ai-recognition-overlay:not(.has-reading)>span:last-child{
+  max-width:75%;
+  font-size:11px;
+  line-height:1.45;
 }
 .legacy-translation-data{display:none!important}
 .hotspot{display:none!important}
