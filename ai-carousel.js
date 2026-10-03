@@ -10,6 +10,7 @@
   const aiComparisonHeading = document.getElementById("ai-comparison-heading");
   const resetButton = document.getElementById("reset-ai-button");
   const imageTabs = document.querySelectorAll(".image-tab");
+  const demoLayout = document.getElementById("ai-demo-layout");
   if (!track) return;
 
   const imageNames = ["Gate inscription", "Signboard", "Stone inscription", "Wikisource baseline"];
@@ -134,6 +135,13 @@
 
   function render(imageIndex) {
     const current = responses.filter((item) => Number(item.image) === Number(imageIndex));
+    demoLayout?.classList.toggle("is-wikisource", imageIndex === 3);
+    imageTabs.forEach((tab) => {
+      const selected = Number(tab.dataset.image) === Number(imageIndex);
+      tab.classList.toggle("active", selected);
+      tab.setAttribute("aria-selected", selected ? "true" : "false");
+      tab.tabIndex = selected ? 0 : -1;
+    });
     showPrompt(imageIndex);
 
     if (imageIndex === 3) {
