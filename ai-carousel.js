@@ -33,7 +33,7 @@
 
   function selectResponse(item, imageIndex) {
     positionRecognition(imageIndex);
-    overlay.classList.add("is-active");
+    overlay.classList.add("is-active", "has-reading");
     overlayAi.textContent = item.ai;
     overlayText.textContent = item.source_text || "No source reading supplied.";
   }
@@ -41,6 +41,7 @@
   function showPrompt(imageIndex) {
     positionRecognition(imageIndex);
     overlay.classList.add("is-active");
+    overlay.classList.remove("has-reading");
     overlayAi.textContent = "Ready to compare";
     overlayText.textContent = "Click the box to see how different AI systems read these characters.";
   }
@@ -90,10 +91,15 @@
   });
 
   resetButton?.addEventListener("click", () => {
-    overlay.classList.remove("is-active");
-    overlayAi.textContent = "Select an AI response";
-    overlayText.textContent = "The selected AI's recognized characters will appear here.";
     track.querySelectorAll(".ai-carousel-card").forEach((card) => card.classList.remove("is-selected"));
+    showPrompt(Number(window.__activeAiImage || 0));
+  });
+
+  // The photograph itself is the reset target: clicking outside the one
+  // recognition box returns to the temporary prompt state.
+  document.getElementById("photo-stage")?.addEventListener("click", (event) => {
+    if (event.target.closest("#ai-recognition-overlay")) return;
+    showPrompt(Number(window.__activeAiImage || 0));
   });
 
   fetch("public/data/ai_image_comparison.json")
