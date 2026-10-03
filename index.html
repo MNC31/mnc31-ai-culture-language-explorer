@@ -313,6 +313,83 @@
       </div>
     </section>
 
+    <section id="visualization-idioms" class="idiom-section">
+      <div class="heading">
+        <div>
+          <label>04 · VISUALIZATION IDIOMS</label>
+          <h2>Turn the datasets into different ways of seeing.</h2>
+        </div>
+        <small id="idiom-status">Waiting for dataset rows…</small>
+      </div>
+
+      <p class="idiom-intro">
+        These views do not combine the datasets into one score. Each visualization
+        answers a different question: what is present, what changes across languages,
+        how records connect, where cultural metadata is distributed, and how the
+        dimensions interact.
+      </p>
+
+      <div class="idiom-grid">
+        <article class="idiom-card" id="idiom-basic">
+          <div class="idiom-label">01 · BASIC IDIOM</div>
+          <h3>What is in the data?</h3>
+          <p>Counts of matched Global-MMLU-Lite records, cultural-sensitivity labels, and subject categories.</p>
+          <div class="idiom-stats" id="basic-stats"></div>
+          <div class="mini-bars" id="basic-bars"></div>
+        </article>
+
+        <article class="idiom-card" id="idiom-simple">
+          <div class="idiom-label">02 · SIMPLEST COMPARISON</div>
+          <h3>English ↔ Simplified Chinese</h3>
+          <p>For matched records, compare whether the benchmark answer key stays the same or changes between languages.</p>
+          <div class="comparison-meter" id="simple-comparison"></div>
+          <div class="idiom-note">This is a benchmark-key comparison, not a model-accuracy result.</div>
+        </article>
+
+        <article class="idiom-card" id="idiom-network">
+          <div class="idiom-label">03 · NETWORK IDIOM</div>
+          <h3>Question → category → region</h3>
+          <p>Selected metadata relationships show how evaluation records connect subject areas to cultural regions.</p>
+          <div class="network-wrap" id="network-graph"></div>
+        </article>
+
+        <article class="idiom-card" id="idiom-spatial">
+          <div class="idiom-label">04 · SPATIAL IDIOM</div>
+          <h3>Where is the context distributed?</h3>
+          <p>A spatial proxy using the dataset's region metadata. It describes annotation distribution rather than assigning culture ownership.</p>
+          <div class="spatial-bars" id="spatial-bars"></div>
+        </article>
+
+        <article class="idiom-card idiom-wide" id="idiom-interactive">
+          <div class="idiom-label">05 · INTERACTIVE VIEW</div>
+          <h3>Follow one record through the project.</h3>
+          <p>Use the controls below to move from dataset → language → cultural dimension → question → reference. The existing explorer remains the main interaction surface.</p>
+          <div class="idiom-path" id="interactive-path">
+            <button type="button" data-scroll-target="#dataset-explorer">1 · Dataset</button>
+            <span>→</span>
+            <button type="button" data-scroll-target="#global-split">2 · Language</button>
+            <span>→</span>
+            <button type="button" data-scroll-target="#global-sensitivity">3 · Cultural dimension</button>
+            <span>→</span>
+            <button type="button" data-scroll-target="#global-question-list">4 · Question</button>
+            <span>→</span>
+            <button type="button" data-scroll-target="#lab-reference">5 · Reference</button>
+          </div>
+        </article>
+
+        <article class="idiom-card idiom-wide" id="idiom-advanced">
+          <div class="idiom-label">06 · ADVANCED REPRESENTATION</div>
+          <h3>Category × cultural sensitivity × language</h3>
+          <p>Each cell counts matched records in a subject category and sensitivity label; the language pair remains available inside each record for direct inspection.</p>
+          <div class="heatmap-wrap" id="advanced-heatmap"></div>
+        </article>
+      </div>
+
+      <div class="idiom-source-note">
+        <strong>Data loading:</strong> Global-MMLU-Lite is read in the browser through the Hugging Face Dataset Viewer API; CC-Eval is read from its upstream GitHub CSV files. The project keeps the source identities visible rather than copying an unverified full dataset into the site repository.
+      </div>
+    </section>
+
     <section id="methodology">
       <label>04 · DESIGN PRINCIPLE</label>
       <h2>Translation should reveal context, not hide it.</h2>
@@ -333,6 +410,7 @@
 
   <script src="script.js"></script>
   <script src="explorer.js"></script>
+  <script src="visualizations.js"></script>
   <script src="ai-carousel.js"></script>
 </body>
 </html>
