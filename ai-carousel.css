@@ -87,7 +87,27 @@
 }
 .legacy-translation-data{display:none!important}
 .hotspot{display:none!important}
-.reference-highlight{display:none!important}
+.wikisource-baseline{
+  margin-bottom:18px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--line);
+}
+.wikisource-baseline[hidden],.ai-comparison-heading[hidden]{display:none!important}
+.wikisource-baseline h3{font-size:24px;line-height:1.15;margin:6px 0 16px}
+.baseline-kicker{color:var(--blue);font-size:10px;letter-spacing:.12em;font-weight:800}
+.baseline-field{padding:11px 0;border-top:1px solid var(--line)}
+.baseline-field>span{display:block;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+.baseline-script{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:23px;line-height:1.35}
+.baseline-field>div:not(.baseline-script){font-size:12px;line-height:1.5}
+.baseline-source a{color:var(--blue);font-size:12px;text-decoration:underline;text-underline-offset:2px}
+.ai-comparison-heading{margin-bottom:12px}
+.ai-comparison-heading .ai-panel-kicker{margin-bottom:5px}
+.ai-comparison-heading p{color:var(--muted);font-size:11px;line-height:1.5;margin:0}
+.reference-highlight{
+  z-index:4;
+  pointer-events:none;
+}
+
 .prototype-note{margin-top:16px}
 
 @media(max-width:980px){
