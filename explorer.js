@@ -1,21 +1,24 @@
 const explorerConfig = {
+  // These are the datasets downloaded into THIS repository.
+  // Do not replace these with upstream/API copies: the site should analyze
+  // the exact files committed under public/data/.
   global: {
     test: {
-      en: "https://datasets-server.huggingface.co/rows?dataset=CohereLabs%2FGlobal-MMLU-Lite&config=en&split=test",
-      zh: "https://datasets-server.huggingface.co/rows?dataset=CohereLabs%2FGlobal-MMLU-Lite&config=zh&split=test"
+      en: "public/data/global_mmlu_lite/en_test.jsonl",
+      zh: "public/data/global_mmlu_lite/zh_test.jsonl"
     },
     dev: {
-      en: "https://datasets-server.huggingface.co/rows?dataset=CohereLabs%2FGlobal-MMLU-Lite&config=en&split=dev",
-      zh: "https://datasets-server.huggingface.co/rows?dataset=CohereLabs%2FGlobal-MMLU-Lite&config=zh&split=dev"
+      en: "public/data/global_mmlu_lite/en_dev.jsonl",
+      zh: "public/data/global_mmlu_lite/zh_dev.jsonl"
     }
   },
   cc: {
-    bilingual: "https://raw.githubusercontent.com/qiushi-dong/cc-eval/main/data/bilingual_paralle_value-alignment.csv",
-    aesthetics: "https://raw.githubusercontent.com/qiushi-dong/cc-eval/main/data/Chinese-context_task/Chinese_aesthetics&philosophy.csv",
-    classical: "https://raw.githubusercontent.com/qiushi-dong/cc-eval/main/data/Chinese-context_task/classical_Chinese.csv",
-    folk: "https://raw.githubusercontent.com/qiushi-dong/cc-eval/main/data/Chinese-context_task/folk_culture.csv",
-    slang: "https://raw.githubusercontent.com/qiushi-dong/cc-eval/main/data/Chinese-context_task/modern_Chinese_internet_slang.csv",
-    pragmatic: "https://raw.githubusercontent.com/qiushi-dong/cc-eval/main/data/Chinese-context_task/pragmatic_intent_understanding.csv"
+    bilingual: "public/data/cc-eval/data/bilingual_paralle_value-alignment.csv",
+    aesthetics: "public/data/cc-eval/data/Chinese-context_task/Chinese_aesthetics&philosophy.csv",
+    classical: "public/data/cc-eval/data/Chinese-context_task/classical_Chinese.csv",
+    folk: "public/data/cc-eval/data/Chinese-context_task/folk_culture.csv",
+    slang: "public/data/cc-eval/data/Chinese-context_task/modern_Chinese_internet_slang.csv",
+    pragmatic: "public/data/cc-eval/data/Chinese-context_task/pragmatic_intent_understanding.csv"
   },
   modelResponses: "public/data/model_responses.json"
 };
@@ -150,57 +153,47 @@ if (explorerRoot) {
     };
   }
 
-  async function loadHfRows(config, split) {
-    const rows = [];
-    let offset = 0;
-    const pageSize = 100;
-
-    while (true) {
-      const url = explorerConfig.global[split][config] +
-        "&offset=" + offset + "&length=" + pageSize;
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("Hugging Face dataset viewer returned " + response.status + " for " + config + "/" + split + ".");
-      }
-      const payload = await response.json();
-      const page = (payload.rows || []).map((entry) => entry.row);
-      rows.push(...page);
-
-      if (page.length < pageSize || rows.length >= (payload.num_rows_total || rows.length)) {
-        break;
-      }
-      offset += page.length;
-    }
-
-    return rows;
+  async function loadLocalJsonl(path) {
+    setStatus("Loading " + path + " from this GitHub repository…");
+    const text = await loadText(path);
+    return parseJsonl(text);
   }
 
   async function loadGlobal(split = "test") {
-    setStatus("Loading Global-MMLU-Lite " + split + " questions from Hugging Face…");
+    const paths = explorerConfig.global[split];
 
-    const [enRows, zhRows] = await Promise.all([
-      loadHfRows("en", split),
-      loadHfRows("zh", split)
-    ]);
+    try {
+      const [enRows, zhRows] = await Promise.all([
+        loadLocalJsonl(paths.en),
+        loadLocalJsonl(paths.zh)
+      ]);
 
-    const zhById = new Map(zhRows.map((row) => [row.sample_id, row]));
+      const zhById = new Map(zhRows.map((row) => [row.sample_id, row]));
 
-    explorerState.globalPairs = enRows
-      .map((en) => {
-        const zh = zhById.get(en.sample_id);
-        return zh ? normalizeGlobalPair(en, zh) : null;
-      })
-      .filter(Boolean);
+      explorerState.globalPairs = enRows
+        .map((en) => {
+          const zh = zhById.get(en.sample_id);
+          return zh ? normalizeGlobalPair(en, zh) : null;
+        })
+        .filter(Boolean);
 
-    explorerState.globalLoaded = true;
-    populateGlobalFilters();
-    renderGlobal();
-    setStatus(
-      "Loaded " + explorerState.globalPairs.length +
-      " matched English–Simplified Chinese pairs from the " + split +
-      " split via the Hugging Face dataset viewer."
-    );
-    document.dispatchEvent(new CustomEvent("explorer-data-ready"));
+      explorerState.globalLoaded = true;
+      populateGlobalFilters();
+      renderGlobal();
+
+      setStatus(
+        "Loaded " + explorerState.globalPairs.length +
+        " matched English–Simplified Chinese pairs from the repository's local " +
+        split + " dataset files."
+      );
+      document.dispatchEvent(new CustomEvent("explorer-data-ready"));
+    } catch (error) {
+      explorerState.globalLoaded = false;
+      throw new Error(
+        "The repository dataset files could not be loaded. Expected: " +
+        paths.en + " and " + paths.zh + ". " + error.message
+      );
+    }
   }
 
   function populateGlobalFilters() {
@@ -305,7 +298,7 @@ if (explorerRoot) {
   async function loadCcTask(task) {
     if (explorerState.ccCache[task]) return explorerState.ccCache[task];
 
-    setStatus("Loading CC-Eval " + task + " from the upstream repository…");
+    setStatus("Loading CC-Eval " + task + " from this GitHub repository…");
     const text = await loadText(explorerConfig.cc[task]);
     const rows = parseCsv(text);
     explorerState.ccCache[task] = rows;
