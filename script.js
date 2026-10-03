@@ -217,9 +217,6 @@ function showImage(index) {
 
   resetText();
 
-  if (isBaseline) {
-    showText(index, null);
-  }
 }
 
 hotspots.forEach((spot) => {
@@ -230,10 +227,6 @@ hotspots.forEach((spot) => {
 });
 
 stage.addEventListener("click", (event) => {
-  if (activeImage === 3) {
-    return;
-  }
-
   if (!event.target.closest(".hotspot")) {
     resetText();
   }
