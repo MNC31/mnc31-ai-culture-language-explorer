@@ -65,88 +65,28 @@
           <div class="photo-help" id="photo-help">Click a highlighted text region · click the photograph outside it to reset</div>
         </div>
 
-        <aside class="translation-panel" id="translation-panel" aria-live="polite">
-          <div class="panel-kicker">TRANSLATION RESULT</div>
-          <div id="result-empty">
-            <h3>Select a character region</h3>
-            <p>The standardized text, pinyin, translation, and cultural context will appear here.</p>
+        <aside class="translation-panel ai-response-panel" id="translation-panel" aria-live="polite">
+          <div class="ai-panel-kicker">AI RESPONSE COMPARISON</div>
+          <h3 class="ai-panel-title" id="ai-response-title">Gate inscription · different AI readings</h3>
+          <p class="ai-panel-intro">
+            There is not one fixed AI translation here. This panel shows the
+            stored responses from four AI systems for the selected photograph.
+            Scroll sideways to see how their readings, translations, and
+            interpretations differ.
+          </p>
+          <div class="ai-panel-legend">
+            <span><b>01</b> AI system</span>
+            <span><b>02</b> Reading</span>
+            <span><b>03</b> Translation + meaning</span>
           </div>
-
-          <div id="result-content" hidden>
-            <div class="result-label">Standardized form</div>
-            <div class="standard-text" id="standard-text"></div>
-
-            <div class="result-block">
-              <span>Pinyin</span>
-              <strong id="pinyin"></strong>
-            </div>
-
-            <div class="result-block">
-              <span>English translation</span>
-              <strong id="translation"></strong>
-            </div>
-
-            <div class="culture-note">
-              <span>Cultural importance / context</span>
-              <p id="culture"></p>
-            </div>
-
-            <div class="reading-note" id="reading-note"></div>
-
-            <div class="baseline-analysis" id="baseline-analysis" hidden>
-              <div class="baseline-kicker">REFERENCE COMPARISON</div>
-              <h3>AI reading vs. Wikisource</h3>
-
-              <div class="comparison-block">
-                <span>AI reading · prototype</span>
-                <p id="ai-reading"></p>
-              </div>
-
-              <div class="comparison-block">
-                <span>Standardized text from Wikisource</span>
-                <p class="comparison-script" id="reference-text"></p>
-              </div>
-
-              <div class="comparison-block">
-                <span>Wikisource translation</span>
-                <p id="reference-translation"></p>
-              </div>
-
-              <div class="comparison-grid">
-                <div>
-                  <span>Similarities</span>
-                  <p id="comparison-similarities"></p>
-                </div>
-                <div>
-                  <span>Differences</span>
-                  <p id="comparison-differences"></p>
-                </div>
-              </div>
-
-              <p class="comparison-note">
-                This comparison is a prototype evaluation example, not a
-                measurement of general AI accuracy. The AI reading shown here
-                is a fixed demonstration output rather than a live model call.
-              </p>
-            </div>
-
-            <div class="source-note">
-              <span id="source-note-label">Context / reference used</span>
-              <div id="sources"></div>
-            </div>
+          <div class="ai-carousel ai-carousel-inline" aria-label="Different AI responses for the selected photograph">
+            <div id="ai-carousel-track" class="ai-carousel-track"></div>
           </div>
-
-          <div class="ai-disclaimer">
-            <strong>AI interpretation notice</strong>
-            <p>
-              These translations and cultural interpretations are AI-assisted
-              working interpretations and may contain OCR, reading, translation,
-              or context errors. Further testing and external references should
-              be used to determine an accurate translation, especially for
-              historical, regional, religious, or site-specific text.
-            </p>
+          <div class="ai-response-panel-note">
+            <strong>Important:</strong> these are stored AI interpretations, not
+            a single authoritative translation or an accuracy ranking. Different
+            systems can read the same photographed characters differently.
           </div>
-
           <button class="reset-button" id="reset-button" type="button">Reset selection</button>
         </aside>
       </div>
@@ -170,30 +110,7 @@
         </button>
       </div>
 
-      <section id="ai-response-comparison" class="ai-response-section" aria-labelledby="ai-response-title">
-        <div class="ai-response-heading">
-          <div>
-            <label>AI RESPONSE COMPARISON</label>
-            <h3 id="ai-response-title">Gate inscription · AI responses</h3>
-            <p>
-              Keep the photograph fixed and compare the stored responses from
-              different AI systems. Each card identifies the AI and the exact
-              project dataset file used for that response.
-            </p>
-          </div>
-          <span id="ai-response-count" class="ai-response-count">Loading responses…</span>
-        </div>
-
-        <div class="ai-carousel" aria-label="AI responses for the selected photograph">
-          <div id="ai-carousel-track" class="ai-carousel-track"></div>
-          <p class="ai-carousel-tip">
-            Scroll or swipe horizontally. The carousel is CSS-first; changing
-            the photograph above changes which four AI responses are shown.
-          </p>
-        </div>
-      </section>
-
-      <p class="prototype-note">
+  <p class="prototype-note">
         <b>Prototype note:</b> these are hand-defined demonstration hotspots, not
         automatic OCR. The next version can let a visitor draw a box around any
         text region and send that crop through an OCR/translation pipeline.
