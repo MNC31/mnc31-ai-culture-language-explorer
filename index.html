@@ -7,6 +7,7 @@
   <title>AI Culture & Language Explorer</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="explorer.css">
+  <link rel="stylesheet" href="ai-carousel.css">
 </head>
 <body>
   <header>
@@ -168,6 +169,29 @@
           Wikisource baseline
         </button>
       </div>
+
+      <section id="ai-response-comparison" class="ai-response-section" aria-labelledby="ai-response-title">
+        <div class="ai-response-heading">
+          <div>
+            <label>AI RESPONSE COMPARISON</label>
+            <h3 id="ai-response-title">Gate inscription · AI responses</h3>
+            <p>
+              Keep the photograph fixed and compare the stored responses from
+              different AI systems. Each card identifies the AI and the exact
+              project dataset file used for that response.
+            </p>
+          </div>
+          <span id="ai-response-count" class="ai-response-count">Loading responses…</span>
+        </div>
+
+        <div class="ai-carousel" aria-label="AI responses for the selected photograph">
+          <div id="ai-carousel-track" class="ai-carousel-track"></div>
+          <p class="ai-carousel-tip">
+            Scroll or swipe horizontally. The carousel is CSS-first; changing
+            the photograph above changes which four AI responses are shown.
+          </p>
+        </div>
+      </section>
 
       <p class="prototype-note">
         <b>Prototype note:</b> these are hand-defined demonstration hotspots, not
@@ -392,5 +416,6 @@
 
   <script src="script.js"></script>
   <script src="explorer.js"></script>
+  <script src="ai-carousel.js"></script>
 </body>
 </html>
