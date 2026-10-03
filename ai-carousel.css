@@ -216,3 +216,29 @@
     height:auto;
   }
 }
+
+/* Wikisource: keep the baseline and AI comparison directly beneath the image,
+   with the carousel starting at the top of its own column. */
+@media(min-width:981px){
+  .ai-demo-layout.is-wikisource .ai-response-panel{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:22px;
+    align-items:start;
+  }
+  .ai-demo-layout.is-wikisource .wikisource-baseline{
+    grid-column:1;
+    grid-row:1;
+  }
+  .ai-demo-layout.is-wikisource .ai-comparison-column{
+    grid-column:2;
+    grid-row:1;
+    min-width:0;
+  }
+  .ai-demo-layout.is-wikisource .reset-button{
+    display:none;
+  }
+}
+.ai-demo-layout.is-wikisource .photo-help{
+  display:none;
+}
