@@ -242,3 +242,11 @@
 .ai-demo-layout.is-wikisource .photo-help{
   display:none;
 }
+
+.baseline-script-long{
+  font-size:20px;
+  line-height:1.55;
+}
+@media(max-width:620px){
+  .baseline-script-long{font-size:18px}
+}
