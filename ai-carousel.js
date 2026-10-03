@@ -34,16 +34,16 @@
   function selectResponse(item, imageIndex) {
     positionRecognition(imageIndex);
     overlay.classList.add("is-active", "has-reading");
-    overlayAi.textContent = item.ai;
-    overlayText.textContent = item.source_text || "No source reading supplied.";
+    if (overlayAi) overlayAi.textContent = item.ai;
+    if (overlayText) overlayText.textContent = item.source_text || "No source reading supplied.";
   }
 
   function showPrompt(imageIndex) {
     positionRecognition(imageIndex);
     overlay.classList.add("is-active");
     overlay.classList.remove("has-reading");
-    overlayAi.textContent = "Ready to compare";
-    overlayText.textContent = "Click the box to see how different AI systems read these characters.";
+    if (overlayAi) overlayAi.textContent = "Ready to compare";
+    if (overlayText) overlayText.textContent = "Click the box to see how different AI systems read these characters.";
   }
 
   function render(imageIndex) {
