@@ -201,8 +201,8 @@ function showImage(index) {
   stage.classList.toggle("reference-mode", isBaseline);
   demoLayout.classList.toggle("reference-layout", isBaseline);
   referenceHighlight.hidden = !isBaseline;
-  photoHelp.hidden = isBaseline;
-  photoHelp.textContent = "Click a highlighted text region · click the photograph outside it to reset";
+  photoHelp.hidden = false;
+  photoHelp.textContent = "Click the highlighted box to see how different AI systems read these characters · click outside to reset";
 
   hotspots.forEach((spot, hotspotIndex) => {
     spot.hidden = hotspotIndex !== index;
