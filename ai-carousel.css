@@ -164,3 +164,29 @@
     min-height: 23rem;
   }
 }
+
+/* Inline placement: the AI comparison now occupies the same right-hand
+   panel that previously presented a single translation result. */
+.ai-response-panel{min-width:0;overflow:hidden}
+.ai-panel-kicker{color:var(--accent);font-size:11px;letter-spacing:.14em;font-weight:800}
+.ai-panel-title{font-size:24px;line-height:1.15;letter-spacing:-.02em;margin:8px 0 9px}
+.ai-panel-intro{color:var(--muted);font-size:12px;line-height:1.55;margin:0 0 14px}
+.ai-panel-legend{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.ai-panel-legend span{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:#f7f4ee;padding:5px 7px;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.06em}
+.ai-panel-legend b{color:var(--accent)}
+.ai-carousel-inline{min-width:0;margin:0 -4px}
+.ai-carousel-inline .ai-carousel-track{grid-auto-columns:minmax(255px,100%);gap:10px;padding:2px 4px 12px;scroll-snap-type:x mandatory}
+.ai-carousel-inline .ai-carousel-card{min-width:0;min-height:0;height:auto;padding:15px;box-shadow:0 .55rem 1.3rem rgba(20,25,30,.06)}
+.ai-carousel-inline .ai-name{font-size:1.08rem}
+.ai-carousel-inline .ai-source{max-width:48%;overflow-wrap:anywhere;font-size:.62rem}
+.ai-carousel-inline .ai-field{margin-top:.72rem}
+.ai-carousel-inline .ai-script{font-size:1.28rem}
+.ai-carousel-inline .ai-translation{font-size:.92rem}
+.ai-carousel-inline .ai-meaning{font-size:.83rem;line-height:1.45}
+.ai-carousel-inline .ai-dataset-link{font-size:.68rem}
+.ai-response-panel-note{margin-top:10px;padding:10px 11px;background:#eef3f5;border-left:3px solid var(--blue);color:#53616b;font-size:10px;line-height:1.5}
+.ai-response-panel-note strong{color:var(--ink)}
+.ai-response-panel .reset-button{margin-top:12px}
+.demo-layout.reference-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(310px,.7fr);gap:18px}
+.reference-layout .translation-panel{margin-top:0;min-height:520px}
+@media(max-width:860px){.ai-carousel-inline .ai-carousel-track{grid-auto-columns:minmax(260px,82vw)}}
