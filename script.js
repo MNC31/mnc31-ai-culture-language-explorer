@@ -106,16 +106,46 @@ let selectedRecord = null;
 
 const image = document.getElementById("demo-image");
 const stage = document.getElementById("photo-stage");
+const emptyResult = document.getElementById("result-empty");
+const resultContent = document.getElementById("result-content");
 const status = document.getElementById("selection-status");
+const standard = document.getElementById("standard-text");
+const pinyin = document.getElementById("pinyin");
+const translation = document.getElementById("translation");
+const culture = document.getElementById("culture");
+const sources = document.getElementById("sources");
+const readingNote = document.getElementById("reading-note");
 const resetButton = document.getElementById("reset-button");
 const photoHelp = document.getElementById("photo-help");
 const referenceHighlight = document.getElementById("reference-highlight");
 const demoLayout = document.querySelector(".demo-layout");
+const sourceNoteLabel = document.getElementById("source-note-label");
+const baselineAnalysis = document.getElementById("baseline-analysis");
+const aiReading = document.getElementById("ai-reading");
+const referenceText = document.getElementById("reference-text");
+const referenceTranslation = document.getElementById("reference-translation");
+const comparisonSimilarities = document.getElementById("comparison-similarities");
+const comparisonDifferences = document.getElementById("comparison-differences");
 const imageTabs = document.querySelectorAll(".image-tab");
 const hotspots = document.querySelectorAll(".hotspot");
 
+function renderSources(record) {
+  sources.innerHTML = "";
+
+  record.sources.forEach((source) => {
+    const link = document.createElement("a");
+    link.href = source.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = source.label;
+    sources.appendChild(link);
+  });
+}
+
 function resetText() {
   selectedRecord = null;
+  emptyResult.hidden = false;
+  resultContent.hidden = true;
   status.textContent = "Nothing selected";
   hotspots.forEach((spot) => spot.classList.remove("selected"));
 }
@@ -123,9 +153,36 @@ function resetText() {
 function showText(index, hotspot) {
   const record = imageRecords[index];
   selectedRecord = index;
-  status.textContent = `Selected: ${record.title} · compare AI responses in the panel`;
+
+  standard.textContent = record.standard;
+  pinyin.textContent = record.pinyin;
+  translation.textContent = record.translation;
+  culture.textContent = record.culture;
+  readingNote.textContent = record.note;
+  sourceNoteLabel.textContent = record.analysis
+    ? "Wikisource reference"
+    : "Context / reference used";
+  renderSources(record);
+
+  if (record.analysis) {
+    baselineAnalysis.hidden = false;
+    aiReading.textContent = record.analysis.aiReading;
+    referenceText.textContent = record.analysis.referenceText;
+    referenceTranslation.textContent = record.analysis.referenceTranslation;
+    comparisonSimilarities.textContent = record.analysis.similarities;
+    comparisonDifferences.textContent = record.analysis.differences;
+  } else {
+    baselineAnalysis.hidden = true;
+  }
+
+  emptyResult.hidden = true;
+  resultContent.hidden = false;
+  status.textContent = `Selected: ${record.title}`;
+
   hotspots.forEach((spot) => spot.classList.remove("selected"));
-  if (hotspot) hotspot.classList.add("selected");
+  if (hotspot) {
+    hotspot.classList.add("selected");
+  }
 }
 
 function showImage(index) {
