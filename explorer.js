@@ -63,7 +63,7 @@ if (explorerRoot) {
     // public/ are requested from /public/... rather than through a
     // framework-specific public-folder rewrite.
     const candidates = [
-      "/" + path.replace(/^\\/+/, ""),
+      "/" + path.replace(/^\/+/, ""),
       path
     ];
     let lastError = null;
