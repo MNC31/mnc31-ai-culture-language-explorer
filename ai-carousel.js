@@ -6,7 +6,6 @@
   const overlay = document.getElementById("ai-recognition-overlay");
   const demoImage = document.getElementById("demo-image");
   const photoStage = document.getElementById("photo-stage");
-  const referenceHighlight = document.getElementById("reference-highlight");
   const baselinePanel = document.getElementById("wikisource-baseline");
   const aiComparisonHeading = document.getElementById("ai-comparison-heading");
   const resetButton = document.getElementById("reset-ai-button");
@@ -82,7 +81,6 @@
   function selectResponse(item, imageIndex) {
     hasSelection = true;
     if (imageIndex === 3) {
-      if (referenceHighlight) referenceHighlight.hidden = true;
       overlay.style.display = "block";
     }
     panel?.classList.remove("is-awaiting-selection");
@@ -94,7 +92,6 @@
     hasSelection = false;
     if (baselinePanel) baselinePanel.hidden = imageIndex !== 3;
     if (aiComparisonHeading) aiComparisonHeading.hidden = imageIndex !== 3;
-    if (referenceHighlight) referenceHighlight.hidden = imageIndex !== 3;
     if (imageIndex === 3) overlay.style.display = "none";
     else overlay.style.display = "block";
     panel?.classList.add("is-awaiting-selection");
@@ -108,42 +105,48 @@
     count.textContent = "Nothing selected";
   }
 
+  function renderCards(current, imageIndex) {
+    track.innerHTML = current.map((item, index) =>
+      '<button class="ai-carousel-card" type="button" data-response-index="' + index + '" aria-label="Show ' + escapeHtml(item.ai) + ' reading">' +
+        '<div class="ai-card-top"><div><span class="ai-card-number">0' + (index + 1) + '</span><div class="ai-name">' + escapeHtml(item.ai) + '</div></div><span class="ai-card-action">View on image →</span></div>' +
+        (imageIndex === 3 ? '<div class="ai-field"><span class="ai-field-label">Passage coverage</span><div class="ai-coverage">' + (characterCount(item.source_text) >= 35 ? 'Full passage' : 'Partial passage') + '</div></div>' : '') +
+        '<div class="ai-field ai-field-reading"><span class="ai-field-label">Recognized characters</span><div class="ai-script" lang="zh">' + escapeHtml(item.source_text) + '</div></div>' +
+        '<div class="ai-field"><span class="ai-field-label">Standardized / simplified</span><div class="ai-script ai-script-small" lang="zh">' + escapeHtml(item.standardized) + '</div></div>' +
+        '<div class="ai-field"><span class="ai-field-label">Pinyin</span><div>' + escapeHtml(item.pinyin || "Not supplied.") + '</div></div>' +
+        '<div class="ai-field"><span class="ai-field-label">English translation</span><div class="ai-translation">' + escapeHtml(item.translation) + '</div></div>' +
+        '<div class="ai-field"><span class="ai-field-label">Meaning / interpretation</span><div class="ai-meaning">' + escapeHtml(item.meaning) + '</div></div>' +
+      '</button>'
+    ).join("");
+
+    title.textContent = imageIndex === 3
+      ? "AI readings against the Wikisource baseline"
+      : (imageNames[imageIndex] || "Selected image") + " · AI responses";
+    count.textContent = current.length + " AI responses · scroll";
+
+    track.querySelectorAll(".ai-carousel-card").forEach((card, index) => {
+      card.addEventListener("click", () => {
+        track.querySelectorAll(".ai-carousel-card").forEach((other) => other.classList.remove("is-selected"));
+        card.classList.add("is-selected");
+        selectResponse(current[index], imageIndex);
+      });
+    });
+  }
+
   function render(imageIndex) {
     const current = responses.filter((item) => Number(item.image) === Number(imageIndex));
-
-    // Before the user clicks the box, deliberately show no AI translations.
     showPrompt(imageIndex);
 
-    track.innerHTML = "";
+    if (imageIndex === 3) {
+      renderCards(current, imageIndex);
+      return;
+    }
 
-    // The response cards are prepared only after the user activates the box.
+    track.innerHTML = "";
     overlay.onclick = (event) => {
       event.stopPropagation();
 
       if (!hasSelection) {
-        track.innerHTML = current.map((item, index) =>
-          '<button class="ai-carousel-card" type="button" data-response-index="' + index + '" aria-label="Show ' + escapeHtml(item.ai) + ' reading">' +
-            '<div class="ai-card-top"><div><span class="ai-card-number">0' + (index + 1) + '</span><div class="ai-name">' + escapeHtml(item.ai) + '</div></div><span class="ai-card-action">View on image →</span></div>' +
-            (imageIndex === 3 ? '<div class="ai-field"><span class="ai-field-label">Passage coverage</span><div class="ai-coverage">' + (characterCount(item.source_text) >= 35 ? 'Full passage' : 'Partial passage') + '</div></div>' : '') +
-            '<div class="ai-field ai-field-reading"><span class="ai-field-label">Recognized characters</span><div class="ai-script" lang="zh">' + escapeHtml(item.source_text) + '</div></div>' +
-            '<div class="ai-field"><span class="ai-field-label">Standardized / simplified</span><div class="ai-script ai-script-small" lang="zh">' + escapeHtml(item.standardized) + '</div></div>' +
-            '<div class="ai-field"><span class="ai-field-label">Pinyin</span><div>' + escapeHtml(item.pinyin || "Not supplied.") + '</div></div>' +
-            '<div class="ai-field"><span class="ai-field-label">English translation</span><div class="ai-translation">' + escapeHtml(item.translation) + '</div></div>' +
-            '<div class="ai-field"><span class="ai-field-label">Meaning / interpretation</span><div class="ai-meaning">' + escapeHtml(item.meaning) + '</div></div>' +
-          '</button>'
-        ).join("");
-
-        title.textContent = (imageNames[imageIndex] || "Selected image") + " · AI responses";
-        count.textContent = current.length + " AI responses · scroll";
-        track.querySelectorAll(".ai-carousel-card").forEach((card, index) => {
-          card.addEventListener("click", () => {
-            track.querySelectorAll(".ai-carousel-card").forEach((other) => other.classList.remove("is-selected"));
-            card.classList.add("is-selected");
-            selectResponse(current[index], imageIndex);
-          });
-        });
-
-        // Keep the large all-character highlight until the visitor chooses an AI card.
+        renderCards(current, imageIndex);
         return;
       }
 
@@ -162,7 +165,12 @@
 
   document.getElementById("photo-stage")?.addEventListener("click", (event) => {
     if (event.target.closest("#ai-recognition-overlay")) return;
-    showPrompt(Number(window.__activeAiImage || 0));
+    const imageIndex = Number(window.__activeAiImage || 0);
+    showPrompt(imageIndex);
+    if (imageIndex === 3) {
+      const current = responses.filter((item) => Number(item.image) === imageIndex);
+      renderCards(current, imageIndex);
+    }
   });
 
   fetch("public/data/ai_image_comparison.json")
