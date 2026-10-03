@@ -17,9 +17,9 @@
   // particular response claims to have read.
   const imagePositions = [
     // Image 1: all four green characters across the stone panel.
-    { left: "13%", top: "27%", width: "58%", height: "23%", direction: "horizontal", maxChars: 4 },
+    { left: "12%", top: "44%", width: "77%", height: "22%", direction: "horizontal", maxChars: 4 },
     // Image 2: the gold characters form one short horizontal line on the signboard.
-    { left: "20%", top: "28%", width: "48%", height: "22%", direction: "horizontal", maxChars: 10 },
+    { left: "14%", top: "46%", width: "61%", height: "21%", direction: "horizontal", maxChars: 10 },
     // Image 3: the inscription is a long vertical column running almost the full height.
     { left: "49%", top: "7%", width: "17%", height: "90%", direction: "vertical", maxChars: 12 },
     // Image 4: the full long Wikisource passage.
