@@ -412,13 +412,13 @@ if (explorerRoot) {
   function renderCcDetail(row, task) {
     if (task === "bilingual") {
       ccDetail.innerHTML =
-        '<div class="detail-kicker">OPEN-ENDED BILINGUAL COMPARISON</div>' +
-        '<h3>Value-alignment prompt pair</h3>' +
-        '<div class="question-pair">' +
-          '<article><span>Chinese prompt</span><p class="script-large">' + escapeHtml(row["中文提示词"]) + "</p></article>" +
-          '<article><span>English prompt</span><p>' + escapeHtml(row["英文提示词"]) + "</p></article>" +
+        "<div class=\"detail-kicker\">OPEN-ENDED BILINGUAL COMPARISON</div>" +
+        "<h3>Value-alignment prompt pair</h3>" +
+        "<div class=\"question-pair\">" +
+          "<article><span>Chinese prompt</span><p class=\"script-large\">" + escapeHtml(row["中文提示词"]) + "</p></article>" +
+          "<article><span>English prompt</span><p>" + escapeHtml(row["英文提示词"]) + "</p></article>" +
         "</div>" +
-        '<div class="comparison-callout"><strong>Possible use</strong><p>Run the same model under both prompts, save the two responses, and compare whether the model changes its reasoning or value framing when only the prompt language changes.</p></div>";
+        "<div class=\"comparison-callout\"><strong>Possible use</strong><p>Run the same model under both prompts, save the two responses, and compare whether the model changes its reasoning or value framing when only the prompt language changes.</p></div>";
       return;
     }
 
@@ -429,26 +429,32 @@ if (explorerRoot) {
       slang: ["梗", "梗解释"],
       pragmatic: ["对话内容", "真实意图"]
     };
+
     const fields = definitions[task];
+    if (!fields || !row) {
+      ccDetail.innerHTML = "<div class=\"explorer-empty\">No CC-Eval detail is available for this task.</div>";
+      return;
+    }
+
+    let useText = "Test whether a model can explain a culturally situated concept and distinguish it from a superficially similar English concept.";
+    if (task === "pragmatic") {
+      useText = "Test whether a model identifies indirect meaning rather than only translating the literal sentence.";
+    } else if (task === "slang") {
+      useText = "Test whether a model understands contemporary Chinese internet language and the social context behind a phrase.";
+    } else if (task === "classical") {
+      useText = "Test interpretation of classical language, references, and culturally situated concepts.";
+    } else if (task === "folk") {
+      useText = "Test whether a model can explain a cultural practice without reducing the practice to a generic translation.";
+    }
 
     ccDetail.innerHTML =
-      '<div class="detail-kicker">CHINESE-CONTEXT TASK · ' + escapeHtml(ccTitle(task)) + "</div>" +
-      '<h3>' + escapeHtml(row[fields[0]]) + "</h3>" +
+      "<div class=\"detail-kicker\">CHINESE-CONTEXT TASK · " + escapeHtml(ccTitle(task)) + "</div>" +
+      "<h3>" + escapeHtml(row[fields[0]]) + "</h3>" +
       fields.slice(1).map((field) =>
-        '<div class="cc-field"><span>' + escapeHtml(field) + "</span><p>" + escapeHtml(row[field]) + "</p></div>"
+        "<div class=\"cc-field\"><span>" + escapeHtml(field) + "</span><p>" + escapeHtml(row[field]) + "</p></div>"
       ).join("") +
-      '<div class="comparison-callout"><strong>Possible use</strong><p>' +
-      escapeHtml(
-        task === "pragmatic"
-          ? "Test whether a model identifies indirect meaning rather than only translating the literal sentence."
-          : task === "slang"
-            ? "Test whether a model understands contemporary Chinese internet language and the social context behind a phrase."
-            : task === "classical"
-              ? "Test interpretation of classical language, references, and culturally situated concepts."
-              : task === "folk"
-                ? "Test whether a model can explain a cultural practice without reducing the practice to a generic translation."
-                : "Test whether a model can explain a culturally situated concept and distinguish it from a superficially similar English concept."
-      ) +
+      "<div class=\"comparison-callout\"><strong>Possible use</strong><p>" +
+      escapeHtml(useText) +
       "</p></div>";
   }
 
