@@ -90,13 +90,6 @@
 
     track.innerHTML = "";
 
-    const activateFirstResponse = () => {
-      if (!current[0]) return;
-      const firstCard = track.querySelector(".ai-carousel-card");
-      firstCard?.classList.add("is-selected");
-      selectResponse(current[0], imageIndex);
-    };
-
     // The response cards are prepared only after the user activates the box.
     overlay.onclick = (event) => {
       event.stopPropagation();
@@ -123,7 +116,7 @@
           });
         });
 
-        activateFirstResponse();
+        // Keep the large all-character highlight until the visitor chooses an AI card.
         return;
       }
 
