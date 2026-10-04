@@ -837,7 +837,11 @@ if (explorerRoot) {
   loadGlobal("test").catch((error) => {
     setStatus("Dataset loading failed: " + error.message, true);
   });
-  refreshCc();
+  // Preload every CC-Eval task family so the Cultural Context Map can show
+  // the complete network immediately, while keeping the selector interactive.
+  Promise.all(Object.keys(explorerConfig.cc).map((task) => loadCcTask(task)))
+    .then(() => refreshCc())
+    .catch((error) => setStatus("CC-Eval loading failed: " + error.message, true));
   // The lab waits for the same Global-MMLU load instead of starting a
   // second competing request during page initialization.
   refreshLabQuestions().catch((error) => setStatus(error.message, true));
