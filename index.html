@@ -358,8 +358,8 @@
       <label>LAB QUESTIONS · MODEL COMPARISON</label>
       <h2>Compare the same cultural question across AI models.</h2>
       <p class="method-copy">
-        Select one of the 60 controlled CC-Eval questions. The site keeps the original prompt and reference context visible, then places the saved responses from ChatGPT, Doubao, Perplexity, and Workbuddy side by side.
-        This is a comparison of interpretations, framing, omissions, cultural assumptions, and language choices—not a right/wrong score.
+        Select one of the 60 controlled CC-Eval questions. The original prompt and reference context stay visible while the saved responses are presented one model at a time, like the AI image carousel above.
+        Use the navigation to compare interpretation, framing, omissions, cultural assumptions, and language choices—not a right/wrong score.
       </p>
 
       <div class="lab-controls">
@@ -382,7 +382,22 @@
 
       <div id="lab-prompt" class="lab-prompt"></div>
       <div id="lab-reference" class="lab-reference"></div>
-      <div id="lab-model-grid" class="lab-model-grid"></div>
+
+      <div class="lab-carousel" aria-label="AI model response comparison">
+        <div class="lab-carousel-head">
+          <div>
+            <div class="lab-section-kicker">MODEL RESPONSE</div>
+            <h3 id="lab-response-title">AI model</h3>
+          </div>
+          <div id="lab-response-count" class="lab-response-count">1 / 4</div>
+        </div>
+        <div class="lab-carousel-nav">
+          <button id="lab-prev" class="lab-carousel-arrow" type="button" aria-label="Previous model">←</button>
+          <div id="lab-model-tabs" class="lab-model-tabs"></div>
+          <button id="lab-next" class="lab-carousel-arrow" type="button" aria-label="Next model">→</button>
+        </div>
+        <div id="lab-model-grid" class="lab-model-grid"></div>
+      </div>
     </section>
 
   </main>
