@@ -333,7 +333,8 @@ footer{border-top:1px solid var(--line);padding:25px 5vw;color:var(--muted);font
 }
 #lab-model-grid.lab-model-grid:active{cursor:grabbing}
 #lab-model-grid .lab-model-card{
-  flex:0 0 min(82%, 620px);
+  flex:0 0 100%;
+  width:100%;
   scroll-snap-align:start;
   box-sizing:border-box;
 }
@@ -341,5 +342,5 @@ footer{border-top:1px solid var(--line);padding:25px 5vw;color:var(--muted);font
 #lab-model-grid::-webkit-scrollbar-track{background:var(--surface-2, #eee)}
 #lab-model-grid::-webkit-scrollbar-thumb{background:var(--line-strong, #999);border-radius:8px}
 @media (max-width:700px){
-  #lab-model-grid .lab-model-card{flex-basis:88%}
+  #lab-model-grid .lab-model-card{flex-basis:100%}
 }
