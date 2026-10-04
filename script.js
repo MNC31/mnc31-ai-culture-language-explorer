@@ -306,9 +306,11 @@ if (explorerRoot) {
   const ccList = explorerRoot.querySelector("#cc-question-list");
   const ccDetail = explorerRoot.querySelector("#cc-detail");
   const status = explorerRoot.querySelector("#explorer-status");
-  const labCategory = explorerRoot.querySelector("#lab-category");
-  const labQuestion = explorerRoot.querySelector("#lab-question");
-  const labReference = explorerRoot.querySelector("#lab-reference");
+  // The Lab section is a sibling of #dataset-explorer, not a child of it.
+  // Use document-level lookups so the Lab controls can actually be populated.
+  const labCategory = document.getElementById("lab-category");
+  const labQuestion = document.getElementById("lab-question");
+  const labReference = document.getElementById("lab-reference");
 
   function setStatus(message, isError = false) {
     status.textContent = message;
@@ -839,8 +841,8 @@ if (explorerRoot) {
   }
 
   function renderLabQuestionOptions(records) {
-    const categorySelect = explorerRoot.querySelector("#lab-category");
-    const questionSelect = explorerRoot.querySelector("#lab-question");
+    const categorySelect = document.getElementById("lab-category");
+    const questionSelect = document.getElementById("lab-question");
     if (!categorySelect || !questionSelect) return;
 
     const category = categorySelect.value;
