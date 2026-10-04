@@ -96,40 +96,92 @@
     openDatasetViewer("global");
   }
 
+  let cultureView = { rx: -0.35, ry: 0.55, scale: 1, dragging: false, px: 0, py: 0 };
+
+  function project3D(n, width, height) {
+    const x = (n.x - 50) / 50;
+    const y = (n.y - 50) / 50;
+    const z = (n.z ?? 0) / 50;
+    const cy = Math.cos(cultureView.ry), sy = Math.sin(cultureView.ry);
+    const cx = Math.cos(cultureView.rx), sx = Math.sin(cultureView.rx);
+    const x1 = x * cy - z * sy;
+    const z1 = x * sy + z * cy;
+    const y1 = y * cx - z1 * sx;
+    const z2 = y * sx + z1 * cx;
+    const depth = 1 + z2 * 0.34;
+    return {
+      x: width / 2 + x1 * 350 * cultureView.scale / Math.max(depth, .45),
+      y: height / 2 + y1 * 185 * cultureView.scale / Math.max(depth, .45),
+      depth: z2,
+      scale: Math.max(.72, Math.min(1.28, 1 / Math.max(depth, .45)))
+    };
+  }
+
   function renderCulturalMap() {
     const wrap = document.getElementById("cultural-map");
     if (!wrap) return;
 
-    const loaded = culturalNodes.filter(n => ccRows(n.task).length);
-    const width = 900, height = 480;
-    const pos = n => ({x: 50 + (n.x/100)*800, y: 45 + (n.y/100)*370});
-    const maxCount = Math.max(...loaded.map(nodeCount), 1);
+    const width = 900, height = 500;
+    const maxCount = Math.max(...culturalNodes.map(nodeCount), 1);
+    const points = new Map(culturalNodes.map(n => [n.id, project3D(n, width, height)]));
 
     const lines = edges.map(([a,b]) => {
-      const A=culturalNodes.find(n=>n.id===a), B=culturalNodes.find(n=>n.id===b);
-      if (!A || !B) return "";
-      const p=pos(A), q=pos(B);
-      return '<line x1="'+p.x+'" y1="'+p.y+'" x2="'+q.x+'" y2="'+q.y+'" class="culture-edge"/>';
+      const p=points.get(a), q=points.get(b);
+      if (!p || !q) return "";
+      const opacity = .12 + .12 * Math.max(0, (p.depth + q.depth) / 2 + .5);
+      return '<line x1="'+p.x.toFixed(1)+'" y1="'+p.y.toFixed(1)+'" x2="'+q.x.toFixed(1)+'" y2="'+q.y.toFixed(1)+'" class="culture-edge" style="opacity:'+opacity+'"/>';
     }).join("");
 
     const nodes = culturalNodes.map(n => {
-      const p=pos(n), count=nodeCount(n);
-      const r=12 + 12*(count/maxCount);
-      return '<g class="culture-node" tabindex="0" role="button" data-task="'+n.task+'" aria-label="'+esc(n.label)+'">'+
-        '<circle cx="'+p.x+'" cy="'+p.y+'" r="'+r+'" class="culture-node-circle"/>'+
-        '<text x="'+p.x+'" y="'+(p.y+r+17)+'" text-anchor="middle" class="culture-node-label">'+esc(n.label)+'</text>'+
-        '<text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle" class="culture-node-count">'+count+'</text>'+
+      const p=points.get(n.id), count=nodeCount(n);
+      const r=(10 + 12*(count/maxCount))*p.scale;
+      return '<g class="culture-node" tabindex="0" role="button" data-task="'+n.task+'" aria-label="'+esc(n.label)+'" style="transform:translateZ('+((p.depth+1)*80)+'px)">'+
+        '<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+r.toFixed(1)+'" class="culture-node-circle"/>'+
+        '<text x="'+p.x.toFixed(1)+'" y="'+(p.y+r+17).toFixed(1)+'" text-anchor="middle" class="culture-node-label">'+esc(n.label)+'</text>'+
+        '<text x="'+p.x.toFixed(1)+'" y="'+(p.y+4).toFixed(1)+'" text-anchor="middle" class="culture-node-count">'+count+'</text>'+
       '</g>';
     }).join("");
 
     wrap.innerHTML =
-      '<svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="Interactive CC-Eval cultural context network map">'+
-        '<line x1="50" y1="415" x2="850" y2="415" class="culture-axis"/>'+
-        '<line x1="50" y1="415" x2="50" y2="45" class="culture-axis"/>'+
-        '<text x="450" y="455" text-anchor="middle" class="culture-axis-label">Cultural knowledge ←──────────────→ Language & social interaction</text>'+
-        '<text x="25" y="235" text-anchor="middle" transform="rotate(-90 25 235)" class="culture-axis-label">Classical / traditional ←──────────────→ Modern / internet</text>'+
-        lines + nodes +
-      '</svg>';
+      '<div class="cultural-3d-stage" aria-label="Interactive 3D cultural context network">'+
+        '<svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="3D cultural context network. Drag to rotate and use the wheel to zoom. Click a node to open its dataset." style="touch-action:none">'+
+          '<g class="culture-grid">'+
+            '<ellipse cx="450" cy="250" rx="350" ry="185" class="culture-plane"/>'+
+            '<line x1="100" y1="250" x2="800" y2="250" class="culture-axis"/>'+
+            '<line x1="450" y1="65" x2="450" y2="435" class="culture-axis"/>'+
+          '</g>'+
+          lines + nodes +
+        '</svg>'+
+        '<div class="culture-3d-hint"><span><b>3D network</b> · drag to rotate</span><span>scroll to zoom · click a node to explore</span></div>'+
+      '</div>';
+
+    const svg=wrap.querySelector("svg");
+    const stage=wrap.querySelector(".cultural-3d-stage");
+    if (!svg || !stage) return;
+
+    const rerender=()=>renderCulturalMap();
+    svg.addEventListener("pointerdown", e=>{
+      if (e.target.closest(".culture-node")) return;
+      cultureView.dragging=true;
+      cultureView.px=e.clientX;
+      cultureView.py=e.clientY;
+      svg.setPointerCapture?.(e.pointerId);
+    });
+    svg.addEventListener("pointermove", e=>{
+      if (!cultureView.dragging) return;
+      cultureView.ry += (e.clientX-cultureView.px)*.008;
+      cultureView.rx += (e.clientY-cultureView.py)*.006;
+      cultureView.rx=Math.max(-1.15,Math.min(1.15,cultureView.rx));
+      cultureView.px=e.clientX; cultureView.py=e.clientY;
+      rerender();
+    });
+    svg.addEventListener("pointerup", ()=>{cultureView.dragging=false;});
+    svg.addEventListener("pointercancel", ()=>{cultureView.dragging=false;});
+    svg.addEventListener("wheel", e=>{
+      e.preventDefault();
+      cultureView.scale=Math.max(.72,Math.min(1.55,cultureView.scale*(e.deltaY<0?1.08:.93)));
+      rerender();
+    }, {passive:false});
 
     wrap.querySelectorAll(".culture-node").forEach(node => {
       const activate=()=>showNodeDetail(node.dataset.task);
