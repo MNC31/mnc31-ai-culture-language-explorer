@@ -268,7 +268,8 @@ const explorerConfig = {
     slang: "public/data/cc-eval/data/Chinese-context_task/modern_Chinese_internet_slang.csv",
     pragmatic: "public/data/cc-eval/data/Chinese-context_task/pragmatic_intent_understanding.csv"
   },
-  modelResponses: "public/data/model_responses.json"
+  modelResponses: "public/data/model_responses.json",
+  imageComparison: "public/data/ai_image_comparison.json"
 };
 
 const explorerState = {
@@ -276,7 +277,8 @@ const explorerState = {
   globalLoaded: false,
   ccCache: {},
   selectedGlobal: 0,
-  selectedCc: 0
+  selectedCc: 0,
+  imageComparisons: []
 };
 
 const explorerRoot = document.getElementById("dataset-explorer");
@@ -717,6 +719,17 @@ if (explorerRoot) {
     }
   }
 
+  async function loadImageComparison() {
+    try {
+      const text = await loadText(explorerConfig.imageComparison);
+      explorerState.imageComparisons = JSON.parse(text).responses || [];
+      document.dispatchEvent(new CustomEvent("explorer-image-comparison-ready"));
+    } catch (error) {
+      explorerState.imageComparisons = [];
+      console.warn("Image comparison data could not be loaded:", error);
+    }
+  }
+
   async function loadModelResponses() {
     try {
       const text = await loadText(explorerConfig.modelResponses);
@@ -845,4 +858,5 @@ if (explorerRoot) {
   // The lab waits for the same Global-MMLU load instead of starting a
   // second competing request during page initialization.
   refreshLabQuestions().catch((error) => setStatus(error.message, true));
+  loadImageComparison();
 }
