@@ -222,15 +222,19 @@ footer{border-top:1px solid var(--line);padding:25px 5vw;color:var(--muted);font
 .cultural-map-wrap{
   margin-top:8px;border:1px solid var(--line);background:#faf9f5;overflow:hidden
 }
-.cultural-map-wrap svg{display:block;width:100%;height:auto;min-height:360px}
-.culture-edge{stroke:currentColor;stroke-opacity:.16;stroke-width:2}
-.culture-axis{stroke:currentColor;stroke-opacity:.12;stroke-width:1}
-.culture-axis-label{fill:var(--muted);font-size:11px;letter-spacing:.04em}
+.cultural-3d-stage{position:relative;overflow:hidden;background:radial-gradient(circle at 50% 48%,#fffdf8 0,#faf9f5 52%,#f1eee7 100%)}
+.cultural-3d-stage svg{display:block;width:100%;height:auto;min-height:400px;cursor:grab;user-select:none}
+.cultural-3d-stage svg:active{cursor:grabbing}
+.culture-plane{fill:none;stroke:currentColor;stroke-opacity:.08;stroke-dasharray:5 7}
+.culture-edge{stroke:currentColor;stroke-opacity:.25;stroke-width:2}
+.culture-axis{stroke:currentColor;stroke-opacity:.08;stroke-width:1}
 .culture-node{cursor:pointer;outline:none}
-.culture-node-circle{fill:var(--paper);stroke:var(--ink);stroke-width:1.5;transition:transform .15s,fill .15s}
-.culture-node:hover .culture-node-circle,.culture-node:focus .culture-node-circle{fill:#ece8df;stroke-width:2}
+.culture-node-circle{fill:var(--paper);stroke:var(--ink);stroke-width:1.5;transition:fill .15s,stroke-width .15s}
+.culture-node:hover .culture-node-circle,.culture-node:focus .culture-node-circle{fill:#ece8df;stroke-width:2.5}
 .culture-node-count{fill:var(--ink);font-size:10px;font-weight:800;pointer-events:none}
 .culture-node-label{fill:var(--ink);font-size:11px;font-weight:700;pointer-events:none}
+.culture-3d-hint{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line);font-size:10px;color:var(--muted);letter-spacing:.02em;background:var(--paper)}
+.culture-3d-hint b{color:var(--ink)}
 .cultural-map-detail{
   display:grid;grid-template-columns:1fr 1fr;gap:25px;border-top:1px solid var(--line);padding:20px;background:var(--paper)
 }
