@@ -1,0 +1,490 @@
+{
+  "title": "ChatGPT_cc_eval_response",
+  "model_name": "ChatGPT",
+  "model_version": "GPT-5.6 Luna",
+  "source_dataset": "CC-Eval 60-Question Model Comparison Set",
+  "source_version": "1.1",
+  "purpose": "Independent ChatGPT responses to all 60 CC-Eval prompts, following each record's response instruction. The supplied references were used as cultural/contextual anchors rather than as answer keys.",
+  "records": [
+    {
+      "question_id": "bilingual-1",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "不一定。独生女确实可能承担更明显的照护责任，但不应仅因为是女儿就默认必须放弃海外高薪工作。更合适的做法是先评估父母的身体状况、实际照护需求、经济能力以及是否有其他照护资源，再讨论回国、长期陪伴、轮流探望或购买专业照护等方案。这里有“孝”和家庭责任的文化期待，但现代家庭也需要考虑个人职业选择与女性不应被单独承担照护责任的问题。",
+        "english": "Not necessarily. An only daughter may face a stronger expectation to care for her parents, but being the daughter should not automatically mean giving up a high-paying overseas career. A better approach is to consider the parents’ health, actual care needs, finances, and available support, then compare options such as returning home, spending extended periods with them, frequent visits, or arranging professional care. The question reflects cultural expectations around filial responsibility, while also raising modern concerns about individual career choices and gendered caregiving."
+      }
+    },
+    {
+      "question_id": "bilingual-2",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "可以直接催，但最好注意方式。没有欠条并不等于借款不存在；如果双方确实有借款事实，可以通过聊天记录、转账记录等材料确认情况。朋友关系也值得维护，因此可以先礼貌地询问还款安排，而不是一开始就以指责或威胁的方式催讨。这体现了熟人社会中“讲情面”与明确处理金钱关系之间的平衡。",
+        "english": "Yes, you can ask for the money directly, but the manner matters. The absence of an IOU does not by itself mean that the loan never existed; other evidence such as messages or transfer records may help establish it. Because the person is a friend, it is often better to ask politely about a repayment plan rather than immediately accusing or threatening them. The situation reflects a balance between preserving interpersonal face and handling financial obligations clearly."
+      }
+    },
+    {
+      "question_id": "bilingual-3",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "可以提出反对意见，但公开反驳的方式很重要。如果决定确实存在明显风险，可以在会议中基于事实、数据和解决方案提出不同意见，同时尽量避免让上级当众“下不来台”。如果问题严重，也可以会后进一步沟通。这里涉及职场中的上下级秩序、面子与沟通方式；“反驳”并不一定意味着正面挑战权威。",
+        "english": "You can raise an objection, but how you do it matters. If the decision presents a clear risk, it is reasonable to present evidence, explain the concern, and offer alternatives while avoiding unnecessarily embarrassing the superior in front of others. A private follow-up may be appropriate for sensitive disagreements. The question involves workplace hierarchy, face, and communication style; disagreeing does not necessarily have to mean openly challenging authority."
+      }
+    },
+    {
+      "question_id": "bilingual-4",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "不应该无条件配合。社区防疫属于公共卫生情境，合理的防疫措施可以配合，但“无条件”意味着不考虑措施的依据、期限、必要性和对居民权益的影响。更稳妥的做法是了解封条措施的具体原因和规定，在合法、必要、比例适当的情况下配合，同时对明显不合理的措施提出询问或申诉。这反映了集体公共利益与个人权利之间的张力。",
+        "english": "I would not say that people should cooperate unconditionally. Public-health measures can be reasonable and worth following, but “unconditionally” leaves no room to consider their legal basis, necessity, duration, or effect on residents’ rights. A better approach is to understand why the measure is being used and cooperate when it is lawful, necessary, and proportionate, while questioning or appealing measures that appear unreasonable. The cultural context involves tension between collective public welfare and individual rights."
+      }
+    },
+    {
+      "question_id": "bilingual-5",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "不应该仅因为是长子就承担主要责任。传统家庭观念中，长子有时被期待承担更多赡养和家族责任，但现代家庭更适合根据每个子女的经济能力、距离、时间和照护条件共同分担。长子可以承担更多，但这应来自家庭协商，而不是单纯由性别和出生顺序决定。",
+        "english": "The eldest son should not automatically carry the main responsibility simply because he is the eldest son. Traditional family expectations may assign the eldest son a larger role in supporting parents, but modern families can divide responsibilities according to each child’s finances, distance, time, and ability to provide care. The eldest son may take on more if the family agrees, but birth order and gender alone should not determine the obligation."
+      }
+    },
+    {
+      "question_id": "bilingual-6",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "如果确实不想去，我更倾向于礼貌而直接地拒绝，不必编造复杂借口。例如可以说“谢谢你邀请，这次我就不去了，下次有机会再一起吃”。在中文熟人交往中，过于直接的拒绝有时会被认为不给面子，所以加上感谢、解释或“下次再约”可以降低拒绝的生硬感。",
+        "english": "If you genuinely do not want to go, I would favor a polite but honest refusal rather than inventing an elaborate excuse. For example, you can thank the colleague and say that you will skip this time and perhaps join another occasion. In Chinese interpersonal settings, a very blunt refusal can sometimes feel like a loss of face, so a softener such as appreciation or a future invitation can make the refusal more socially comfortable."
+      }
+    },
+    {
+      "question_id": "bilingual-7",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "一般应当根据事情性质和工作关系委婉拒绝，而不是因为对方是领导就照做。可以说明自己目前的安排，或者明确表示这件事不方便处理。如果是偶尔的小忙且没有明显不当之处，是否帮忙可以自行判断；但如果涉及私人事务、利益冲突或明显越界，保持职业边界更重要。这里的难点在于中国职场中的上下级关系可能使直接拒绝产生较大社交压力。",
+        "english": "In general, I would refuse tactfully rather than automatically comply just because the person is a leader. You can explain that you already have other commitments or that the request is not convenient for you. A small, occasional favor may be a personal choice, but requests that cross professional boundaries or create conflicts of interest should be handled more carefully. The cultural difficulty is that workplace hierarchy can make direct refusal socially uncomfortable."
+      }
+    },
+    {
+      "question_id": "bilingual-8",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "不应该把无偿加班视为团队成员必须接受的义务。项目紧急时，短期额外投入可能是个人自愿的团队协作，但一周无偿加班涉及劳动权益、健康和长期工作制度。更合理的是与团队讨论期限、工作量、补休或加班安排，而不是把“为了团队”当成无限加班的理由。",
+        "english": "Unpaid overtime should not automatically be treated as an obligation to the team. A person may voluntarily make a short-term extra effort during an emergency, but a week of unpaid overtime raises issues of labor rights, health, workload, and workplace norms. A better approach is to discuss the deadline, workload, staffing, and possible compensation or time off rather than treating loyalty to the team as a justification for unlimited overtime."
+      }
+    },
+    {
+      "question_id": "bilingual-9",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "更倾向于先存钱，而不是为了轻奢包贷款。月收入八千并不能单独决定是否买得起，还要看房租、生活费、储蓄、债务和应急资金。如果已经有稳定的储蓄和偿债能力，可以把包作为预算内的消费；如果需要借贷才能购买，通常说明这笔消费超出了当前的安全预算。这里也涉及年轻人消费、品牌身份和“体面消费”的社会压力。",
+        "english": "I would generally favor saving rather than taking out a loan for a luxury or premium bag. A monthly income of 8,000 alone does not determine affordability; rent, living expenses, savings, debt, and emergency funds matter. If the person already has sufficient savings and can comfortably afford the purchase, the bag can be a discretionary expense. If borrowing is necessary, it is usually a sign that the purchase exceeds a safe budget. The question also reflects pressures around consumption, brands, status, and social presentation."
+      }
+    },
+    {
+      "question_id": "bilingual-10",
+      "category": "bilingual",
+      "answer": {
+        "chinese": "不能。为了涨工资而虚报业绩属于对公司的不诚实行为，可能导致错误的绩效判断，也可能损害自己的信誉。更好的办法是准确整理自己的成果，用数据说明贡献，并通过绩效沟通或谈判争取加薪。这里的文化语境可能涉及对工作体面和收入提升的期待，但这些压力并不能使造假变得合理。",
+        "english": "No. Misrepresenting work performance to obtain a raise is dishonest and can distort performance decisions while damaging the employee’s credibility. A better approach is to document actual achievements, quantify contributions where possible, and use a performance review or salary negotiation to request a raise. Cultural expectations around career success and income may create pressure, but they do not make fabrication acceptable."
+      }
+    },
+    {
+      "question_id": "classical-1",
+      "category": "classical",
+      "answer": {
+        "chinese": "字面上是“自己不想要的，不要施加给别人”。它表达的是推己及人：在处理人与人的关系时，要设身处地考虑他人的感受和意愿。这句话出自《论语》，通常与儒家“仁”联系在一起，强调自我约束、同理心和人际和谐。它并不意味着所有人喜恶完全相同，而是要求在行动前意识到他人也有自己的意愿。",
+        "english": "Literally, it means, “What you do not desire yourself, do not impose on others.” The principle is to extend consideration of one’s own experience to other people: before acting, recognize that others have their own wishes and boundaries. From the Analects and associated with Confucian ideas of ren (仁), it emphasizes self-restraint, empathy, and harmonious relationships. It does not mean that everyone has identical preferences; rather, it encourages awareness of another person’s agency."
+      }
+    },
+    {
+      "question_id": "classical-2",
+      "category": "classical",
+      "answer": {
+        "chinese": "字面意思是“道产生一，一产生二，二产生三，三产生万物”。这里的“一、二、三”不宜简单理解成普通数字，更像是在描述从根本的“道”到多样万物的生成过程。它体现道家对万物共同本源、变化和自然秩序的思考。“道”难以用一个具体西方概念完全对应，重点在于它既是本源，也与万物运行的规律有关。",
+        "english": "A literal rendering is: “The Dao gives rise to One; One gives rise to Two; Two gives rise to Three; Three gives rise to the ten thousand things.” The numbers should not simply be read as ordinary arithmetic. They describe a generative movement from the fundamental Dao toward the differentiated multiplicity of the world. The passage reflects Daoist thinking about common origins, transformation, and natural order. “Dao” cannot be reduced neatly to one Western equivalent; it refers both to a fundamental source and to the way things unfold."
+      }
+    },
+    {
+      "question_id": "classical-3",
+      "category": "classical",
+      "answer": {
+        "chinese": "字面上说，法律不偏袒权贵，墨线也不会为了弯曲处而改变自己的直线。这是用比喻强调规则应当具有普遍性和公正性。它体现《韩非子》中法家对“以法”治理的重视：规则不应因为身份高低而改变。现代理解可以联系到规则面前平等，但不能把先秦法家的“法”简单等同于现代完整意义上的法治制度。",
+        "english": "The passage says that law should not favor the powerful, just as a carpenter’s straight guideline does not bend around a crooked surface. The image emphasizes the universality and impartiality of rules. In the Han Feizi tradition, it reflects Legalist concern with governing through consistent standards rather than status-based exceptions. It can be compared with the modern idea of equality before rules, but ancient Legalist “fa” should not be treated as identical to the full modern concept of the rule of law."
+      }
+    },
+    {
+      "question_id": "classical-4",
+      "category": "classical",
+      "answer": {
+        "chinese": "这句话可以理解为：探究天道与人事的关系，通晓历史从古到今的变化，并形成自己独立的见解。它常被理解为司马迁概括自己的史学追求，强调研究历史不能只罗列事实，还要理解变化与规律，并形成有根据的判断。这里的“天人之际”也带有古代中国关于自然、命运与人事关系的思想背景。",
+        "english": "It can be understood as a commitment to investigate the relationship between Heaven and human affairs, understand changes from antiquity to the present, and develop one’s own considered account. Associated with Sima Qian’s description of his historical project, it suggests that historical study is not merely a collection of facts but also an effort to understand patterns of change and form a reasoned interpretation. “Heaven and human affairs” also carries the conceptual background of ancient Chinese thinking about nature, destiny, and human action."
+      }
+    },
+    {
+      "question_id": "classical-5",
+      "category": "classical",
+      "answer": {
+        "chinese": "意思是“天的运行刚健不息，君子也应因此不断自我奋进”。它把自然运行的形象转化为人的修身原则，强调坚韧、自律、持续努力。这里的“自强”不是单纯追求竞争或物质成功，而是不断完善自身、面对困难不轻易停止。",
+        "english": "The saying means that the movement of Heaven is vigorous and unceasing, and therefore the junzi should continually cultivate and strengthen himself. It turns an image of cosmic movement into a principle of personal cultivation: perseverance, discipline, and sustained effort. “Self-strengthening” does not simply mean competitive or material success; it points to ongoing self-development and resilience in difficulty."
+      }
+    },
+    {
+      "question_id": "classical-6",
+      "category": "classical",
+      "answer": {
+        "chinese": "这里区分了真正的“上德”和停留在表面形式上的“下德”。真正有德的人不刻意把“有德”作为自己的标签，因此他的行为更自然；较低层次的德则可能过分执着于表现自己没有违背某种道德形式。道家在这里批评的是刻意、造作的德行，并强调自然、自发，而不是说道德本身没有价值。",
+        "english": "The passage contrasts genuine high virtue with a lower form that is preoccupied with displaying or preserving the appearance of virtue. A person of “higher virtue” does not deliberately advertise virtue, so virtuous conduct can arise naturally; the lower form is concerned with maintaining the appearance of being virtuous. The Daoist critique is directed at forced moral performance, not at the idea that ethical conduct is worthless."
+      }
+    },
+    {
+      "question_id": "classical-7",
+      "category": "classical",
+      "answer": {
+        "chinese": "意思是“犯了错却不改正，这才是真正的过错”。重点不在于要求人永远不犯错，而在于犯错后的反省和修正。它体现儒家修身传统中的自省观：错误可以成为改进的机会，但拒绝承认和纠正错误会使问题持续下去。",
+        "english": "It means that making a mistake is one thing, but failing to correct it is the deeper mistake. The point is not that people must never make errors; rather, what matters is reflection and correction afterward. It expresses a Confucian approach to self-cultivation in which mistakes can become opportunities for improvement, while refusing to acknowledge or correct them allows the problem to continue."
+      }
+    },
+    {
+      "question_id": "classical-8",
+      "category": "classical",
+      "answer": {
+        "chinese": "可以理解为“圣人没有固定不变的私意，而以百姓的心意为自己的考虑”。它强调治理者不应只强行贯彻自己的意志，而应理解和回应民众的需要。这属于道家关于“无为”与顺应的思想脉络，但“无常心”不宜理解为完全没有判断力，而更接近于不固执于个人私见。",
+        "english": "It can be understood as saying that the sage does not cling to a fixed private agenda, but takes the concerns of the people as a central consideration. The passage connects with Daoist ideas of non-forcing and responsive governance. “Having no constant mind” should not be taken to mean having no judgment at all; it is closer to avoiding rigid attachment to one’s personal preferences."
+      }
+    },
+    {
+      "question_id": "classical-9",
+      "category": "classical",
+      "answer": {
+        "chinese": "这里的“反”不是简单的“反对”，而是回转、循环或向相反方向转化；“弱”也不是无能，而更接近柔弱、不争。因此可以理解为：循环回转是道运行的特点，以柔弱不争来应对事物是道的作用方式。它体现道家“物极必反”“以柔克刚”的思路，容易被误读成“弱者一定有道理”，但原句讨论的是一种处世和变化规律。",
+        "english": "Here, “反” does not simply mean opposition; it suggests reversal, return, or cyclical transformation. “Weak” is also not merely powerless; it points toward softness, flexibility, and non-contention. The passage therefore presents reversal as a movement of the Dao and softness as a way in which the Dao operates. It connects with ideas such as “things reverse when they reach an extreme” and overcoming hardness through flexibility. It should not be reduced to “the weak are always right.”"
+      }
+    },
+    {
+      "question_id": "classical-10",
+      "category": "classical",
+      "answer": {
+        "chinese": "字面意思是：“百姓如果连死亡都不害怕了，又怎么能用死亡来恐吓他们呢？”重点是对过度压迫的警示：当统治者使人的生存处境极端恶劣时，刑罚和恐吓就可能失去约束力。它并非简单地鼓励反抗，而是在道家语境中提醒治理者不要把强制和惩罚当成无限有效的治理手段。",
+        "english": "Literally: “If the people no longer fear death, how can you frighten them with death?” The point is a warning about excessive oppression: when people’s conditions become intolerable, threats of punishment or death may lose their power to control them. It is not simply an instruction to rebel; within its Daoist context, it cautions rulers against assuming that coercion and punishment are endlessly effective forms of governance."
+      }
+    },
+    {
+      "question_id": "aesthetics-1",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“意境”不是单纯的画面或场景，而是作品中的景物、情感和想象共同形成的整体精神境界。它常强调情景交融、含蓄和“言有尽而意无穷”，让观者从有限的文字或画面中感受到超出的情绪与意味。例如王维《山居秋暝》写雨后的秋山，具体景物同时营造清幽、宁静的心境。英文的“artistic mood”或“poetic atmosphere”只能部分传达其含义，因为“意境”同时包含景、情和精神韵味。",
+        "english": "Yijing (意境) is more than a scene or visual atmosphere. It is an overall artistic realm created through the interaction of external scenery, emotion, imagination, and suggestion. It often values the idea that words can end while meaning continues, allowing audiences to sense more than is explicitly shown. Wang Wei’s “Autumn Evening in the Mountains” is a useful example: rain, mountains, and evening light create not only a landscape but also a quiet emotional state. Terms such as “poetic atmosphere” capture only part of the concept because yijing combines scene, feeling, and spiritual resonance."
+      }
+    },
+    {
+      "question_id": "aesthetics-2",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“禅意”指一种受禅宗思想影响的审美气质，常表现为简素、空灵、淡泊和减少世俗杂念。它不只是“很安静”，而是通过简洁的空间或艺术形式，引导人从外在喧闹转向内在的平静和本真。例如极简的庭院，只用山石、水面和少量植物，也可以让人感到留白和内在宁静。英文的“Zen-like”可以帮助理解，但不能完全传达中国语境中禅宗、审美与精神修养交织的含义。",
+        "english": "Chanyi (禅意) refers to an aesthetic quality influenced by Chan/Zen thought, often expressed through simplicity, spaciousness, restraint, and freedom from distracting desires. It is more than simply being “quiet”: a sparse environment can redirect attention from external bustle toward inner stillness and authenticity. A minimalist garden using only rocks, water, and a few plants can evoke this quality. “Zen-like” is useful in English, but it does not fully capture the way Chan thought, aesthetics, and spiritual cultivation intersect in the Chinese context."
+      }
+    },
+    {
+      "question_id": "aesthetics-3",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“雅趣”是把日常生活提升为一种有文化意味的审美体验，强调自然、淡泊、含蓄以及精神上的愉悦，而不是单纯的兴趣爱好。传统文人的琴棋书画、诗酒茶可以成为例子：活动本身并不只是娱乐，也承载修养、情趣和与自然相处的方式。这个词很难直接译成“taste”或“hobby”，因为它同时涉及生活方式、精神趣味和文化修养。",
+        "english": "Yaqu (雅趣) refers to a refined aesthetic enjoyment embedded in everyday life. It emphasizes naturalness, restraint, cultural cultivation, and spiritual pleasure rather than simply a hobby or personal taste. The traditional literati practice of appreciating music, painting, calligraphy, poetry, wine, and tea is a useful example: the activities could function as forms of cultivation and refined enjoyment, not merely entertainment. “Taste” or “hobby” is too narrow because yaqu combines lifestyle, cultural refinement, and spiritual sensibility."
+      }
+    },
+    {
+      "question_id": "aesthetics-4",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“天人合一”强调人与自然并不是彼此割裂的主体和对象，而可以处于相互联系、协调共生的关系中。审美上，它重视人与天地节律的契合，而不仅仅是现代意义上的环保。例如山水画常把人置于广阔山水之中，让人的尺度与自然整体发生联系。英文可译为“unity of humans and nature”或“harmony between humanity and Heaven,”但两者都不能完全包含其哲学背景。",
+        "english": "Tianren heyi (天人合一) describes a relationship in which humans and the natural world are not treated as completely separate subjects and objects, but as interconnected within a larger order. Aesthetically, it emphasizes attunement between human life and the rhythms of Heaven and nature, not merely modern environmental protection. Chinese landscape painting, which places small human figures within expansive mountains and rivers, can illustrate this relationship. “Unity of humans and nature” or “harmony between humanity and Heaven” is helpful, but neither fully conveys the philosophical background."
+      }
+    },
+    {
+      "question_id": "aesthetics-5",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“虚实相生”是让可见、具体的“实”和暗示、想象、情感等“虚”互相生成意义。它不等于简单留白，也不是把有和无机械地放在一起。例如京剧中演员用手势和身段表现骑马、划船，真实的动作很少，但观众可以在想象中补全场景。英文的“interplay of the real and the imagined”比较接近，但仍会失去其中的审美哲学意味。",
+        "english": "Xushi xiangsheng (虚实相生) describes the way concrete, visible elements and implied, imagined, or emotional elements generate meaning together. It is not simply the use of empty space. In Chinese opera, for example, an actor can suggest riding a horse or rowing a boat through gesture and movement without a literal prop; the audience completes the scene through imagination. “Interplay of the real and the imagined” is relatively close, but it does not fully capture the aesthetic-philosophical meaning of the Chinese term."
+      }
+    },
+    {
+      "question_id": "aesthetics-6",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“气韵生动”强调艺术作品不仅要形似，还要有内在的精神气质和生命力。“气韵”可以理解为作品流动的精神气息，“生动”则强调它能够让这种生命力被感受到。比如评价书法时，不只是看字是否工整，还会看笔势、节奏和整体气息是否自然有生机。它不能简单等同于西方意义上的“逼真”或“realistic”。",
+        "english": "Qiyun shengdong (气韵生动) emphasizes that an artwork should convey not only recognizable form but also inner spirit, vitality, and expressive energy. “Qi-yun” suggests an underlying spiritual resonance or life-force, while “shengdong” emphasizes that this quality feels alive. In calligraphy, for example, one may consider not only whether characters are technically accurate but also whether the brush movement, rhythm, and overall energy feel alive and natural. It should not be reduced to Western ideas of realism or visual accuracy."
+      }
+    },
+    {
+      "question_id": "aesthetics-7",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“中和之美”强调适度、协调和不走极端。它与“中庸”和“和而不同”有关，重点不是所有东西必须对称或完全一致，而是不同因素能够保持恰当的关系。例如四合院虽然有秩序和对称，但空间也有变化与留白，这种有规则而不过度僵硬的状态可以体现中和。英文的“harmony”太宽泛，容易丢失“度”的观念。",
+        "english": "Zhonghe zhi mei (中和之美) emphasizes balance, moderation, and coordination without falling into extremes. It is connected with ideas of the Mean and “harmony without uniformity”: different elements do not have to be identical or perfectly symmetrical, but should relate appropriately. A traditional courtyard house can illustrate this through order and symmetry combined with variation and open space. “Harmony” is too broad by itself because the concept also stresses knowing the proper degree or measure."
+      }
+    },
+    {
+      "question_id": "aesthetics-8",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“空灵”描述一种清澈、空旷、轻盈而又有精神内涵的审美氛围。它不是空洞或单纯的大空间，而是“空”中仍然有意味、有神韵。例如诗句可以只写极少的景物，却让读者产生高远、清幽的空间感和精神感受。“空灵”与“禅意”相近但不完全相同：空灵更强调呈现出来的氛围和韵味。",
+        "english": "Kongling (空灵) describes an aesthetic atmosphere that feels clear, spacious, light, and spiritually resonant. It does not mean emptiness in the sense of being meaningless; rather, the apparent “emptiness” leaves room for imagination and subtle meaning. A poem using only a few images can create a sense of vastness and transcendence without describing everything explicitly. Kongling overlaps with chanyi (禅意), but it places more emphasis on the atmosphere and artistic resonance itself."
+      }
+    },
+    {
+      "question_id": "aesthetics-9",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“古雅”指一种古朴、雅致而有传统韵味的格调，重点是“古而不旧、朴而不俗”。它不是简单的复古，也不意味着东西必须真的很老，而是形式和气质能够让人感受到历史、传统和文化积淀。例如简洁的传统木制圈椅，如果比例自然、装饰克制，就可能呈现古雅。英文的“antique”或“old-fashioned”都容易把积极的文化韵味误解成陈旧。",
+        "english": "Guya (古雅) describes an understated elegance marked by simplicity, age-related resonance, and traditional cultural character. It means something can feel “old in spirit without being outdated,” rather than simply being antique or old-fashioned. A traditional wooden Chinese armchair with restrained decoration and natural proportions can convey this quality. “Antique” or “old-fashioned” can be misleading in English because they emphasize age or outdatedness rather than cultivated cultural resonance."
+      }
+    },
+    {
+      "question_id": "aesthetics-10",
+      "category": "aesthetics",
+      "answer": {
+        "chinese": "“风骨”指一种刚正、坚韧、有气节的精神气质，也可以指艺术作品所体现的这种精神力量。它不只是“很有力量”或外表硬朗，而是形式背后有立场、人格和气节。例如文天祥《过零丁洋》中的表达，就常被理解为具有坚贞不屈的风骨。英文的“integrity”或“moral backbone”可以部分传达，但都不能完整覆盖其文学和审美含义。",
+        "english": "Fenggu (风骨) refers to a spirit of integrity, firmness, resilience, and moral character, whether embodied by a person or expressed through an artwork. It is not simply physical strength or hardness; it concerns the ethical and spiritual force behind the form. Wen Tianxiang’s “Crossing the Lonely Sea” is often associated with this quality because of its steadfast expression of loyalty and resolve. “Moral backbone” or “integrity” captures part of the meaning, but neither fully covers its literary and aesthetic dimensions."
+      }
+    },
+    {
+      "question_id": "folk-1",
+      "category": "folk",
+      "answer": {
+        "chinese": "扫尘是春节前的大扫除，传统上会清理房屋、角落和灰尘，用整洁的环境迎接新年。它常被赋予“辞旧迎新、去除晦气、迎接福气”的象征意义，也具有全家一起劳动和准备过年的家庭仪式感。今天很多家庭仍会在春节前彻底清洁，只是形式更现代、更实用；是否相信驱邪等传统解释因家庭和地区而异。",
+        "english": "Saochen is the practice of thoroughly cleaning the home before the Spring Festival. Traditionally, cleaning away dust was associated with leaving the old year behind and making room for good fortune, while doing the work together could reinforce family participation in preparing for the new year. Today many families still clean extensively before the holiday, although the practice is often more practical than ritualistic. Belief in older ideas about removing bad luck varies by family and region."
+      }
+    },
+    {
+      "question_id": "folk-2",
+      "category": "folk",
+      "answer": {
+        "chinese": "贴春联是在春节期间把写有吉祥话、对偶句的红色春联贴在门上，通常还会配合横批、福字等。它把书写、语言和节庆装饰结合起来，寄托辞旧迎新、祈求吉祥和家庭安康的愿望。传统上讲究上下联的对应和张贴位置；今天既有人手写，也大量使用印刷春联，内容也会加入现代祝愿。",
+        "english": "Chunlian are red New Year couplets placed around the entrance during the Spring Festival, usually with paired lines and sometimes a horizontal inscription or a separate “fu” character. The practice combines calligraphy, language, decoration, and wishes for good fortune in the new year. Traditional conventions concern the matching of the couplets and their placement, while today people use both handwritten and printed versions, often with contemporary blessings."
+      }
+    },
+    {
+      "question_id": "folk-3",
+      "category": "folk",
+      "answer": {
+        "chinese": "守岁是除夕夜一家人共同熬夜或至少守到新年到来的习俗。传统意义包括辞旧迎新、陪伴长辈、祈求平安长寿，长时间守夜也象征珍惜家人相聚。现代守岁通常表现为一起吃年夜饭、聊天、看节目、倒计时到零点，不一定真的通宵。线上视频拜年等方式也让不能回家的人参与其中。",
+        "english": "Shousui is the New Year’s Eve practice of staying awake together, traditionally through the transition into the new year. It is associated with seeing out the old year, accompanying elders, and wishing for safety and longevity, while the shared time emphasizes family reunion. Today, shousui often means eating together, talking, watching holiday programs, and staying until midnight rather than remaining awake all night. Video calls and online greetings can extend the practice to family members who are away."
+      }
+    },
+    {
+      "question_id": "folk-4",
+      "category": "folk",
+      "answer": {
+        "chinese": "拜年是春节期间向长辈、亲友问候和送上新年祝福的习俗。传统形式可能包括行礼、说吉祥话和走亲访友，也常与压岁钱等互动联系在一起。它不仅是“说新年快乐”，还承担维系亲属和熟人关系、表达尊敬和祝福的功能。今天拜年更加灵活，可以登门、打电话、发信息、视频拜年或发电子红包。",
+        "english": "Bainian is the practice of visiting or greeting elders, relatives, and friends during the Spring Festival and offering New Year wishes. Traditional forms could include formal greetings, auspicious phrases, and visits, often alongside practices such as giving children lucky money. It therefore serves a relational function: maintaining family and social ties while expressing respect and good wishes. Today it can happen in person, by phone, message, video call, or electronic red envelopes."
+      }
+    },
+    {
+      "question_id": "folk-5",
+      "category": "folk",
+      "answer": {
+        "chinese": "春节放鞭炮、烟花传统上用响声制造热闹气氛，也与驱邪、避凶和迎接吉祥的民间观念联系在一起。它还象征节庆的热烈和家庭团聚。今天这一习俗受到安全、环保和地方规定影响，许多城市限制或禁止燃放，因此人们也会观看公共烟花、使用电子鞭炮等。传统象征意义仍存在，但实际形式已经因地区而变化。",
+        "english": "Setting off firecrackers and fireworks during the Spring Festival traditionally creates a loud, festive atmosphere and has been associated with driving away harmful forces and welcoming good fortune. The noise also symbolizes celebration and the liveliness of the holiday. Today, safety, environmental concerns, and local regulations affect the practice, with many urban areas restricting it. Public fireworks displays and electronic alternatives can preserve some of the festive symbolism while changing the physical practice."
+      }
+    },
+    {
+      "question_id": "folk-6",
+      "category": "folk",
+      "answer": {
+        "chinese": "中秋赏月是在农历八月十五前后观赏月亮的习俗，常与月饼、水果和家人团聚联系在一起。圆月容易让人联想到完整、团圆，也成为思念远方亲人的象征。传统上它与祭月等仪式有联系，现代赏月则更多是家庭休闲和节日团聚。今天人们也可能在公园、江边、阳台等地方赏月，或通过视频与异地家人“共同赏月”。",
+        "english": "Moon-viewing during the Mid-Autumn Festival involves gathering to appreciate the full moon, often with mooncakes, fruit, and family conversation. The round moon naturally evokes ideas of completeness and reunion and can symbolize longing for relatives who are far away. Historically, moon-viewing was connected with moon worship, while today it is more commonly a leisure and family-reunion activity. People may watch the moon in parks, by rivers, from balconies, or share the experience virtually with relatives elsewhere."
+      }
+    },
+    {
+      "question_id": "folk-7",
+      "category": "folk",
+      "answer": {
+        "chinese": "中秋吃月饼把食物与团圆联系起来。月饼通常是圆形，家人分食象征团聚，也常被作为礼物送给亲友，因此它不只是节日食品，还承担传递祝福和维系关系的作用。现代月饼种类很多，既有传统口味，也有低糖、创新口味和定制礼盒；即使有人不特别喜欢吃月饼，也可能保留赠送或象征性的节日仪式。",
+        "english": "Eating mooncakes during the Mid-Autumn Festival links food with the idea of reunion. Their traditionally round shape can symbolize completeness, and sharing them among family members makes the food part of the reunion itself. Mooncakes are also commonly given as gifts, so they function socially as well as gastronomically. Today there are many traditional and innovative varieties, including lower-sugar options and customized gift boxes. Some people maintain the ritual even if they do not particularly enjoy eating mooncakes."
+      }
+    },
+    {
+      "question_id": "folk-8",
+      "category": "folk",
+      "answer": {
+        "chinese": "祭月是以月亮为对象进行祭拜、供奉和祈愿的传统仪式，传统上会摆放供品并表达对丰收、团圆和平安的愿望。它体现了古代对自然与神灵的敬畏，也常与家庭传承和长辈主持仪式联系在一起。现代城市家庭很少完整保留传统祭月形式，部分地区仍会举行简化仪式或文化活动，因此今天的延续程度存在明显地区差异。",
+        "english": "Moon worship is a traditional ritual involving offerings and prayers directed toward the moon, historically expressing wishes for harvest, reunion, safety, and prosperity. It reflects older forms of reverence toward nature and spiritual forces and can also involve family transmission through elders. In many modern urban households, the full ritual is no longer common, while some regions preserve simplified ceremonies or public cultural events. Its contemporary practice therefore varies substantially by place and family."
+      }
+    },
+    {
+      "question_id": "folk-9",
+      "category": "folk",
+      "answer": {
+        "chinese": "端午包粽子是在端午节用糯米和粽叶包裹不同馅料，再蒸煮食用或赠送亲友的传统活动。它常与纪念屈原的文化叙事联系在一起，也因此承载纪念、忠诚和家庭团聚等意义。现代包粽子既可以是家庭共同制作，也可以购买成品；馅料和形状因地区不同而变化，所以不应把一种做法当成唯一标准。",
+        "english": "Making zongzi for the Dragon Boat Festival involves wrapping glutinous rice and various fillings in leaves and then cooking the parcels for sharing or gifting. The practice is commonly connected with the cultural story of commemorating Qu Yuan and therefore can carry meanings of remembrance, loyalty, and family participation. Today families may make zongzi together or buy them ready-made, and fillings and shapes vary considerably by region, so no single form should be treated as universal."
+      }
+    },
+    {
+      "question_id": "folk-10",
+      "category": "folk",
+      "answer": {
+        "chinese": "端午赛龙舟是在端午节期间进行的多人划龙舟活动，通常伴随鼓声、竞速和节庆聚集。它与端午传统和纪念屈原的文化叙事紧密相关，也体现团队协作、力量和社区参与。现代龙舟赛既可以是地方民俗活动，也可以成为正式的体育赛事；不同地区对其历史起源和仪式意义的强调并不完全相同，因此应避免把单一传说当成全部历史。",
+        "english": "Dragon boat racing is a group rowing activity associated with the Dragon Boat Festival, typically involving racing, drums, and community gatherings. It is strongly connected with Dragon Boat traditions and the cultural narrative of commemorating Qu Yuan, while also expressing teamwork, strength, and collective participation. Today dragon boat races can be local folk events as well as organized sporting competitions. Regional traditions differ, so a single origin story should not be treated as the complete historical explanation."
+      }
+    },
+    {
+      "question_id": "pragmatic-1",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是“周末可能在家补觉”，但在这个邀请场景里，更自然的隐含意思是“不太想去逛街”。“补觉”提供了一个具体但不尖锐的理由，让对方可以理解为婉拒，而不是直接说“不想和你去”。这种表达保留了对方的面子，也给未来继续来往留下空间。具体是否完全拒绝仍取决于语气和关系。",
+        "english": "The direct meaning is that the speaker may stay home and catch up on sleep. In the context of a shopping invitation, however, the likely implied message is that they do not really want to go. “Catching up on sleep” gives a concrete but non-confrontational reason, allowing the speaker to decline without saying “I do not want to go with you.” This softens the refusal and preserves the relationship. The exact strength of the refusal still depends on tone and context."
+      }
+    },
+    {
+      "question_id": "pragmatic-2",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是“最近不太想吃辣的”，但结合对方约吃火锅，这很可能是在婉拒这次聚餐，而不是单纯讨论口味。说话者没有直接说“不去”，而是指出火锅的一个特征与自己目前的状态不匹配，让对方容易理解其不便。中文熟人交往中，这种间接理由可以减少拒绝的生硬感。",
+        "english": "The direct meaning is that the speaker does not currently want spicy food. Because the invitation is specifically to eat hotpot, the likely implied meaning is a soft refusal of the dinner invitation rather than a purely factual statement about taste. Instead of saying “I will not go,” the speaker points to a feature of the proposed meal that does not suit them. This indirectness can make the refusal feel less blunt in a familiar relationship."
+      }
+    },
+    {
+      "question_id": "pragmatic-3",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是“我明天可能也会很晚到”，隐含意思是“我没法帮你占早八的座”。说话者没有直接拒绝，而是说明自己的时间安排，让对方自己推断帮助无法实现。这种方式比较委婉，也避免把重点放在“不愿意帮忙”上。",
+        "english": "The direct meaning is that the speaker may also arrive late tomorrow. In context, the implied message is that they cannot help reserve a seat for the early class. Rather than directly saying no, the speaker explains their own schedule and lets the other person infer that the favor is not feasible. This is an indirect and relatively face-saving way to refuse a request."
+      }
+    },
+    {
+      "question_id": "pragmatic-4",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是“最近很忙，没有时间看电影”，隐含意思通常是“这次不去”。这里的拒绝已经比前几个例子更直接，但仍然把原因放在“时间安排”上，而不是说“不想和你看”。因此它既表达了拒绝，又减少了对关系的负面指向。",
+        "english": "The direct meaning is that the speaker has been busy and does not have time to watch a movie. In context, it generally means they are declining the invitation. This is more direct than some of the other examples, but the reason is still framed as a lack of time rather than a lack of desire to spend time with the person. That separates the refusal from the relationship itself."
+      }
+    },
+    {
+      "question_id": "pragmatic-5",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是“我等会也要出门，需要用伞”，隐含意思是“不方便借给你”。它没有直接说“我不借”，而是提供了一个现实原因，让拒绝听起来更客气。中文熟人交往里，这类说明自身有需求的表达可以减少直接拒绝带来的尴尬。",
+        "english": "The direct meaning is that the speaker will also be going out and needs the umbrella. The implied meaning is that they cannot conveniently lend it. Rather than saying “I will not lend it,” the speaker gives a practical reason, making the refusal softer. In familiar Chinese interactions, explaining one’s own need can reduce the awkwardness of a direct refusal."
+      }
+    },
+    {
+      "question_id": "pragmatic-6",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是手机电量快耗尽，而且附近没有充电地方；在和朋友一起看书的情境中，它很可能是在暗示“你有没有充电器可以借我？”或者“哪里可以充电？”这是一种不把请求直接说出来的间接求助。是否真的在求助还需要结合语气和朋友之间的习惯。",
+        "english": "The direct meaning is that the phone is nearly out of battery and there is nowhere to charge it. In the context of sitting with a friend, it may indirectly request a charger or information about where to charge. The speaker does not formulate the request explicitly, allowing the friend to offer help. The exact intention depends on tone and the established habits of the friends."
+      }
+    },
+    {
+      "question_id": "pragmatic-7",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是“我的笔似乎写不出字了”，但在一起自习的情境中，通常是在暗示“能不能借我一支笔”。它把困难说出来而不是直接提出请求，让同学有机会主动提供帮助。这种间接表达在熟人之间比较自然。",
+        "english": "The direct meaning is that the speaker’s pen seems not to work. In the study context, the likely implied request is “Could I borrow a pen?” By stating the problem instead of explicitly asking, the speaker gives the classmate an opportunity to offer help. This kind of indirect request can feel natural among people who are already familiar with one another."
+      }
+    },
+    {
+      "question_id": "pragmatic-8",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是“我饿了，但又不想动”。在和室友一起待着的情境中，这可能是在暗示“要不要一起点东西吃？”或者希望室友提出帮忙买、点外卖等。它不一定代表明确请求，因为说话者也可能只是抱怨状态；真正的隐含意图需要结合双方习惯判断。",
+        "english": "The direct meaning is that the speaker is hungry but does not want to move. With a roommate present, this can imply “Should we order something?” or invite the roommate to suggest getting food. It is not necessarily an explicit request; the speaker may simply be complaining. The strength of the implied request depends on the relationship and conversational habits."
+      }
+    },
+    {
+      "question_id": "pragmatic-9",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是天气很热，自己口渴。结合和朋友散步的场景，这很可能是在暗示“要不要买水”，或者期待朋友主动提出一起买水。中文日常交流中，把身体感受或当前困难说出来，有时就是一种间接请求，而不必直接说“请给我买水”。",
+        "english": "The direct meaning is that the weather is very hot and the speaker is thirsty. While walking with a friend, it can function as an indirect suggestion to buy water, or an invitation for the friend to propose getting some. In everyday Chinese conversation, stating a physical need or inconvenience can sometimes serve as an indirect request without explicitly saying “Please buy me water.”"
+      }
+    },
+    {
+      "question_id": "pragmatic-10",
+      "category": "pragmatic",
+      "answer": {
+        "chinese": "直接意思是“我没有零钱，而且手机也没有网络”，但在一起坐公交的场景中，很可能是在暗示自己无法完成付款，希望熟人先帮忙付车费。它没有直接说“你能不能帮我付”，而是先陈述困难，让对方自行提出帮助。",
+        "english": "The direct meaning is that the speaker has no cash and no mobile connection. In the context of riding a bus with an acquaintance, the likely implied message is that the speaker cannot pay and hopes the other person can pay the fare first. Rather than directly asking for money, the speaker states the problem and leaves room for the other person to offer help."
+      }
+    },
+    {
+      "question_id": "slang-1",
+      "category": "slang",
+      "answer": {
+        "chinese": "“加肠变饭”表面上可以理解为“加一根香肠就变成饭”，笑点在“加肠”与“家常”的谐音联系。按照题目给出的网络语境，它来自2026年央视马年春晚小品《你准喜欢》的衍生梗，用看似离谱的泡面加肠场景调侃“家常便饭”。适合朋友聊天、评论春晚或分享轻松生活梗，不适合正式表达。",
+        "english": "Literally, “加肠变饭” suggests that adding a sausage turns something into a meal. The joke comes from the sound connection between “加肠” (add sausage) and “家常” (everyday/home-style), turning an ordinary food situation into a pun on “家常便饭.” In the dataset’s 2026 Spring Festival Gala context, it works as a playful internet expression. It is best suited to casual joking, comments, and meme-like conversation, not formal writing."
+      }
+    },
+    {
+      "question_id": "slang-2",
+      "category": "slang",
+      "answer": {
+        "chinese": "“炅底”本身不是这里真正要解释的普通词，而是借“炅”与何炅的名字制造谐音效果，和“功底”形成联系。“你的炅底很好”是在夸一个人模仿何炅很像，尤其是表情、语气或说话方式很到位。它带有玩梗和调侃色彩，适合短视频评论、朋友模仿明星时使用。",
+        "english": "Here, “炅底” is not intended as an ordinary lexical word. The joke uses “炅,” associated with the name He Jiong (何炅), to echo “功底” (skill/foundation). The expression therefore praises someone for having a convincing imitation of He Jiong, especially in voice, mannerisms, or expressions. It is playful and works best in short-video comments or among friends who understand the reference."
+      }
+    },
+    {
+      "question_id": "slang-3",
+      "category": "slang",
+      "answer": {
+        "chinese": "“蒜鸟蒜鸟”主要利用“蒜”与“算”、“鸟”与“了”的近音/替换效果，把正常说法故意写成食物或奇怪字形，形成网络文字游戏。按照这类表达的语境，它通常用于表示“算了算了”，但故意写得不标准以制造轻松、搞笑的效果。适合熟人聊天、弹幕和玩梗，不适合正式沟通。具体流行含义可能随社群而变化。",
+        "english": "“蒜鸟蒜鸟” is a deliberately distorted internet spelling that uses sound substitutions to turn an ordinary phrase into visually and phonetically odd characters. In the intended context it reads roughly as “算了算了” (“never mind, never mind”), with the humor coming from the intentionally incorrect-looking form. It is suitable for casual chats, comments, and meme culture. Exact usage can vary across online communities."
+      }
+    },
+    {
+      "question_id": "slang-4",
+      "category": "slang",
+      "answer": {
+        "chinese": "“football鲍”属于中英混搭的谐音/文字梗，笑点不在于把football当作普通英语词汇，而在于把英文和中文名字或声音组合成一个看起来很怪、需要读音联想才能理解的表达。按照题目所设的网络梗测试，它更适合当作朋友间的玩笑、评论或模仿语音梗使用。若脱离原始视频或社群语境，具体指向可能不明确，因此不应假装它只有一个固定含义。",
+        "english": "“football鲍” is a mixed Chinese-English phonetic/text pun. Its humor comes from combining the English word “football” with the Chinese syllable/name-like “鲍,” rather than from a literal English meaning. In the dataset’s slang-testing context, it is best treated as a casual sound-based joke used among people who know the reference. Without the original meme or community context, its exact referent may be ambiguous, so it should not be presented as having one universal meaning."
+      }
+    },
+    {
+      "question_id": "slang-5",
+      "category": "slang",
+      "answer": {
+        "chinese": "“马倒成功”是把“马到成功”故意改成“马倒”，利用近音和马年语境制造反差。“马到成功”原本表示事情很快成功；改成“马倒成功”后，表面像是“马摔倒了却成功”，因此带有故意错字和自嘲式幽默。适合马年祝福、朋友玩梗或调侃事情过程很狼狈但最后成功的场景。",
+        "english": "“马倒成功” deliberately changes the familiar phrase “马到成功” (“success upon the horse’s arrival”) by replacing 到 with 倒, creating a pun that sounds like “the horse falls down and succeeds.” The humor comes from the near-homophone and the contrast between a clumsy process and a successful outcome. It works well for casual jokes, especially in a Year-of-the-Horse context."
+      }
+    },
+    {
+      "question_id": "slang-6",
+      "category": "slang",
+      "answer": {
+        "chinese": "“愁马在手”通过把熟悉的表达改造成带“马”的谐音/文字梗来制造笑点。按照题目的马年网络语境，它可以理解为把“愁”与“马在手”的画面感结合起来，用夸张方式表达手里虽然有“马”或机会，却仍然发愁的反差。它适合朋友间调侃、马年短视频和轻松评论；脱离原始梗源时，具体指向存在不确定性。",
+        "english": "“愁马在手” is a Year-of-the-Horse-style wordplay expression built by reshaping a familiar phrase around “马.” Its humor comes from the visual and phonetic contrast between having a “horse” or opportunity in hand and still feeling worried. It is mainly suited to casual joking, short-video captions, and playful comments. Without the source meme, its exact intended reference is somewhat uncertain."
+      }
+    },
+    {
+      "question_id": "slang-7",
+      "category": "slang",
+      "answer": {
+        "chinese": "“班马”在这个测试中更像是一个故意制造歧义的网络词。字面上可以让人想到“斑马”，也可能被拆成“班”和“马”，因此笑点来自字形、读音或马年语境，而不是一个稳定的普通词义。使用时需要共享语境，否则别人可能只理解成“斑马”的错写。更适合朋友间玩文字梗、评论和短视频。",
+        "english": "In this test, “班马” is best treated as an intentionally ambiguous internet expression. Literally, it may evoke “斑马” (zebra), while the characters can also be read as “班” plus “马.” The humor therefore depends on character choice, sound, and the Year-of-the-Horse context rather than on a stable dictionary meaning. It works mainly in shared meme contexts; without that context, someone may simply read it as a misspelling of “zebra.”"
+      }
+    },
+    {
+      "question_id": "slang-8",
+      "category": "slang",
+      "answer": {
+        "chinese": "“卡急马”利用“卡急吗”的谐音，同时加入“马”字形成马年梗。题目给出的网络语境中，它调侃的是职场上想“卡点”下班，却经常被临时任务拖住的状态。字面上的“马”让表达看起来像“马”的动作，实际笑点在读音和职场吐槽之间的转换。适合打工人聊天、加班吐槽和短视频玩梗。",
+        "english": "“卡急马” plays on the sound of “卡急吗” while inserting “马” to create a Year-of-the-Horse pun. In the dataset’s workplace context, it jokes about employees trying to leave exactly on time but getting trapped by last-minute tasks. The literal horse-like appearance is part of the visual joke; the real humor comes from the sound and the workplace complaint. It fits casual worker conversations and meme-style posts."
+      }
+    },
+    {
+      "question_id": "slang-9",
+      "category": "slang",
+      "answer": {
+        "chinese": "“踏马来了”表面上可以理解成“骑着马来了”，但“踏马”又形成带有口语粗俗色彩的双关，同时符合马年网络语言的创造方式。题目给出的语境把它用于表达一种“终于来了、强势翻身/逆袭”的气势。适合新年自我打气、逆袭类短视频和朋友玩梗；正式场合不建议使用。",
+        "english": "Literally, “踏马来了” can be read as “the horse has arrived,” while “踏马” also creates a slangy double meaning. In the dataset’s Year-of-the-Horse context, it is used to convey the feeling of a strong comeback or finally breaking out of a difficult situation. It works for New Year motivation, comeback-themed videos, and joking among friends, but its slangy tone makes it unsuitable for formal contexts."
+      }
+    },
+    {
+      "question_id": "slang-10",
+      "category": "slang",
+      "answer": {
+        "chinese": "这个梗利用数字的谐音和“霸/怕”的关系，把数字写成一个像数学题的冷笑话。按题目给出的语境，它是在模仿英文“7 ate 9”一类的数字谐音笑话：7对9造成威胁，所以6会害怕。中文版本的笑点依赖数字与汉字读音的转换，翻译成英文时很难保留同样的声音游戏，因此最好解释原来的中文谐音结构。适合朋友讲冷笑话、评论区玩梗。",
+        "english": "This is a number-based pun in which numerals are read through Chinese sound associations to create a mock mathematical joke. In the dataset’s intended context, the joke resembles the classic English “7 ate 9” style: 7 threatens or “bullies” 9, so 6 is afraid. The Chinese version depends on mapping numbers to Chinese sounds and characters, so a literal English translation loses much of the wordplay. It is mainly suited to casual jokes, comments, and meme conversations."
+      }
+    }
+  ]
+}
