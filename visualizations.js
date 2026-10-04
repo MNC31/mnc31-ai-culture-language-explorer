@@ -73,13 +73,31 @@
     return ccRows(node.task).length;
   }
 
-  function selectCcTask(task) {
-    const select = document.getElementById("cc-task");
-    if (!select) return;
-    select.value = task;
-    select.dispatchEvent(new Event("change"));
+  function openDatasetViewer(view, task) {
+    const datasetSelect = document.getElementById("dataset-select");
+    if (datasetSelect) {
+      datasetSelect.value = view;
+      datasetSelect.dispatchEvent(new Event("change"));
+    }
+
+    if (view === "cc" && task) {
+      const select = document.getElementById("cc-task");
+      if (select) {
+        select.value = task;
+        select.dispatchEvent(new Event("change"));
+      }
+    }
+
     const explorer = document.getElementById("dataset-explorer");
-    if (explorer) explorer.scrollIntoView({behavior:"smooth", block:"center"});
+    if (explorer) explorer.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  function selectCcTask(task) {
+    openDatasetViewer("cc", task);
+  }
+
+  function selectGlobalDataset() {
+    openDatasetViewer("global");
   }
 
   function renderCulturalMap() {
@@ -126,28 +144,33 @@
 
   function showNodeDetail(task) {
     const node=culturalNodes.find(n=>n.task===task);
-    const rows=ccRows(task);
     const detail=document.getElementById("cultural-map-detail");
     if(!node || !detail) return;
 
-    const examples = rows.slice(0,3).map(row => {
-      if(task==="bilingual") return row["中文提示词"];
-      if(task==="classical") return row["文言文原文"];
-      if(task==="folk") return row["民俗文化场景"];
-      if(task==="slang") return row["梗"];
-      if(task==="pragmatic") return row["对话内容"];
-      return row["中式美学概念"] || Object.values(row)[0];
-    }).filter(Boolean);
-
     detail.innerHTML =
-      '<div><span class="detail-kicker">SELECTED CULTURAL AREA</span><h4>'+esc(node.label)+'</h4>'+
-      '<p>'+esc(node.description)+'</p>'+
-      '<div class="culture-detail-meta"><strong>'+rows.length+'</strong><span>records in repository</span><strong>'+esc(node.axis)+'</strong></div></div>'+
-      '<div><span class="detail-kicker">REPRESENTATIVE RECORDS</span><ul>'+examples.map(e=>'<li>'+esc(e).slice(0,240)+'</li>').join("")+'</ul>'+
-      '<button type="button" class="map-explore-button" data-map-task="'+task+'">Explore this area in CC-Eval →</button></div>';
+      '<span class="detail-kicker">OPENING DATASET VIEWER</span>'+
+      '<p><strong>'+esc(node.label)+'</strong> — '+esc(node.description)+'</p>';
 
-    const button=detail.querySelector("[data-map-task]");
-    if(button) button.addEventListener("click",()=>selectCcTask(task));
+    selectCcTask(task);
+  }
+
+  function bindVisualizationDatasetEntries() {
+    const basic=document.getElementById("idiom-basic");
+    const simple=document.getElementById("idiom-simple");
+
+    const bind=(el, action)=>{
+      if(!el) return;
+      el.addEventListener("click", action);
+      el.addEventListener("keydown", e=>{
+        if(e.key==="Enter" || e.key===" "){
+          e.preventDefault();
+          action();
+        }
+      });
+    };
+
+    bind(basic, selectGlobalDataset);
+    bind(simple, selectGlobalDataset);
   }
 
   function renderVisualBridge() {
@@ -201,8 +224,7 @@
     renderSimple(pairs);
     renderCulturalMap();
     renderAdvanced(pairs);
-    renderVisualBridge();
-    const loadedCc=Object.keys(state().ccCache||{}).filter(k=>Array.isArray(state().ccCache[k]));
+const loadedCc=Object.keys(state().ccCache||{}).filter(k=>Array.isArray(state().ccCache[k]));
     status.textContent = loadedCc.length
       ? "CC-Eval cultural map is using the repository's local CC-Eval files; Global-MMLU remains available for language/benchmark comparison."
       : "Waiting for CC-Eval rows…";
@@ -218,4 +240,5 @@
   document.addEventListener("explorer-data-ready", render);
   document.addEventListener("explorer-image-comparison-ready", render);
   render();
+  bindVisualizationDatasetEntries();
 })();
