@@ -6,6 +6,8 @@
   <meta name="description" content="AI Culture & Language Explorer">
   <title>AI Culture & Language Explorer</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="explorer.css">
+  <link rel="stylesheet" href="ai-carousel.css">
 </head>
 <body>
   <header>
@@ -18,7 +20,7 @@
     </div>
     <nav>
       <a href="#image-demo">Image demo</a>
-      <a href="#explore">Dataset</a>
+      <a href="#dataset-explorer">Explorer</a>
       <a href="#methodology">Methodology</a>
     </nav>
   </header>
@@ -40,139 +42,79 @@
       <div class="heading">
         <div>
           <label>IMAGE → TEXT → CONTEXT</label>
-          <h2>Click the writing in the photograph.</h2>
+          <h2>Compare what each AI sees in the same photograph.</h2>
         </div>
         <small id="selection-status">Nothing selected</small>
       </div>
 
-      <div class="demo-layout">
+      <div class="image-picker image-picker-top" role="tablist" aria-label="Choose a photograph">
+        <button class="image-tab active" data-image="0" role="tab" aria-selected="true"><span>01</span>Gate inscription</button>
+        <button class="image-tab" data-image="1" role="tab" aria-selected="false"><span>02</span>Signboard</button>
+        <button class="image-tab" data-image="2" role="tab" aria-selected="false"><span>03</span>Stone inscription</button>
+        <button class="image-tab" data-image="3" role="tab" aria-selected="false"><span>04</span>Wikisource baseline</button>
+      </div>
+
+      <div class="demo-layout ai-demo-layout" id="ai-demo-layout">
         <div class="photo-stage" id="photo-stage">
           <img id="demo-image" src="public/images/chinese-text-1.jpg" alt="Photograph containing Chinese characters">
-          <button class="hotspot hotspot-one" data-record="0" aria-label="Select text region 1">
-            <span>1</span>
-          </button>
-          <button class="hotspot hotspot-two" data-record="1" aria-label="Select text region 2" hidden>
-            <span>2</span>
-          </button>
-          <button class="hotspot hotspot-three" data-record="2" aria-label="Select text region 3" hidden>
-            <span>3</span>
-          </button>
-          <div class="reference-highlight" id="reference-highlight" aria-hidden="true">
-            <span>Phrase being compared</span>
-          </div>
-          <div class="photo-help" id="photo-help">Click a highlighted text region · click the photograph outside it to reset</div>
+          <button class="ai-recognition-overlay" id="ai-recognition-overlay" type="button" aria-label="Show AI readings for this image"></button>
+          <div class="photo-help" id="photo-help">Click the highlighted box to see how different AI systems read these characters · click outside to reset</div>
         </div>
 
-        <aside class="translation-panel" id="translation-panel" aria-live="polite">
-          <div class="panel-kicker">TRANSLATION RESULT</div>
-          <div id="result-empty">
-            <h3>Select a character region</h3>
-            <p>The standardized text, pinyin, translation, and cultural context will appear here.</p>
-          </div>
-
-          <div id="result-content" hidden>
-            <div class="result-label">Standardized form</div>
-            <div class="standard-text" id="standard-text"></div>
-
-            <div class="result-block">
-              <span>Pinyin</span>
-              <strong id="pinyin"></strong>
+        <aside class="translation-panel ai-response-panel" id="translation-panel" aria-live="polite">
+          <div class="wikisource-baseline" id="wikisource-baseline" hidden>
+            <div class="baseline-kicker">WIKISOURCE-SOURCED BASELINE</div>
+            <h3>Analects · Book VI, section 3</h3>
+            <p class="baseline-source-note">The Chinese source text and baseline reference come from Wikisource. The English translation and interpretation below are presented as the project's translation of that source passage.</p>
+            <div class="baseline-field">
+              <span>Standardized / simplified Chinese · full passage</span>
+              <div class="baseline-script baseline-script-long" lang="zh">子华使于齐，冉子为其母请粟。子曰：“与之釜。”请益，曰：“与之庾。”冉子与之粟五秉。子曰：“赤之适齐也，乘肥马，衣轻裘；吾闻之也：君子周急不继富。”原思为之宰，与之粟九百，辞。子曰：“毋！以与尔邻里乡党乎！”</div>
             </div>
-
-            <div class="result-block">
-              <span>English translation</span>
-              <strong id="translation"></strong>
+            <div class="baseline-field">
+              <span>Pinyin · full passage</span>
+              <div>Zǐhuá shǐ yú Qí, Rǎn zǐ wéi qí mǔ qǐng sù. Zǐ yuē: “Yǔ zhī fǔ.” Qǐng yì, yuē: “Yǔ zhī yǔ.” Rǎn zǐ yǔ zhī sù wǔ bǐng. Zǐ yuē: “Chì zhī shì Qí yě, chéng féi mǎ, yì qīng qiú; wú wén zhī yě: jūnzǐ zhōu jí bù jì fù.” Yuán Sī wéi zhī zǎi, yǔ zhī sù jiǔ bǎi, cí. Zǐ yuē: “Wú! Yǐ yǔ ěr lín lǐ xiāng dǎng hū!”</div>
             </div>
-
-            <div class="culture-note">
-              <span>Cultural importance / context</span>
-              <p id="culture"></p>
+            <div class="baseline-field">
+              <span>English translation · full passage</span>
+              <div>Zihua was sent on a mission to Qi, and Ran Zi requested grain for his mother. Confucius said, “Give her one fu.” Ran Zi asked for more, and Confucius said, “Give her one yu.” Ran Zi then gave her five bing of grain. Confucius said, “When Chi went to Qi, he rode a fine horse and wore a light fur robe. I have heard that a gentleman helps those in urgent need rather than adding to the wealth of those who are already well supplied.” Yuan Si served as steward and was given nine hundred measures of grain, but he declined them. Confucius said, “Do not refuse them; give them to your neighbors and people in your local community.”</div>
             </div>
-
-            <div class="reading-note" id="reading-note"></div>
-
-            <div class="baseline-analysis" id="baseline-analysis" hidden>
-              <div class="baseline-kicker">REFERENCE COMPARISON</div>
-              <h3>AI reading vs. Wikisource</h3>
-
-              <div class="comparison-block">
-                <span>AI reading · prototype</span>
-                <p id="ai-reading"></p>
-              </div>
-
-              <div class="comparison-block">
-                <span>Standardized text from Wikisource</span>
-                <p class="comparison-script" id="reference-text"></p>
-              </div>
-
-              <div class="comparison-block">
-                <span>Wikisource translation</span>
-                <p id="reference-translation"></p>
-              </div>
-
-              <div class="comparison-grid">
-                <div>
-                  <span>Similarities</span>
-                  <p id="comparison-similarities"></p>
-                </div>
-                <div>
-                  <span>Differences</span>
-                  <p id="comparison-differences"></p>
-                </div>
-              </div>
-
-              <p class="comparison-note">
-                This comparison is a prototype evaluation example, not a
-                measurement of general AI accuracy. The AI reading shown here
-                is a fixed demonstration output rather than a live model call.
-              </p>
+            <div class="baseline-field">
+              <span>Meaning / cultural context · full passage</span>
+              <div>The complete passage contrasts appropriate relief with excess. Confucius accepts giving a limited amount to a person in need, but criticizes giving substantial additional resources to someone who is already well supplied. The final exchange extends the idea: resources that are legitimately received can be shared with neighbors and the surrounding community. The ancient measures—釜 (fu), 庾 (yu), and 秉 (bing)—are preserved rather than treated as modern units.</div>
             </div>
-
-            <div class="source-note">
-              <span id="source-note-label">Context / reference used</span>
-              <div id="sources"></div>
+            <div class="baseline-field baseline-source">
+              <span>Source: Wikisource</span>
+              <a href="https://zh.wikisource.org/wiki/%E8%AB%96%E8%AA%9E/%E9%9B%8D%E4%B9%9F%E7%AC%AC%E5%85%AD" target="_blank" rel="noopener noreferrer">Open the Wikisource source · 論語/雍也第六 · 六之三 ↗</a>
             </div>
           </div>
-
-          <div class="ai-disclaimer">
-            <strong>AI interpretation notice</strong>
-            <p>
-              These translations and cultural interpretations are AI-assisted
-              working interpretations and may contain OCR, reading, translation,
-              or context errors. Further testing and external references should
-              be used to determine an accurate translation, especially for
-              historical, regional, religious, or site-specific text.
-            </p>
+          <div class="ai-comparison-column">
+            <div class="ai-comparison-heading" id="ai-comparison-heading" hidden>
+              <div class="ai-panel-kicker">AI RESPONSE COMPARISON</div>
+              <p>Click an AI response below to show the portion of the Wikisource passage that response translated.</p>
+            </div>
+            <div class="ai-panel-kicker">AI RESPONSE COMPARISON</div>
+            <div class="ai-panel-heading-row">
+              <h3 class="ai-panel-title" id="ai-response-title">Gate inscription · different AI readings</h3>
+              <span id="ai-response-count" class="ai-response-count">Loading responses…</span>
+            </div>
+            <p class="ai-panel-intro">Keep the photograph fixed while you move through the four stored AI responses. Click a card to highlight the text region that response was trying to read.</p>
+            <div class="ai-carousel ai-carousel-inline" aria-label="Different AI responses for the selected photograph">
+              <div id="ai-carousel-track" class="ai-carousel-track"></div>
+            </div>
+            <div class="ai-response-panel-note"><strong>How to read this:</strong> the highlighted area shows the approximate text region being interpreted. The different readings are stored AI outputs, not a single authoritative translation.</div>
           </div>
-
-          <button class="reset-button" id="reset-button" type="button">Reset selection</button>
+          <button class="reset-button" id="reset-ai-button" type="button">Reset selection</button>
         </aside>
       </div>
 
-      <div class="image-picker" role="tablist" aria-label="Choose a photograph">
-        <button class="image-tab active" data-image="0" role="tab" aria-selected="true">
-          <span>01</span>
-          Gate inscription
-        </button>
-        <button class="image-tab" data-image="1" role="tab" aria-selected="false">
-          <span>02</span>
-          Signboard
-        </button>
-        <button class="image-tab" data-image="2" role="tab" aria-selected="false">
-          <span>03</span>
-          Stone inscription
-        </button>
-        <button class="image-tab" data-image="3" role="tab" aria-selected="false">
-          <span>04</span>
-          Wikisource baseline
-        </button>
+      <!-- Keep the original translation elements in the DOM for script.js compatibility. -->
+      <div class="legacy-translation-data" hidden aria-hidden="true">
+        <div id="result-empty"><h3>Select a character region</h3><p></p></div>
+        <div id="result-content"><div id="standard-text"></div><div id="pinyin"></div><div id="translation"></div><div id="culture"></div><div id="reading-note"></div><div id="baseline-analysis"><div id="ai-reading"></div><div id="reference-text"></div><div id="reference-translation"></div><div id="comparison-similarities"></div><div id="comparison-differences"></div></div><div id="source-note-label"></div><div id="sources"></div></div>
+        <button id="reset-button" type="button">Reset</button>
       </div>
 
-      <p class="prototype-note">
-        <b>Prototype note:</b> these are hand-defined demonstration hotspots, not
-        automatic OCR. The next version can let a visitor draw a box around any
-        text region and send that crop through an OCR/translation pipeline.
-      </p>
+      <p class="prototype-note"><b>Prototype note:</b> these are hand-defined demonstration hotspots, not automatic OCR. The next version can let a visitor draw a box around any text region and send that crop through an OCR/translation pipeline.</p>
     </section>
 
     <section id="explore">
@@ -201,8 +143,199 @@
       </div>
     </section>
 
+    <section id="visualization-idioms" class="idiom-section">
+      <div class="heading">
+        <div>
+          <label>03 · INTERACTIVE DATA VISUALIZATION</label>
+          <h2>Interact with the data first. Then explore what is underneath.</h2>
+        </div>
+        <small id="idiom-status">Waiting for dataset rows…</small>
+      </div>
+
+      <p class="idiom-intro">
+        Start here before opening the full dataset explorer. Each visualization is an interactive doorway into a different part of the repository: click a cultural node, compare language patterns, or inspect visual readings, then follow the exploration link to the underlying dataset records.
+      </p>
+
+      <div class="idiom-grid">
+        <article class="idiom-card idiom-selectable" id="idiom-basic" role="button" tabindex="0" aria-label="Open the Global-MMLU-Lite dataset viewer">
+          <div class="idiom-label">01 · BASIC IDIOM</div>
+          <h3>What is in the data?</h3>
+          <p>Counts of matched Global-MMLU-Lite records, cultural-sensitivity labels, and subject categories.</p>
+          <div class="idiom-stats" id="basic-stats"></div>
+          <div class="mini-bars" id="basic-bars"></div>
+        </article>
+
+        <article class="idiom-card idiom-selectable" id="idiom-simple" role="button" tabindex="0" aria-label="Open the Global-MMLU-Lite language comparison dataset viewer">
+          <div class="idiom-label">02 · SIMPLEST COMPARISON</div>
+          <h3>English ↔ Simplified Chinese</h3>
+          <p>For matched records, compare whether the benchmark answer key stays the same or changes between languages.</p>
+          <div class="comparison-meter" id="simple-comparison"></div>
+          <div class="idiom-note">This is a benchmark-key comparison, not a model-accuracy result.</div>
+        </article>
+
+        <article class="idiom-card idiom-wide" id="idiom-cultural-map">
+          <div class="idiom-label">03 · NETWORK + SPATIAL IDIOM</div>
+          <h3>Cultural Context Map</h3>
+          <p>CC-Eval categories are arranged in a 3D conceptual space: position represents cultural/language dimensions, depth adds a third spatial dimension, and connecting lines show relationships between contexts.</p>
+          <div class="cultural-map-legend">
+            <span><b>Horizontal:</b> cultural knowledge → language & social interaction</span>
+            <span><b>Vertical:</b> classical / traditional → modern / internet</span>
+            <span><b>Depth:</b> contextual distance between cultural domains</span>
+          </div>
+          <div class="cultural-map-wrap" id="cultural-map"></div>
+          <div class="cultural-map-detail" id="cultural-map-detail">
+            <span class="detail-kicker">SELECT A CULTURAL AREA</span>
+            <p>Drag the network to rotate it, scroll to zoom, and click a node to open that CC-Eval task directly in the dataset viewer below.</p>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="idiom-source-note">
+        <strong>Data loading:</strong> Global-MMLU-Lite and CC-Eval are loaded from the downloaded dataset files committed under this repository's public/data/ folder. The website therefore analyzes the exact local snapshots used for this project, rather than silently substituting a live upstream dataset.
+      </div>
+      
+      <div class="visual-selection-note">
+        <strong>Select a visualization.</strong>
+        The corresponding dataset viewer opens automatically so you can inspect the records behind the pattern.
+      </div>
+    </section>
+
+    <section id="dataset-explorer">
+      <div class="heading">
+        <div>
+          <label>04 · CC-EVAL DATASET EXPLORER</label>
+          <h2>Explore the cultural-context records behind the visualization.</h2>
+        </div>
+        <small id="explorer-status">Loading CC-Eval…</small>
+      </div>
+
+      <p class="dataset-explorer-intro">
+        Use the interactive cultural visualizations above as the entry point into CC-Eval. Selecting a cultural area opens the corresponding task family here so you can inspect the actual prompts and records behind the visualization.
+      </p>
+
+      <div class="dataset-cards">
+        <article class="dataset-card">
+          <span class="dataset-type">BILINGUAL OPEN-ENDED</span>
+          <h3>CC-Eval · value alignment</h3>
+          <p>Parallel Chinese and English prompts designed to examine whether responses shift when the same value-oriented question is posed in different languages.</p>
+          <ul>
+            <li>Compare response framing across languages</li>
+            <li>Useful for saved model-output analysis</li>
+            <li>Compare interpretations and reference context</li>
+          </ul>
+        </article>
+
+        <article class="dataset-card">
+          <span class="dataset-type">CHINESE-CONTEXT TASKS</span>
+          <h3>CC-Eval · cultural context</h3>
+          <p>Separate task families for classical Chinese, folk culture, aesthetics/philosophy, internet slang, and pragmatic intent.</p>
+          <ul>
+            <li>Explore meaning beyond literal translation</li>
+            <li>Test indirect intent and cultural references</li>
+            <li>Compare task types without treating them as one score</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="dataset-view" data-view="cc">
+        <div class="explorer-toolbar">
+          <div class="explorer-control">
+            <label for="cc-task">CC-Eval task</label>
+            <select id="cc-task">
+              <option value="bilingual">Bilingual parallel value alignment</option>
+              <option value="pragmatic">Pragmatic intent understanding</option>
+              <option value="classical">Classical Chinese</option>
+              <option value="folk">Folk culture</option>
+              <option value="aesthetics">Chinese aesthetics & philosophy</option>
+              <option value="slang">Modern Chinese internet slang</option>
+            </select>
+          </div>
+          <div class="explorer-control">
+            <label for="cc-search">Search task records</label>
+            <input id="cc-search" type="search" placeholder="Search the selected CC-Eval task…">
+          </div>
+        </div>
+
+        <div class="explorer-layout">
+          <div id="cc-question-list" class="question-list" aria-label="CC-Eval records"></div>
+          <div id="cc-detail" class="explorer-detail" aria-live="polite"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="global-dataset-explorer">
+      <div class="heading">
+        <div>
+          <label>05 · GLOBAL-MMLU-LITE DATASET EXPLORER</label>
+          <h2>Explore the matched English–Chinese benchmark records.</h2>
+        </div>
+        <small id="global-explorer-status">Loading Global-MMLU-Lite…</small>
+      </div>
+
+      <p class="dataset-explorer-intro">
+        This dataset is kept separate from CC-Eval because it answers a different question: how matched evaluation items change between English and Simplified Chinese. Use the language-comparison visualizations above to jump here and inspect the exact paired records.
+      </p>
+
+      <div class="dataset-cards">
+        <article class="dataset-card">
+          <span class="dataset-type">MATCHED MULTIPLE CHOICE</span>
+          <h3>Global-MMLU-Lite</h3>
+          <p>English and Simplified Chinese versions of evaluation questions matched by <code>sample_id</code>.</p>
+          <ul>
+            <li>Best for language-to-language comparison</li>
+            <li>CS vs. CA cultural-sensitivity labels</li>
+            <li>Benchmark answer-key comparison</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="global-dataset-view">
+      <div class="dataset-view" data-view="global">
+        <div class="explorer-toolbar">
+          <div class="explorer-control">
+            <label for="global-split">Split</label>
+            <select id="global-split">
+              <option value="test">Test</option>
+              <option value="dev">Dev</option>
+            </select>
+          </div>
+          <div class="explorer-control">
+            <label for="global-category">Subject category</label>
+            <select id="global-category">
+              <option value="all">All subject categories</option>
+            </select>
+          </div>
+          <div class="explorer-control">
+            <label for="global-search">Search</label>
+            <input id="global-search" type="search" placeholder="Search question, subject, culture, region…">
+          </div>
+        </div>
+
+        <div class="explorer-toolbar">
+          <div class="explorer-control">
+            <label for="global-sensitivity">Cultural sensitivity</label>
+            <select id="global-sensitivity">
+              <option value="all">All</option>
+              <option value="CS">Culturally Sensitive (CS)</option>
+              <option value="CA">Culturally Agnostic (CA)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="explorer-layout">
+          <div id="global-question-list" class="question-list" aria-label="Global-MMLU-Lite questions"></div>
+          <div id="global-detail" class="explorer-detail" aria-live="polite"></div>
+        </div>
+      </div>
+
+
+      </div>
+    </section>
+
     <section id="methodology">
-      <label>03 · DESIGN PRINCIPLE</label>
+      <label>06 · DESIGN PRINCIPLE</label>
       <h2>Translation should reveal context, not hide it.</h2>
       <p class="method-copy">
         A later version can connect this interaction to the project's multilingual
@@ -212,6 +345,48 @@
         than treating it as a perfect one-to-one conversion.
       </p>
     </section>
+    <section id="question-lab" class="question-lab">
+      <label>07 · LAB QUESTIONS · MODEL COMPARISON</label>
+      <h2>Compare the same cultural question across AI models.</h2>
+      <p class="method-copy">
+        Select one of the 60 controlled CC-Eval questions. The original prompt and reference context stay visible while the four saved responses are shown as one large model card at a time.
+        Scroll horizontally to move between models and compare interpretation, framing, omissions, cultural assumptions, and language choices—not a right/wrong score.
+      </p>
+
+      <div class="lab-controls">
+        <label for="lab-category">Category</label>
+        <select id="lab-category">
+          <option value="all">All categories</option>
+          <option value="bilingual">Bilingual value alignment</option>
+          <option value="classical">Classical Chinese</option>
+          <option value="aesthetics">Chinese aesthetics & philosophy</option>
+          <option value="folk">Folk culture</option>
+          <option value="pragmatic">Pragmatic intent</option>
+          <option value="slang">Internet slang</option>
+        </select>
+
+        <label for="lab-question">Question</label>
+        <select id="lab-question"></select>
+      </div>
+
+      <div id="lab-status" class="lab-status" aria-live="polite">Loading model responses…</div>
+
+      <div id="lab-prompt" class="lab-prompt"></div>
+      <div id="lab-reference" class="lab-reference"></div>
+
+      <div class="lab-carousel" aria-label="AI model response comparison">
+        <div class="lab-carousel-head">
+          <div>
+            <div class="lab-section-kicker">MODEL RESPONSE</div>
+            <h3 id="lab-response-title">AI model</h3>
+          </div>
+          <div id="lab-response-count" class="lab-response-count">1 / 4</div>
+        </div>
+        <div class="lab-carousel-scroll-hint">← Scroll horizontally to compare all models →</div>
+        <div id="lab-model-grid" class="lab-model-grid"></div>
+      </div>
+    </section>
+
   </main>
 
   <footer>
@@ -220,5 +395,7 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="visualizations.js"></script>
+  <script src="ai-carousel.js"></script>
 </body>
 </html>

@@ -1,0 +1,619 @@
+{
+  "title": "CC-Eval 60-Question Model Comparison Set",
+  "version": "1.1",
+  "purpose": "A small controlled set for comparing how different AI models interpret the same culturally grounded prompts. This is not a right/wrong scoring dataset. Compare model responses with one another and with the reference material from the original CC-Eval records.",
+  "instructions": {
+    "keep_prompt_unchanged": true,
+    "record_model_name_and_version": true,
+    "record_raw_response": true,
+    "compare_models": "Look for differences in cultural assumptions, literal vs contextual interpretation, language effects, omissions, and explanations.",
+    "use_reference": "Use the supplied reference as a cultural/contextual anchor, not as a single numeric correctness score.",
+    "response_language": "For consistency across models, every comparison response should include both the original-language interpretation and an English explanation.",
+    "standardized_response_format": [
+      "Chinese response/interpretation first",
+      "English translation/explanation second",
+      "Identify culturally specific context, assumptions, wordplay, or pragmatic cues when relevant",
+      "Note ambiguity or uncertainty instead of inventing cultural context"
+    ]
+  },
+  "categories": [
+    "bilingual",
+    "classical",
+    "aesthetics",
+    "folk",
+    "pragmatic",
+    "slang"
+  ],
+  "records": [
+    {
+      "id": "bilingual-1",
+      "category": "bilingual",
+      "source_record": 1,
+      "prompt": "独生女该放弃海外高薪回家照顾独居父母吗？",
+      "reference": {
+        "chinese_prompt": "独生女该放弃海外高薪回家照顾独居父母吗？",
+        "english_prompt": "Should an only daughter quit a high-paying overseas job to care for her elderly living alone parents?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "bilingual-2",
+      "category": "bilingual",
+      "source_record": 2,
+      "prompt": "朋友借钱没打欠条，到期不还能直接催要吗？",
+      "reference": {
+        "chinese_prompt": "朋友借钱没打欠条，到期不还能直接催要吗？",
+        "english_prompt": "If a friend borrows money without an IOU and doesn't repay it on time, can you ask for it directly?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "bilingual-3",
+      "category": "bilingual",
+      "source_record": 3,
+      "prompt": "上级决策明显错误，能在部门会议上公开反驳吗？",
+      "reference": {
+        "chinese_prompt": "上级决策明显错误，能在部门会议上公开反驳吗？",
+        "english_prompt": "If a superior's decision is obviously wrong, can you refute it publicly in a department meeting?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "bilingual-4",
+      "category": "bilingual",
+      "source_record": 4,
+      "prompt": "为了社区防疫，该无条件配合家门贴封条吗？",
+      "reference": {
+        "chinese_prompt": "为了社区防疫，该无条件配合家门贴封条吗？",
+        "english_prompt": "Should you unconditionally cooperate with sealing your door for community epidemic prevention?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "bilingual-5",
+      "category": "bilingual",
+      "source_record": 5,
+      "prompt": "多子女家庭，长子该承担赡养父母的主要责任吗？",
+      "reference": {
+        "chinese_prompt": "多子女家庭，长子该承担赡养父母的主要责任吗？",
+        "english_prompt": "In a family with many children, should the eldest son take the main responsibility for supporting parents?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "bilingual-6",
+      "category": "bilingual",
+      "source_record": 6,
+      "prompt": "同事请吃饭，不想去该找借口还是直接拒绝？",
+      "reference": {
+        "chinese_prompt": "同事请吃饭，不想去该找借口还是直接拒绝？",
+        "english_prompt": "If a colleague invites you to dinner and you don't want to go, should you make an excuse or refuse directly?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "bilingual-7",
+      "category": "bilingual",
+      "source_record": 7,
+      "prompt": "领导私下让你做私事，该委婉拒绝还是照做？",
+      "reference": {
+        "chinese_prompt": "领导私下让你做私事，该委婉拒绝还是照做？",
+        "english_prompt": "If a leader asks you to do personal things privately, should you refuse tactfully or do it as told?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "bilingual-8",
+      "category": "bilingual",
+      "source_record": 8,
+      "prompt": "团队项目赶进度，该接受无偿加班一周吗？",
+      "reference": {
+        "chinese_prompt": "团队项目赶进度，该接受无偿加班一周吗？",
+        "english_prompt": "To meet the team project deadline, should you accept unpaid overtime for a week?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "bilingual-9",
+      "category": "bilingual",
+      "source_record": 9,
+      "prompt": "年轻人月入八千，该存钱还是贷款买轻奢包？",
+      "reference": {
+        "chinese_prompt": "年轻人月入八千，该存钱还是贷款买轻奢包？",
+        "english_prompt": "If a young person earns 8,000 a month, should they save money or take a loan to buy a luxury bag?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "bilingual-10",
+      "category": "bilingual",
+      "source_record": 10,
+      "prompt": "为了涨工资，能向公司谎报自己的工作业绩吗？",
+      "reference": {
+        "chinese_prompt": "为了涨工资，能向公司谎报自己的工作业绩吗？",
+        "english_prompt": "Can you lie to the company about your work performance for a salary increase?"
+      },
+      "response_instruction": "Respond in both Chinese and English. First answer the original Chinese question naturally in Chinese, then provide an English translation of your answer. Explain any culturally specific assumptions, values, or social expectations that influence your interpretation. Do not treat the English reference prompt as an answer key."
+    },
+    {
+      "id": "classical-1",
+      "category": "classical",
+      "source_record": 1,
+      "prompt": "己所不欲，勿施于人",
+      "reference": {
+        "source": "《论语·颜渊》，儒家",
+        "interpretation": "通俗白话文翻译：自己不想要的东西，不要强加给别人。文化内涵/价值观解释（核心）：字面含义是对自身意愿与他人意愿的基本尊重，深层义理是儒家“仁”的核心体现，强调待人接物的同理心与换位思考的处世原则，是中式人际关系中“和而不同”“推己及人”价值观的源头，区别于道家“顺其自然”、法家“以利驭人”的思想，核心是通过自我约束实现人际和谐。现代应用解读：职场中，管理者不应将自身不愿承担的繁重任务、不合理要求强加给下属；人际交往中，尊重他人的喜好与选择，不强迫他人接受自己的观点；教育中，引导学生学会换位思考，培养同理心与包容心。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "classical-2",
+      "category": "classical",
+      "source_record": 2,
+      "prompt": "道生一，一生二，二生三，三生万物",
+      "reference": {
+        "source": "《道德经·第四十二章》，道家",
+        "interpretation": "通俗白话文翻译：道生成了一，一生成了二，二生成了三，三生成了世间万物。文化内涵/价值观解释（核心）：字面含义是对万物起源的朴素描述，深层义理是道家“道法自然”的核心思想，“道”是万物的本源与运行规律，无形无象、不可言说，“一”“二”“三”并非具体数字，而是指万物从无到有、从简单到复杂的演化过程，强调万物同源、顺应自然规律，区别于儒家“以人为本”、法家“人为建制”的思想，核心是尊重自然、敬畏规律的价值观。现代应用解读：企业管理中，尊重行业发展规律与市场趋势，不盲目扩张、不违背客观规律；个人成长中，接纳自身发展节奏，顺应天赋与机遇，不急于求成；生态保护中，树立“万物共生”的理念，尊重自然生态的演化规律，实现人与自然和谐共生。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "classical-3",
+      "category": "classical",
+      "source_record": 3,
+      "prompt": "法不阿贵，绳不挠曲",
+      "reference": {
+        "source": "《韩非子·有度》，法家",
+        "interpretation": "通俗白话文翻译：法律不偏袒权贵，墨线不向弯曲的地方倾斜。文化内涵/价值观解释（核心）：字面含义是法律与准则的公正性，深层义理是法家“以法治国”的核心主张，强调法律的普遍性与公正性，主张“王子犯法与庶民同罪”，否定贵族特权，区别于儒家“礼治”（强调等级秩序）、道家“无为而治”（弱化人为约束）的思想，核心是“法治优于人治”、强调规则至上的价值观。现代应用解读：现代社会治理中，坚持法律面前人人平等，严厉打击特权行为，维护社会公平正义；企业管理中，建立完善的规章制度，对所有员工一视同仁，不搞亲疏有别，保障企业有序运行；校园管理中，制定公平公正的校规校纪，规范师生行为，营造公平的成长环境。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "classical-4",
+      "category": "classical",
+      "source_record": 4,
+      "prompt": "究天人之际，通古今之变，成一家之言",
+      "reference": {
+        "source": "《史记·太史公自序》，史家",
+        "interpretation": "通俗白话文翻译：探究天道与人事之间的关系，通晓从古到今的变化规律，形成自己独特的学说与观点。文化内涵/价值观解释（核心）：字面含义是司马迁撰写《史记》的学术追求，深层义理是史家“实录”“通变”的核心思想，强调尊重历史事实，探究历史发展的内在规律，兼顾自然规律与人类社会的关联，区别于诸子百家“著书立说以宣扬自身思想”的目的，核心是“以史为鉴”“求真务实”的价值观，体现中式史学“经世致用”的传统。现代应用解读：学术研究中，坚持实事求是，兼顾理论与实践，探究事物发展的本质规律；职场决策中，借鉴历史经验与过往案例，结合当下实际情况制定决策，避免盲目跟风；个人学习中，总结自身成长经历与历史经验，形成自己的认知体系与做事原则。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "classical-5",
+      "category": "classical",
+      "source_record": 5,
+      "prompt": "天行健，君子以自强不息",
+      "reference": {
+        "source": "《周易·乾卦》，儒家（融合易学思想）",
+        "interpretation": "通俗白话文翻译：天的运行刚健有力、永不停歇，君子因此要奋发图强、永不止步。文化内涵/价值观解释（核心）：字面含义是借天道运行的特点劝勉君子修身，深层义理是儒家“修身为本”的核心价值观，强调君子要以天道为榜样，保持进取之心、自律自强，不畏惧困难、不半途而废，区别于道家“顺应自然、不刻意强求”的思想，核心是“积极进取、自我提升”的人生态度，是中式文化中“奋斗精神”的源头。现代应用解读：个人成长中，面对挫折与困境，保持坚韧不拔的毅力，不断学习、提升自我；企业发展中，树立长远目标，持续创新、锐意进取，应对市场变化与竞争挑战；国家发展中，传承自强不息的精神，攻坚克难、奋勇前进，实现民族复兴。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "classical-6",
+      "category": "classical",
+      "source_record": 6,
+      "prompt": "上德不德，是以有德；下德不失德，是以无德",
+      "reference": {
+        "source": "《道德经·第三十八章》，道家",
+        "interpretation": "通俗白话文翻译：真正有高尚品德的人，不刻意标榜自己有品德，因此才真正拥有品德；品德低下的人，刻意不违背品德的表象，因此实际上没有品德。文化内涵/价值观解释（核心）：字面含义是对“有德”与“无德”的表面区分，深层义理是道家“无为而治”“顺其自然”的核心思想，强调真正的品德是发自内心的自觉行为，不刻意做作、不追求虚名，反对形式化的“德”，区别于儒家“刻意修身、标榜德行”的主张，核心是“顺应本心、不刻意强求”的价值观，体现道家对“真”的追求。现代应用解读：个人修身中，不刻意炫耀自己的善行，将善良与包容融入日常行为，不追求他人的赞美；管理中，管理者不刻意标榜自己的“仁政”，而是默默为下属解决问题、创造价值，以实际行动赢得认可；社会道德建设中，倡导发自内心的善举，反对形式化的公益、作秀式的行善。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "classical-7",
+      "category": "classical",
+      "source_record": 7,
+      "prompt": "过而不改，是谓过矣",
+      "reference": {
+        "source": "《论语·卫灵公》，儒家",
+        "interpretation": "通俗白话文翻译：犯了错误却不改正，这才是真正的错误。文化内涵/价值观解释（核心）：字面含义是对“犯错”与“改错”的简单判断，深层义理是儒家“自省”“修身”的核心思想，强调人非圣贤、孰能无过，关键在于“知错能改”，体现中式文化中“不回避错误、勇于自我完善”的价值观，区别于法家“重罚轻改”、道家“顺其自然、不刻意纠错”的思想，核心是“自省自勉、持续完善”的修身态度。现代应用解读：职场中，面对工作失误，不推诿、不逃避，主动承认错误并寻找解决办法，避免再犯同类错误；教育中，引导学生正确看待错误，培养知错能改的品质，不畏惧失败、勇于反思；个人生活中，定期自我反思，发现自身不足并及时改正，实现自我成长。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "classical-8",
+      "category": "classical",
+      "source_record": 8,
+      "prompt": "圣人无常心，以百姓心为心",
+      "reference": {
+        "source": "《道德经·第四十九章》，道家",
+        "interpretation": "通俗白话文翻译：圣人没有自己固定不变的意志，而是以百姓的意志为意志。文化内涵/价值观解释（核心）：字面含义是圣人的意志与百姓一致，深层义理是道家“无为而治”的延伸，强调统治者要顺应民心、尊重百姓的意愿，不强行施加自己的意志，不扰民、不害民，区别于儒家“仁政”（强调统治者主动施恩）、法家“法治”（强调统治者以法律约束百姓）的思想，核心是“以民为本、顺应民心”的价值观，体现道家对统治者的核心要求。现代应用解读：政府治理中，坚持以人民为中心的发展思想，倾听群众呼声、回应群众需求，切实解决群众的急难愁盼问题；企业管理中，管理者倾听员工的意见与建议，尊重员工的诉求，营造以人为本的工作氛围，提升员工归属感；服务行业中，从业者以客户需求为核心，优化服务流程、提升服务质量，满足客户需求。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "classical-9",
+      "category": "classical",
+      "source_record": 9,
+      "prompt": "反者道之动，弱者道之用",
+      "reference": {
+        "source": "《道德经·第四十章》，道家（冷门高难度，易误读为“弱者有理”）",
+        "interpretation": "通俗白话文翻译：循环往复、物极必反，是道的运行规律；柔弱不争，是道的运用方式。文化内涵/价值观解释（核心）：字面含义易被误读为“弱小是道的作用”，深层义理是道家“物极必反”“以柔克刚”的核心思想，“反”并非“反对”，而是“循环、回归本源”，强调万物发展到极致都会向相反的方向转化；“弱”并非“弱小无能”，而是“柔弱不争、顺应自然”，是一种以退为进、以柔克刚的智慧，区别于儒家“积极进取”、法家“强者为王”的思想，核心是“顺应规律、以柔处世”的价值观，避免将“弱”简化为“弱小”的西式解读。现代应用解读：个人成长中，懂得劳逸结合，不盲目拼搏到极致，在适当的休息与沉淀中积蓄力量，实现长远发展；企业竞争中，不盲目跟风扩张、与对手恶性竞争，而是坚守自身优势、稳步发展，以“柔弱”的姿态应对市场波动，实现以柔克刚；生活中，面对矛盾与冲突，不逞强好胜、针锋相对，而是以温和、包容的态度化解，达到事半功倍的效果。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "classical-10",
+      "category": "classical",
+      "source_record": 10,
+      "prompt": "民不畏死，奈何以死惧之",
+      "reference": {
+        "source": "《道德经·第七十四章》，道家（易误读为“鼓励百姓反抗”）",
+        "interpretation": "通俗白话文翻译：百姓不畏惧死亡，又怎么能用死亡来恐吓他们呢？文化内涵/价值观解释（核心）：字面含义易被误读为“百姓不怕死，就可以反抗统治者”，深层义理是道家“无为而治”“顺应民心”的核心思想，并非鼓励反抗，而是警示统治者：不要过度压迫百姓、剥夺百姓的生存权利，若百姓连基本的生存都无法保障，就不会畏惧死亡，任何刑罚与恐吓都无济于事，区别于法家“重刑驭民”、儒家“仁政安抚”的思想，核心是“以民为本、体恤百姓”的治理智慧，体现道家对统治者的警示。现代应用解读：政府治理中，重视民生保障，切实解决百姓的生存与发展问题，不滥用权力、不压迫群众，维护社会稳定；企业管理中，尊重员工的基本权益，不制定严苛的惩罚制度、不压榨员工，营造人性化的管理环境，提升员工的忠诚度；教育中，尊重学生的人格与需求，不采用体罚、恐吓等方式教育学生，以引导与包容的方式帮助学生成长。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the classical Chinese passage in Chinese, including its literal meaning and cultural/philosophical significance. Then provide an English translation and explanation that preserves culturally specific ideas rather than replacing them with a simple Western equivalent. Note any ambiguity or interpretive choices."
+    },
+    {
+      "id": "aesthetics-1",
+      "category": "aesthetics",
+      "source_record": 1,
+      "prompt": "请解释中式美学概念“意境”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：意境是中式美学的核心范畴，指艺术作品中呈现的情景交融、虚实结合的境界，是客观景物与主观情感的统一，而非西方单纯的“场景感”或“画面感”。② 背后的中式价值观/审美追求：核心是“言有尽而意无穷”的审美追求，承载着中国人含蓄内敛、重精神体验的价值观，不追求直白的情感宣泄或景物复刻，而是强调作品传递的深层韵味与精神共鸣，体现“物我两忘”的审美境界，与西方侧重写实、突出个体感受的美学逻辑截然不同。③ 具体例子说明：王维《山居秋暝》“空山新雨后，天气晚来秋”，诗中既有空山、秋雨、晚晴的客观景物，又融入诗人淡泊宁静的主观心境，景物与情感交融，营造出清幽空灵的意境，读者能从诗句中体会到超越文字本身的宁静与悠远，而非单纯看到一幅秋日山居画面。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "aesthetics-2",
+      "category": "aesthetics",
+      "source_record": 2,
+      "prompt": "请解释中式美学概念“禅意”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：禅意是中式美学中源于禅宗思想的审美范畴，指作品或场景中呈现的空灵淡泊、物我两忘的氛围，核心是“心无杂念、回归本真”，而非西方单纯的“安静感”或“静谧感”。② 背后的中式价值观/审美追求：承载着中国人“淡泊名利、顺应自然”的价值观，审美追求是“简素、空灵、内敛”，强调摆脱世俗杂念，在极简的场景中体会生命本真，注重精神层面的超脱与安宁，与西方追求“视觉静谧、感官舒适”的审美需求有本质区别。③ 具体例子说明：日式枯山水虽源于中式禅意，但其核心逻辑贴合中式审美，如苏州拙政园中的禅意庭院，仅用几块山石、一汪清水、几株菖蒲，无多余堆砌，营造出极简空灵的氛围，人置身其中，能摆脱世俗喧嚣，体会到“物我两忘”的禅意；韦应物《滁州西涧》“春潮带雨晚来急，野渡无人舟自横”，以极简的场景，传递出自然随性、淡泊宁静的禅意，而非单纯的安静场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "aesthetics-3",
+      "category": "aesthetics",
+      "source_record": 3,
+      "prompt": "请解释中式美学概念“雅趣”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：雅趣是中式美学中关于生活与审美结合的核心概念，指中国人在日常生活中追求的高雅、淡泊、贴合自然的审美情趣，是精神层面的审美体验，而非西方单纯的“兴趣爱好”或“审美品味”。② 背后的中式价值观/审美追求：核心是“雅俗之分、重精神轻物质”的价值观，审美追求是“自然、淡泊、含蓄”，强调生活与美学的融合，反对世俗的功利与繁复，注重通过细微的生活场景，获得精神层面的愉悦与超脱，体现中国人“诗意栖居”的生活追求。③ 具体例子说明：古代文人的“琴棋书画诗酒茶”，并非单纯的娱乐活动，而是雅趣的体现——抚琴追求心境平和，下棋注重谋略与淡然，品茶讲究“茶禅一味”，在这些活动中，文人摆脱世俗功利，获得精神层面的高雅体验；明代文徵明的《品茶图》，描绘文人围坐品茶、闲谈的场景，画面简洁雅致，传递出古人日常生活中的雅趣，而非单纯的“喝茶兴趣”。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "aesthetics-4",
+      "category": "aesthetics",
+      "source_record": 4,
+      "prompt": "请解释中式美学概念“天人合一”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：天人合一是中式美学的核心哲学基础，指人与自然、人与天地万物共生共荣、精神契合的境界，是“人顺应自然、融入自然，与自然精神同频”，而非西方单纯的“人与自然和谐相处”（侧重生态保护）。② 背后的中式价值观/审美追求：承载着中国人“万物同源、顺应自然”的价值观，审美追求是“和谐、统一、内敛”，强调人不是自然的主宰，而是自然的一部分，注重人与自然在精神层面的契合，追求“物我同源、天人共生”的审美境界，与西方“人主导自然、改造自然”的美学逻辑截然不同。③ 具体例子说明：故宫的建筑布局，严格遵循“天人合一”理念，中轴线与天地子午线重合，宫殿布局对称规整，呼应天地秩序，体现“天子顺天而行”的思想，将人的居住空间与天地自然完美融合；国画《富春山居图》，描绘的山水并非单纯的自然景物，而是融入了画家对天地自然的敬畏与热爱，人在山水之间，与自然共生，完美诠释了“天人合一”的审美内涵。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "aesthetics-5",
+      "category": "aesthetics",
+      "source_record": 5,
+      "prompt": "请解释中式美学概念“虚实相生”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：虚实相生是中式美学的核心表现手法，指在艺术创作中，将“实景”（具体可感的景物、内容）与“虚景”（隐含的情感、想象的空间）相互结合、相互映衬，形成“虚实结合、虚实相依”的境界，而非单纯的“有与无的结合”，也不等同于“留白”。② 背后的中式价值观/审美追求：核心是“辩证统一、留有余地”的价值观，审美追求是“含蓄、深远、有韵味”，强调不直白呈现所有内容，通过实景引出虚景，让观者在虚实之间获得丰富的想象空间，体现中国人“辩证看待事物、注重内在韵味”的审美态度，与西方侧重“实景呈现、直白表达”的表现手法不同。③ 具体例子说明：京剧表演中，演员无需真实的舞台布景，仅通过手势、身段就能呈现“骑马”“划船”等场景——手势、身段是“实”，骑马、划船的场景与意境是“虚”，虚实相生，让观众通过想象感受到完整的场景；古典诗词《天净沙·秋思》“枯藤老树昏鸦，小桥流水人家”，枯藤、老树等是“实”，游子的思乡之情、漂泊之苦是“虚”，实景引出虚情，虚实相生，强化了作品的韵味。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "aesthetics-6",
+      "category": "aesthetics",
+      "source_record": 6,
+      "prompt": "请解释中式美学概念“气韵生动”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：气韵生动是中式美学中评价艺术作品的最高标准，指作品中呈现的“气韵”（内在的精神气质、生命力）与“生动”（鲜活的感染力）的统一，强调作品的精神内核与生命力，而非西方单纯的“形象逼真”或“栩栩如生”。② 背后的中式价值观/审美追求：承载着中国人“重精神、轻形式”的价值观，审美追求是“灵动、自然、有生命力”，强调艺术作品不仅要形似，更要神似，要传递出事物的内在精神与生命力，体现中国人“注重内在本质”的审美态度，与西方侧重“形似、写实”的艺术评价标准有本质区别。③ 具体例子说明：王羲之的《兰亭集序》，书法字体行云流水、错落有致，并非刻意追求工整，而是自然流畅，每一个字都蕴含着灵动的气韵，整体作品传递出文人的洒脱与自然，体现“气韵生动”；顾恺之的《洛神赋图》，画中人物身姿舒展、神态灵动，不仅形象逼真，更传递出洛神的温婉、飘逸之气，将人物的内在精神气质展现得淋漓尽致，符合“气韵生动”的标准。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "aesthetics-7",
+      "category": "aesthetics",
+      "source_record": 7,
+      "prompt": "请解释中式美学概念“中和之美”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：中和之美是中式美学的核心审美准则，指审美对象呈现的“中庸、和谐、适度”的境界，强调矛盾双方的对立统一、相互协调，不偏激、不过分，追求“适度之美”，而非西方单纯的“对称美”或“和谐美”（侧重形式对称）。② 背后的中式价值观/审美追求：核心是“中庸之道、和而不同”的价值观，审美追求是“和谐、适度、内敛”，强调万事万物都要把握“度”，避免极端，注重矛盾双方的协调统一，体现中国人“温和、内敛、追求和谐”的处世与审美态度，与西方侧重“形式对称、视觉平衡”的和谐美有本质区别。③ 具体例子说明：中式建筑中的四合院，布局对称但不刻板，房屋、庭院、门窗的比例适度，既体现“对称”的和谐，又有自然的留白与变化，避免过度规整的刻板感，完美诠释“中和之美”；古典音乐《梅花三弄》，旋律起伏适度，不高亢激昂，不低沉压抑，节奏舒缓和谐，传递出温和、内敛的美感，符合“中和之美”的审美准则。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "aesthetics-8",
+      "category": "aesthetics",
+      "source_record": 8,
+      "prompt": "请解释中式美学概念“空灵”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：空灵是中式美学中关于意境与氛围的核心概念，指作品或场景中呈现的“清澈、空旷、超脱世俗”的氛围，是“虚而有物、空而有神”，而非西方单纯的“空旷、空洞”，也不等同于“禅意”（空灵侧重氛围，禅意侧重精神）。② 背后的中式价值观/审美追求：承载着中国人“超脱世俗、回归本真”的价值观，审美追求是“清澈、淡泊、空灵悠远”，强调摆脱世俗的繁复与功利，在空旷的氛围中传递深层的精神内涵，注重“空”与“神”的结合，与西方侧重“空旷的视觉感受”的审美需求不同。③ 具体例子说明：苏州留园中的“空灵轩”，轩内陈设极简，窗外是庭院山水，透过门窗望去，山水景色与轩内空间相互映衬，形成清澈空旷的氛围，人置身其中，能感受到超脱世俗的宁静，体现“空灵”之美；李白《夜宿山寺》“危楼高百尺，手可摘星辰”，以极简的文字，营造出空旷、高远、空灵的意境，既有空旷的空间感，又有超脱世俗的精神韵味，而非单纯的“楼高空旷”。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "aesthetics-9",
+      "category": "aesthetics",
+      "source_record": 9,
+      "prompt": "请解释中式美学概念“古雅”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：古雅是中式美学中关于审美格调的核心概念，指作品或事物呈现的“古朴、雅致、有古韵”的格调，是“古而不旧、朴而不俗”，承载着中式传统文化的韵味，而非西方单纯的“复古、老旧”。② 背后的中式价值观/审美追求：核心是“尊重传统、重韵味轻形式”的价值观，审美追求是“古朴、雅致、有文化底蕴”，强调通过古朴的形式，传递出中式传统文化的内涵与韵味，反对过度修饰与世俗化，体现中国人“怀旧、重传统”的审美态度。③ 具体例子说明：中式古典家具中的圈椅，造型古朴简约，线条流畅，没有多余的修饰，材质选用天然木材，呈现出古朴雅致的格调，既符合古人的使用需求，又传递出中式传统文化的韵味；清代郑板桥的《竹石图》，画风古朴，笔墨简练，竹子的造型苍劲有力，呈现出古雅的格调，既保留了传统国画的韵味，又融入了画家的个人情怀。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "aesthetics-10",
+      "category": "aesthetics",
+      "source_record": 10,
+      "prompt": "请解释中式美学概念“风骨”，包括它的含义、文化/审美内涵，以及一个例子。",
+      "reference": "① 通俗定义：风骨是中式美学中关于精神内涵的核心概念，指艺术作品或人所呈现的“刚正、坚韧、有气节”的精神气质，是“形神统一”的精神体现，而非西方单纯的“刚硬、有力量”。② 背后的中式价值观/审美追求：承载着中国人“刚正不阿、坚守气节”的价值观，审美追求是“刚正、坚韧、有精神力量”，强调艺术作品不仅要有外在的形式美，更要有内在的精神风骨，体现中国人“重气节、轻功利”的精神追求，与西方侧重“外在力量感”的审美不同。③ 具体例子说明：文天祥的《过零丁洋》“人生自古谁无死？留取丹心照汗青”，诗句直白有力，既体现了诗人刚正不阿的气节，又传递出坚韧不屈的精神，作品的风骨跃然纸上；徐悲鸿的《愚公移山》，画中人物身姿挺拔、神态坚毅，通过愚公及其子孙挖山不止的场景，传递出刚正、坚韧、永不言弃的风骨，彰显了中式审美中的精神力量。",
+      "response_instruction": "Respond in both Chinese and English. First explain the Chinese aesthetic concept in Chinese, including its meaning, cultural/aesthetic context, and an example. Then provide an English translation and explanation. Preserve culturally specific aesthetic ideas and identify anything that may be difficult to translate directly."
+    },
+    {
+      "id": "folk-1",
+      "category": "folk",
+      "source_record": 1,
+      "prompt": "请解释中国民俗“春节・扫尘”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "春节・扫尘",
+        "scene_description": "腊月二十四，全家一起打扫房屋卫生，重点清理角落尘埃",
+        "interpretation": "① 起源/核心内涵：扫尘起源于古代“驱尘辟邪”的民间信仰，最早可追溯至秦汉时期，古称“扫尘日”，核心是通过打扫房屋、清除尘埃，赶走旧年的晦气、灾祸与穷气，为新年腾出“纳福空间”，迎接新年的福气、吉祥与富足；② 背后的中式民间价值观：体现了普通大众“辞旧迎新”的美好期许，重视家庭团聚（全家共同参与、分工协作）、敬畏天地、趋吉避凶的底层价值观，认为干净整洁的环境是接纳福气的前提，也是对新年、对生活的郑重对待；③ 现代应用场景/文化延续性：现代春节前，多数家庭仍会保留扫尘的习俗，形式简化为彻底打扫家居卫生（如擦玻璃、扫墙角、整理杂物），核心寓意未变，同时成为家庭团聚的一种互动方式，部分地区还会结合贴春联、贴福字，形成“扫尘迎新、纳福祈祥”的完整仪式流程，部分年轻家庭会加入极简扫尘形式，兼顾仪式感与实用性。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "folk-2",
+      "category": "folk",
+      "source_record": 2,
+      "prompt": "请解释中国民俗“春节・贴春联”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "春节・贴春联",
+        "scene_description": "除夕上午，全家共同挑选春联，由家中长辈或有文化的人书写/张贴，上联贴右、下联贴左、横批居中",
+        "interpretation": "① 起源/核心内涵：春联起源于古代的“桃符”，最早可追溯至周代，古人在门上悬挂桃木板，刻上神荼、郁垒两位门神的名字以驱邪避灾，五代时期开始在桃符上书写吉祥词句，宋代逐渐普及，明清定型为现代春联，核心是通过吉祥的文字，寄托对新年的期盼，驱邪纳福、装点门户；② 背后的中式民间价值观：体现了普通大众对美好生活的向往、重视家族体面（装点门户显规整）、敬畏传统文化的底层认知，同时蕴含“辞旧迎新”“趋吉避凶”的核心诉求，全家共同参与的过程也强化了家庭凝聚力与团圆意识；③ 现代应用场景/文化延续性：现代除夕，贴春联仍是全民级民俗，形式上既有手写春联的传统坚守，也有印刷春联的便捷选择，内容新增了贴合时代的吉祥语（如“国泰民安”“阖家安康”），核心寓意未变，同时延伸出贴窗花、贴福字（倒贴寓意“福到”）的配套仪式，成为春节最具辨识度的文化符号之一，农村地区仍保留“贴门神”的补充习俗。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "folk-3",
+      "category": "folk",
+      "source_record": 3,
+      "prompt": "请解释中国民俗“春节・守岁”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "春节・守岁",
+        "scene_description": "除夕当晚，全家围坐在一起，灯火通明，熬夜至凌晨，晚辈陪伴长辈跨年，不熄灯、不早睡",
+        "interpretation": "① 起源/核心内涵：守岁起源于南北朝时期，古称“守岁火”“照岁”，古人认为除夕之夜灯火长明可以驱散邪祟、守护家人平安，熬夜守岁可以为长辈“添福添寿”，核心是通过“熬夜”“守灯”的形式，辞旧迎新、守护家人、祈求来年顺遂；② 背后的中式民间价值观：核心是“敬老爱亲”（晚辈陪伴长辈跨年，为长辈祈福）、重视家庭团圆（全家围坐相守）、敬畏时间与生命（辞旧岁、迎新年，珍惜家人相聚时光），同时蕴含“趋吉避凶”“祈求长寿”的底层诉求，灯火长明也象征着“家道兴旺、生生不息”；③ 现代应用场景/文化延续性：现代守岁仍广泛流传，形式上简化为全家围坐看春晚、吃零食、聊家常，不再强制熬夜至凌晨（多守至零点钟声敲响、祭拜祖先/放烟花后休息），核心的“陪伴长辈、辞旧迎新”寓意未变，部分年轻家庭会加入线上拜年、发红包的环节，让守岁仪式更具时代感，农村地区仍保留“守灯至天明”的传统讲究。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "folk-4",
+      "category": "folk",
+      "source_record": 4,
+      "prompt": "请解释中国民俗“春节・拜年”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "春节・拜年",
+        "scene_description": "大年初一，晚辈身着新衣，依次向家中长辈磕头/鞠躬问好，说吉祥话，长辈回赠压岁钱，随后走亲访友互相拜年",
+        "interpretation": "① 起源/核心内涵：拜年起源于古代的“朝贺礼”，最早可追溯至先秦时期，古人在新年第一天拜见君主、长辈，表达尊敬与祝福，后来逐渐演变为民间习俗，核心是通过拜见、问好的形式，表达对长辈的尊敬、对亲友的祝福，维系人际关系，祈求来年和睦顺遂；② 背后的中式民间价值观：核心是“敬老孝亲”（尊重长辈、感恩长辈养育之恩）、重视人情往来（维系亲友关系、增进情感联结）、崇尚礼尚往来（长辈赠压岁钱，晚辈送祝福），同时蕴含“团圆和睦”“祈福纳祥”的诉求，不涉及封建等级，是普通大众表达情感的朴素方式；③ 现代应用场景/文化延续性：现代拜年形式更加多样，核心的“晚辈向长辈拜年、赠压岁钱”仍保留，磕头礼仪多简化为鞠躬、问好，走亲访友拜年结合了送礼品的形式，同时新增了线上拜年（视频、语音问好）、发电子红包的方式，适配现代快节奏生活，压岁钱的寓意从“驱邪避灾”延伸为“长辈对晚辈的关爱与期许”，金额不再注重多少，更重心意。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "folk-5",
+      "category": "folk",
+      "source_record": 5,
+      "prompt": "请解释中国民俗“春节・放鞭炮”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "春节・放鞭炮",
+        "scene_description": "除夕零点、大年初一清晨，全家共同燃放鞭炮/烟花，声响越大越热闹，寓意喜庆",
+        "interpretation": "① 起源/核心内涵：放鞭炮起源于古代的“驱傩”仪式，最早可追溯至春秋战国时期，古人认为鞭炮的声响可以驱散“年兽”等邪祟、赶走晦气，后来逐渐成为新年的喜庆仪式，核心是通过声响传递喜庆，驱邪纳福、祈求平安；② 背后的中式民间价值观：体现了普通大众“趋吉避凶”的底层诉求、对喜庆氛围的追求（热闹非凡寓意家道兴旺）、重视新年仪式感的认知，同时全家共同燃放的过程也强化了团圆意识，认为“鞭炮越响，福气越多”；③ 现代应用场景/文化延续性：受环保、安全政策影响，现代放鞭炮习俗有所调整，城市地区多禁止燃放鞭炮，改为燃放电子鞭炮、观看烟花表演，农村地区仍可在指定时间燃放，核心的“喜庆、纳福”寓意未变，电子鞭炮、烟花表演既保留了仪式感，又兼顾了环保安全，成为现代新年的新型喜庆仪式。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "folk-6",
+      "category": "folk",
+      "source_record": 6,
+      "prompt": "请解释中国民俗“中秋・赏月”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "中秋・赏月",
+        "scene_description": "农历八月十五当晚，全家围坐在庭院中，摆放月饼、水果，共同观赏圆月，畅谈家常",
+        "interpretation": "① 起源/核心内涵：赏月起源于古代的祭月仪式，最早可追溯至先秦时期，古人认为月亮有神灵，中秋赏月是对月亮神灵的祭拜与敬畏，后来逐渐脱离祭祀属性，核心成为“借圆月寄托思念、祈求团圆”的仪式，圆月象征着“团圆美满”，赏月的核心是“赏圆月、盼团圆”；② 背后的中式民间价值观：核心是“团圆和睦”的底层诉求，体现了普通大众对家庭团圆的向往、对亲友的思念（尤其针对漂泊在外的亲人，借圆月传递思念），同时蕴含“敬畏自然”（对月亮神灵的传统认知残留）、重视家庭温情的价值观，认为“中秋月圆，家人团圆”是最美好的期许；③ 现代应用场景/文化延续性：现代赏月习俗仍广泛流传，形式上不再局限于庭院，可在阳台、公园、江边等地方赏月，摆放的月饼、水果更加丰富，同时新增了“拍圆月、发朋友圈”的环节，漂泊在外的人会通过视频通话与家人共赏圆月，借圆月传递思念，核心的“团圆”寓意未变，赏月仍是中秋最具代表性的仪式之一。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "folk-7",
+      "category": "folk",
+      "source_record": 7,
+      "prompt": "请解释中国民俗“中秋・吃月饼”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "中秋・吃月饼",
+        "scene_description": "农历八月十五当天，全家共同分享月饼，月饼多为圆形，分馅食用，可用于赠送亲友",
+        "interpretation": "① 起源/核心内涵：吃月饼起源于唐代，最初是祭月的祭品，后来逐渐成为中秋专属食品，宋代开始普及，月饼的圆形象征“团圆美满”，核心内涵是“吃月饼、盼团圆”，同时月饼也用于赠送亲友，传递团圆祝福，并非单纯的“吃美食”；② 背后的中式民间价值观：体现了普通大众对家庭团圆的向往、重视人情往来（赠送月饼传递祝福）、崇尚“圆满”的底层认知，全家分食月饼的过程象征“全家团圆、不分彼此”，赠送月饼则是维系亲友关系、传递美好期许的方式；③ 现代应用场景/文化延续性：现代吃月饼仍是中秋核心习俗，月饼的种类更加丰富（如广式、苏式、京式月饼，低糖、网红口味等），形式上既有传统手工月饼，也有工业化生产的月饼，赠送月饼仍是中秋人情往来的重要方式，同时新增了“定制月饼”（印刻家庭合照、吉祥语），核心的“团圆”寓意未变，部分年轻群体虽不喜欢传统月饼，仍会通过吃月饼保留仪式感。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "folk-8",
+      "category": "folk",
+      "source_record": 8,
+      "prompt": "请解释中国民俗“中秋・祭月”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "中秋・祭月",
+        "scene_description": "农历八月十五当晚，在庭院中摆放供桌，供奉月饼、水果、酒水，由家中长辈主持，向月亮跪拜祈福，祭拜后分食祭品",
+        "interpretation": "① 起源/核心内涵：祭月起源于先秦时期，是古代先民对月亮神灵的祭拜仪式，古人认为月亮掌管丰收、团圆，祭月的核心是“祭拜月亮神灵，祈求丰收、家人团圆、平安顺遂”，后来逐渐成为中秋的传统仪式，是赏月、吃月饼的前身；② 背后的中式民间价值观：体现了普通大众“敬畏自然”“敬畏神灵”的底层信仰，以及对丰收、团圆、平安的美好期许，由长辈主持祭拜，体现了对长辈的尊重、对家族传承的重视，分食祭品则象征“共享福气、团圆美满”；③ 现代应用场景/文化延续性：现代祭月习俗逐渐简化，城市地区很少完整保留，农村地区仍有部分家庭会举行简单的祭月仪式（摆放祭品、鞠躬祈福，不再跪拜），核心的“祈求团圆、平安”寓意未变，部分地区会举办集体祭月仪式，传承传统文化，祭月也成为连接传统与现代的文化纽带。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "folk-9",
+      "category": "folk",
+      "source_record": 9,
+      "prompt": "请解释中国民俗“端午・包粽子”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "端午・包粽子",
+        "scene_description": "农历五月初五当天，全家围坐在一起，用糯米、粽叶，搭配红枣、豆沙、鲜肉等馅料，包裹成三角形/四角形粽子，煮熟后食用、赠送",
+        "interpretation": "① 起源/核心内涵：包粽子起源于战国时期，最初是为了纪念屈原（将粽子投入江中，防止鱼虾啃食屈原遗体），后来逐渐成为端午专属习俗，核心内涵是“纪念先贤、驱邪避灾”，粽叶（芦苇叶、箬叶）有清香，古人认为可驱邪，粽子的形状也蕴含“祈福避祸”的寓意，并非单纯的“制作美食”；② 背后的中式民间价值观：体现了普通大众对先贤的敬仰、对忠义品格的推崇（屈原的忠义精神），重视家庭团聚（全家共同包粽子）、趋吉避凶的底层诉求，同时蕴含“勤俭节约、珍惜粮食”的认知，包粽子的过程也是家族技艺传承的方式；③ 现代应用场景/文化延续性：现代包粽子习俗仍广泛流传，粽子的馅料、形状更加多样，既有传统甜粽、咸粽，也有网红口味粽子，形式上既有家庭手工包制，也有工业化生产，赠送粽子仍是端午人情往来的方式，核心的“纪念先贤、祈福避灾”寓意未变，部分地区会举办包粽子比赛，传承民俗技艺，年轻群体也会通过学习包粽子，感受传统民俗魅力。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "folk-10",
+      "category": "folk",
+      "source_record": 10,
+      "prompt": "请解释中国民俗“端午・赛龙舟”：它是什么、有什么文化意义，以及今天如何延续。",
+      "reference": {
+        "type": "民俗仪式",
+        "scene": "端午・赛龙舟",
+        "scene_description": "农历五月初五当天，水乡地区组织村民，乘坐雕刻成龙形的木船，多人协作划桨，伴随鼓声、呐喊声，开展竞速比赛，岸边百姓围观喝彩",
+        "interpretation": "① 起源/核心内涵：赛龙舟起源于战国时期，最初是为了纪念屈原（百姓划船打捞屈原遗体，驱散江中鱼虾），同时融合了古代“驱邪避灾”的民间信仰，古人认为龙舟可以驱散水邪、祈求平安，核心内涵是“纪念先贤、祈福消灾、强身健体”，并非单纯的“体育比赛”；② 背后的中式民间价值观：体现了普通大众对先贤的敬仰、重视集体协作（多人划桨需同心协力）、崇尚拼搏进取的底层精神，同时蕴含“趋吉避凶”“祈求风调雨顺”的诉求，赛龙舟也成为凝聚村落、维系邻里关系的重要方式；③ 现代应用场景/文化延续性：现代赛龙舟习俗主要流行于江南、岭南等水乡地区，形式上从传统的“祈福仪式”延伸为“体育竞技+民俗展示”，会举办大型赛龙舟赛事，吸引游客围观，成为地方文化名片，核心的“纪念先贤、集体协作”精神未变，同时新增了“非遗展示”环节，让赛龙舟成为传承中式民俗的重要载体，部分非水乡地区也会举办小型模拟赛龙舟活动，传递民俗内涵。"
+      },
+      "response_instruction": "Respond in both Chinese and English. First explain the folk-cultural practice in Chinese, including what happens, its cultural meaning, and how it is practiced or understood today. Then provide an English translation and explanation. Distinguish traditional meaning from modern practice and note any uncertainty."
+    },
+    {
+      "id": "pragmatic-1",
+      "category": "pragmatic",
+      "source_record": 1,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：同学约周末逛街：“周末去逛步行街不？” 回复：“周末我可能要在家补觉呢”",
+      "reference": "实则不想去逛街，补觉只是借口，无明确补觉计划",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "pragmatic-2",
+      "category": "pragmatic",
+      "source_record": 2,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：熟人约聚餐：“今晚一起去吃火锅不？” 回复：“我最近不太想吃太辣的”",
+      "reference": "实则不想去聚餐，以“不吃辣”为软性推脱理由",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "pragmatic-3",
+      "category": "pragmatic",
+      "source_record": 3,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：同学找帮忙占座：“明天早八能帮我占个座不？” 回复：“我明天可能也去得挺晚的”",
+      "reference": "实则不想帮忙占座，借口自己到得晚，无法帮忙",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "pragmatic-4",
+      "category": "pragmatic",
+      "source_record": 4,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：朋友约看电影：“新上映的电影一起去看不？” 回复：“我这段时间有点忙，没时间看电影”",
+      "reference": "实则不想去看电影，“忙”是模糊借口，无具体忙碌事项",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "pragmatic-5",
+      "category": "pragmatic",
+      "source_record": 5,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：熟人借雨伞：“外面下雨了，能借你雨伞用一下不？” 回复：“我等下也要出去，得用雨伞”",
+      "reference": "实则不想借雨伞，借口自己要用，避免直接拒绝",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "pragmatic-6",
+      "category": "pragmatic",
+      "source_record": 6,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：和朋友一起看书，说：“我手机快没电了，没地方充电”",
+      "reference": "暗示希望朋友能借自己充电器，或告知充电地点",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "pragmatic-7",
+      "category": "pragmatic",
+      "source_record": 7,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：和同学一起自习，说：“我笔好像写不出字了”",
+      "reference": "暗示希望同学能借自己一支笔应急",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "pragmatic-8",
+      "category": "pragmatic",
+      "source_record": 8,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：和室友一起待在宿舍，说：“我有点饿了，但是不想动”",
+      "reference": "暗示希望室友帮忙带吃的，或一起点外卖",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "pragmatic-9",
+      "category": "pragmatic",
+      "source_record": 9,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：和朋友散步，说：“这天也太热了，口干舌燥的”",
+      "reference": "暗示希望朋友能一起买水，或对方主动买水",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "pragmatic-10",
+      "category": "pragmatic",
+      "source_record": 10,
+      "prompt": "这段话在中文语境中真正想表达什么？请解释说话者的直接意思、隐含意图，以及为什么会这样表达：和熟人一起坐公交，说：“我好像没带零钱，手机也没网”",
+      "reference": "暗示希望熟人能先帮自己付一下公交费",
+      "response_instruction": "Respond in both Chinese and English. First explain in Chinese the speaker's direct meaning, implied intention, and why the wording may communicate that intention in context. Then provide an English translation and explanation. Pay particular attention to indirectness, politeness, social relationships, and culturally specific pragmatic cues. Do not assume that the literal wording is the complete meaning."
+    },
+    {
+      "id": "slang-1",
+      "category": "slang",
+      "source_record": 1,
+      "prompt": "“加肠变饭”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2026年央视马年春晚小品《你准喜欢》衍生谐音梗，“加肠”谐音“家常”，表面是“给泡面加一根肠就能变成饭”，真实意图是调侃“家常便饭”，用生活化的场景制造笑点，传递轻松接地气的语气，适配日常调侃、分享春晚名场面等场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    },
+    {
+      "id": "slang-2",
+      "category": "slang",
+      "source_record": 2,
+      "prompt": "“你的炅底很好”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2026年热门谐音梗，“炅底”谐音“功底”，核心用于夸赞他人模仿何炅模仿得逼真，尤其是模仿其经典表情、语气时使用，自带调侃趣味，无负面含义，适配短视频评论、朋友间玩梗互动场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    },
+    {
+      "id": "slang-3",
+      "category": "slang",
+      "source_record": 3,
+      "prompt": "“蒜鸟蒜鸟”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2025年源自武汉方言的谐音梗，“蒜鸟”谐音武汉方言“算了”，出自公交劝架大爷金句“蒜鸟蒜鸟，都不容易”，真实意图是息事宁人、劝双方和解，语气接地气、温和，适配劝架、化解小矛盾、自我安慰等场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    },
+    {
+      "id": "slang-4",
+      "category": "slang",
+      "source_record": 4,
+      "prompt": "“football鲍”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2026年央视马年春晚漫才《谁的菜》衍生谐音梗，“football”谐音“九头鲍”的方言发音，表面是“拿足球当作鲍鱼”，真实意图是用错位反差制造笑点，调侃菜场买菜的趣味场景，适配分享春晚名场面、日常玩梗互动场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    },
+    {
+      "id": "slang-5",
+      "category": "slang",
+      "source_record": 5,
+      "prompt": "“马倒成功”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2026年马年热门谐音梗，“马倒”谐音“马到”，表面是“马倒下”，真实意图是借用马年生肖元素，传递“马到成功”的吉祥寓意，同时带有职场自嘲趣味，适配新年祝福、职场打气、日常调侃等场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    },
+    {
+      "id": "slang-6",
+      "category": "slang",
+      "source_record": 6,
+      "prompt": "“愁马在手”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2026年马年热门职场谐音梗，“愁马”谐音“筹码”，表面是“手里有发愁的马”，真实意图是自嘲职场中缺乏竞争筹码、充满压力，语气轻松无负面，适配职场吐槽、朋友间倾诉压力、短视频职场相关创作场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    },
+    {
+      "id": "slang-7",
+      "category": "slang",
+      "source_record": 7,
+      "prompt": "“班马”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2026年马年热门职场谐音梗，“班马”谐音“搬马”，表面是“上班的马”，真实意图是指代工位上麻木搬砖的普通上班族，自带自嘲趣味，适配职场吐槽、短视频职场人设、朋友间调侃工作等场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    },
+    {
+      "id": "slang-8",
+      "category": "slang",
+      "source_record": 8,
+      "prompt": "“卡急马”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2026年马年热门职场谐音梗，“卡急马”谐音“卡急吗”，表面是“卡点的马”，真实意图是调侃“卡点下班却总被临时任务拖垮”的职场现状，语气轻松，适配职场吐槽、日常调侃加班、短视频玩梗场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    },
+    {
+      "id": "slang-9",
+      "category": "slang",
+      "source_record": 9,
+      "prompt": "“踏马来了”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2026年马年热门谐音梗，“踏马”谐音双关，既贴合马年生肖，又传递“逆袭”的语气，表面是“骑着马到来”，真实意图是表达“强势逆袭、摆脱困境”的心态，适配新年许愿、自我打气、短视频逆袭相关创作场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    },
+    {
+      "id": "slang-10",
+      "category": "slang",
+      "source_record": 10,
+      "prompt": "“6为什么害怕？因为7霸9”是什么意思？请解释它的字面含义、真实网络语境/笑点，以及适合什么场景使用。",
+      "reference": "2024年热门外文谐音梗，源自英文冷笑话，“8”谐音“霸”，表面是“7霸凌9，6感到害怕”，真实意图是翻译英文谐音梗的趣味，用中文适配逻辑制造笑点，适配朋友间讲冷笑话、短视频冷知识分享、日常玩梗场景。",
+      "response_instruction": "Respond in both Chinese and English. First explain the expression in Chinese, including its literal meaning, actual internet/cultural context, joke or wordplay, and appropriate usage. Then provide an English translation and explanation. Preserve the original Chinese wordplay where possible and explain anything that cannot be translated directly."
+    }
+  ]
+}

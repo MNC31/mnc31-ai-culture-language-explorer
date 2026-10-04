@@ -4,6 +4,16 @@
 
 An interactive website for exploring how multilingual AI evaluation datasets represent culturally sensitive content in **English** and **Simplified Chinese**. The project presents matched benchmark questions, dataset annotations, and—where explicitly documented—precomputed model responses for comparison.
 
+## Demo
+
+The video below is the current project demonstration.
+
+<video src="./Demo_Prototype_video%20%281%29.mp4" controls width="100%">
+  Your browser does not support the video player. [Watch the demo video](./Demo_Prototype_video%20%281%29.mp4).
+</video>
+
+[**Watch the demo video directly**](./Demo_Prototype_video%20%281%29.mp4)
+
 ## Research questions
 
 1. **Does AI understand culture equally across languages?**

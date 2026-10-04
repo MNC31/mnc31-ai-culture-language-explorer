@@ -128,6 +128,7 @@ const comparisonSimilarities = document.getElementById("comparison-similarities"
 const comparisonDifferences = document.getElementById("comparison-differences");
 const imageTabs = document.querySelectorAll(".image-tab");
 const hotspots = document.querySelectorAll(".hotspot");
+const aiRecognitionOverlay = document.getElementById("ai-recognition-overlay");
 
 function renderSources(record) {
   sources.innerHTML = "";
@@ -148,6 +149,9 @@ function resetText() {
   resultContent.hidden = true;
   status.textContent = "Nothing selected";
   hotspots.forEach((spot) => spot.classList.remove("selected"));
+  if (aiRecognitionOverlay) {
+    aiRecognitionOverlay.classList.remove("is-active");
+  }
 }
 
 function showText(index, hotspot) {
@@ -191,11 +195,16 @@ function showImage(index) {
   image.alt = imageRecords[index].alt;
 
   const isBaseline = index === 3;
+  if (aiRecognitionOverlay) {
+    aiRecognitionOverlay.classList.remove("is-active");
+  }
   stage.classList.toggle("reference-mode", isBaseline);
   demoLayout.classList.toggle("reference-layout", isBaseline);
-  referenceHighlight.hidden = !isBaseline;
-  photoHelp.hidden = isBaseline;
-  photoHelp.textContent = "Click a highlighted text region · click the photograph outside it to reset";
+  if (referenceHighlight) {
+    referenceHighlight.hidden = !isBaseline;
+  }
+  photoHelp.hidden = false;
+  photoHelp.textContent = "Click the highlighted box to see how different AI systems read these characters · click outside to reset";
 
   hotspots.forEach((spot, hotspotIndex) => {
     spot.hidden = hotspotIndex !== index;
@@ -210,9 +219,6 @@ function showImage(index) {
 
   resetText();
 
-  if (isBaseline) {
-    showText(index, null);
-  }
 }
 
 hotspots.forEach((spot) => {
@@ -223,10 +229,6 @@ hotspots.forEach((spot) => {
 });
 
 stage.addEventListener("click", (event) => {
-  if (activeImage === 3) {
-    return;
-  }
-
   if (!event.target.closest(".hotspot")) {
     resetText();
   }
@@ -241,3 +243,742 @@ imageTabs.forEach((tab) => {
 });
 
 showImage(0);
+
+
+/* Dataset explorer is embedded here so the deployed static page cannot fail silently if explorer.js is not served. */
+const explorerConfig = {
+  // These are the datasets downloaded into THIS repository.
+  // Do not replace these with upstream/API copies: the site should analyze
+  // the exact files committed under public/data/.
+  global: {
+    test: {
+      en: "public/data/global_mmlu_lite/en_test.jsonl",
+      zh: "public/data/global_mmlu_lite/zh_test.jsonl"
+    },
+    dev: {
+      en: "public/data/global_mmlu_lite/en_dev.jsonl",
+      zh: "public/data/global_mmlu_lite/zh_dev.jsonl"
+    }
+  },
+  cc: {
+    bilingual: "public/data/cc-eval/data/bilingual_paralle_value-alignment.csv",
+    aesthetics: "public/data/cc-eval/data/Chinese-context_task/Chinese_aesthetics&philosophy.csv",
+    classical: "public/data/cc-eval/data/Chinese-context_task/classical_Chinese.csv",
+    folk: "public/data/cc-eval/data/Chinese-context_task/folk_culture.csv",
+    slang: "public/data/cc-eval/data/Chinese-context_task/modern_Chinese_internet_slang.csv",
+    pragmatic: "public/data/cc-eval/data/Chinese-context_task/pragmatic_intent_understanding.csv"
+  },
+  ccModelComparison: "public/data/cc-eval/cc_eval_model_comparison_60.json",
+  ccModelResponses: [
+    { name: "ChatGPT", path: "public/data/cc-eval/ChatGPT_cc_eval_response.json" },
+    { name: "Doubao", path: "public/data/cc-eval/Doubao_cc_eval_response.json" },
+    { name: "Perplexity", path: "public/data/cc-eval/Perplexity_cc_eval_response.json" },
+    { name: "Workbuddy", path: "public/data/cc-eval/Workbuddy_cc_eval_response.json" }
+  ],
+  imageComparison: "public/data/ai_image_comparison.json"
+};
+
+const explorerState = {
+  globalPairs: [],
+  globalLoaded: false,
+  ccCache: {},
+  selectedGlobal: 0,
+  selectedCc: 0,
+  labModelIndex: 0,
+  imageComparisons: [],
+  ccModelComparison: null,
+  ccModelResponses: []
+};
+
+const explorerRoot = document.getElementById("dataset-explorer");
+const globalExplorerRoot = document.getElementById("global-dataset-explorer");
+window.aiCultureExplorer = explorerState;
+
+if (explorerRoot || globalExplorerRoot) {
+  const splitSelect = document.getElementById("global-split");
+  const categorySelect = document.getElementById("global-category");
+  const sensitivitySelect = document.getElementById("global-sensitivity");
+  const searchInput = document.getElementById("global-search");
+  const globalList = document.getElementById("global-question-list");
+  const globalDetail = document.getElementById("global-detail");
+  const ccTask = document.getElementById("cc-task");
+  const ccSearch = document.getElementById("cc-search");
+  const ccList = document.getElementById("cc-question-list");
+  const ccDetail = document.getElementById("cc-detail");
+  const status = document.getElementById("explorer-status");
+  const globalStatus = document.getElementById("global-explorer-status");
+  // The Lab section is a sibling of #dataset-explorer, not a child of it.
+  // Use document-level lookups so the Lab controls can actually be populated.
+  const labCategory = document.getElementById("lab-category");
+  const labQuestion = document.getElementById("lab-question");
+  const labReference = document.getElementById("lab-reference");
+
+  function setStatus(message, isError = false) {
+    if (status) {
+      status.textContent = message;
+      status.classList.toggle("explorer-error", isError);
+    }
+    if (globalStatus && message.includes("Global-MMLU")) {
+      globalStatus.textContent = message;
+      globalStatus.classList.toggle("explorer-error", isError);
+    }
+  }
+
+  async function loadText(path) {
+    // Load the exact dataset files committed to this project. The first
+    // candidates are the files served by the deployed site; if the static
+    // host does not expose the /public/ directory, fall back to the raw file
+    // from THIS GitHub repository. This is not an upstream dataset/API copy.
+    const cleanPath = path.replace(/^\/+/, "");
+    const repoRawPath = cleanPath.replace(/^public\//, "");
+    const candidates = [
+      "/" + cleanPath,
+      "/" + repoRawPath,
+      "./" + cleanPath,
+      path,
+      "https://raw.githubusercontent.com/MNC31/mnc31-ai-culture-language-explorer/main/" + cleanPath
+    ].filter((candidate, index, list) => list.indexOf(candidate) === index);
+
+    const failures = [];
+
+    for (const candidate of candidates) {
+      try {
+        const response = await fetch(candidate, { cache: "no-store" });
+        if (!response.ok) {
+          failures.push(candidate + " → HTTP " + response.status);
+          continue;
+        }
+
+        const text = await response.text();
+
+        // A static host may return index.html with HTTP 200 for a missing
+        // asset. Do not mistake that HTML fallback for the dataset file.
+        if (!text.trim()) {
+          failures.push(candidate + " returned an empty file");
+          continue;
+        }
+        if (/^\s*<!doctype html|^\s*<html[\s>]/i.test(text)) {
+          failures.push(candidate + " returned HTML instead of the dataset file");
+          continue;
+        }
+
+        return text;
+      } catch (error) {
+        failures.push(candidate + " → " + error.message);
+      }
+    }
+
+    throw new Error(
+      "Could not load the repository dataset file " + path +
+      ". Tried: " + failures.join("; ")
+    );
+  }
+
+  function parseJsonl(text) {
+    return text
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => JSON.parse(line));
+  }
+
+  function parseCsv(text) {
+    const rows = [];
+    let row = [];
+    let cell = "";
+    let quoted = false;
+
+    for (let i = 0; i < text.length; i += 1) {
+      const char = text[i];
+      const next = text[i + 1];
+
+      if (char === '"') {
+        if (quoted && next === '"') {
+          cell += '"';
+          i += 1;
+        } else {
+          quoted = !quoted;
+        }
+      } else if (char === "," && !quoted) {
+        row.push(cell);
+        cell = "";
+      } else if ((char === "\n" || char === "\r") && !quoted) {
+        if (char === "\r" && next === "\n") i += 1;
+        row.push(cell);
+        rows.push(row);
+        row = [];
+        cell = "";
+      } else {
+        cell += char;
+      }
+    }
+
+    if (cell.length || row.length) {
+      row.push(cell);
+      rows.push(row);
+    }
+
+    if (!rows.length) return [];
+
+    const headers = rows.shift();
+    return rows
+      .filter((values) => values.some((value) => value.trim() !== ""))
+      .map((values) => Object.fromEntries(
+        headers.map((header, index) => [header, values[index] ?? ""])
+      ));
+  }
+
+  function cleanList(value) {
+    if (!value) return [];
+    try {
+      const parsed = JSON.parse(value.replace(/'/g, '"'));
+      return Array.isArray(parsed) ? parsed : [parsed];
+    } catch {
+      return [value];
+    }
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function normalizeGlobalPair(en, zh) {
+    return {
+      id: en.sample_id,
+      subject: en.subject,
+      category: en.subject_category,
+      sensitivity: en.cultural_sensitivity_label,
+      culture: cleanList(en.culture).join(", ") || "Not annotated",
+      region: cleanList(en.region).join(", ") || "Not annotated",
+      country: cleanList(en.country).join(", ") || "Not annotated",
+      en,
+      zh
+    };
+  }
+
+  async function loadLocalJsonl(path) {
+    setStatus("Loading " + path + " from this GitHub repository…");
+    const text = await loadText(path);
+    return parseJsonl(text);
+  }
+
+  async function loadGlobal(split = "test") {
+    const paths = explorerConfig.global[split];
+
+    try {
+      const [enRows, zhRows] = await Promise.all([
+        loadLocalJsonl(paths.en),
+        loadLocalJsonl(paths.zh)
+      ]);
+
+      const zhById = new Map(zhRows.map((row) => [row.sample_id, row]));
+
+      explorerState.globalPairs = enRows
+        .map((en) => {
+          const zh = zhById.get(en.sample_id);
+          return zh ? normalizeGlobalPair(en, zh) : null;
+        })
+        .filter(Boolean);
+
+      explorerState.globalLoaded = true;
+      populateGlobalFilters();
+      renderGlobal();
+
+      setStatus(
+        "Loaded " + explorerState.globalPairs.length +
+        " matched English–Simplified Chinese pairs from the repository's local " +
+        split + " dataset files."
+      );
+      document.dispatchEvent(new CustomEvent("explorer-data-ready"));
+    } catch (error) {
+      explorerState.globalLoaded = false;
+      throw new Error(
+        "The repository dataset files could not be loaded. Expected: " +
+        paths.en + " and " + paths.zh + ". " + error.message
+      );
+    }
+  }
+
+  function populateGlobalFilters() {
+    const categories = [...new Set(explorerState.globalPairs.map((item) => item.category))].sort();
+    categorySelect.innerHTML =
+      '<option value="all">All subject categories</option>' +
+      categories.map((value) => '<option value="' + escapeHtml(value) + '">' + escapeHtml(value) + "</option>").join("");
+  }
+
+  function filteredGlobalPairs() {
+    const search = searchInput.value.trim().toLowerCase();
+    const category = categorySelect.value;
+    const sensitivity = sensitivitySelect.value;
+
+    return explorerState.globalPairs.filter((item) => {
+      const searchable = [
+        item.id,
+        item.subject,
+        item.category,
+        item.en.question,
+        item.zh.question,
+        item.culture,
+        item.region,
+        item.country
+      ].join(" ").toLowerCase();
+
+      return (
+        (category === "all" || item.category === category) &&
+        (sensitivity === "all" || item.sensitivity === sensitivity) &&
+        (!search || searchable.includes(search))
+      );
+    });
+  }
+
+  function renderGlobal() {
+    const items = filteredGlobalPairs();
+    explorerState.selectedGlobal = Math.min(explorerState.selectedGlobal, Math.max(items.length - 1, 0));
+
+    if (!items.length) {
+      globalList.innerHTML = '<div class="explorer-empty">No Global-MMLU-Lite questions match these filters.</div>';
+      globalDetail.innerHTML = '<div class="explorer-empty">Try a broader search or filter.</div>';
+      return;
+    }
+
+    globalList.innerHTML = items.map((item, index) => {
+      const active = index === explorerState.selectedGlobal;
+      return '<button type="button" class="question-row' + (active ? " active" : "") +
+        '" data-global-index="' + index + '">' +
+        '<span class="question-row-id">' + escapeHtml(item.id) + "</span>" +
+        '<strong>' + escapeHtml(item.en.question) + "</strong>" +
+        '<small>' + escapeHtml(item.category) + " · " + escapeHtml(item.sensitivity) + "</small>" +
+        "</button>";
+    }).join("");
+
+    globalList.querySelectorAll("[data-global-index]").forEach((button) => {
+      button.addEventListener("click", () => {
+        explorerState.selectedGlobal = Number(button.dataset.globalIndex);
+        renderGlobal();
+      });
+    });
+
+    renderGlobalDetail(items[explorerState.selectedGlobal]);
+  }
+
+  function optionMarkup(row) {
+    return ["A", "B", "C", "D"].map((letter) => {
+      const key = "option_" + letter.toLowerCase();
+      const correct = row.answer === letter;
+      return '<div class="answer-option' + (correct ? " reference-answer" : "") + '">' +
+        '<span>' + letter + "</span><p>" + escapeHtml(row[key]) + "</p>" +
+        (correct ? '<em>benchmark key</em>' : "") +
+        "</div>";
+    }).join("");
+  }
+
+  function renderGlobalDetail(item) {
+    const keyRelation = item.en.answer === item.zh.answer
+      ? "The English and Simplified Chinese records use the same benchmark answer letter."
+      : "The English and Simplified Chinese records use different benchmark answer letters; inspect the translated options before interpreting this difference.";
+
+    globalDetail.innerHTML =
+      '<div class="detail-kicker">MATCHED RECORD · ' + escapeHtml(item.id) + "</div>" +
+      '<h3>' + escapeHtml(item.subject) + "</h3>" +
+      '<div class="question-pair">' +
+        '<article><span>English question</span><p>' + escapeHtml(item.en.question) + "</p>" +
+          '<div class="answer-grid">' + optionMarkup(item.en) + "</div></article>" +
+        '<article><span>Simplified Chinese question</span><p>' + escapeHtml(item.zh.question) + "</p>" +
+          '<div class="answer-grid">' + optionMarkup(item.zh) + "</div></article>" +
+      "</div>" +
+      '<div class="metadata-strip">' +
+        '<div><span>Category</span><strong>' + escapeHtml(item.category) + "</strong></div>" +
+        '<div><span>Cultural sensitivity</span><strong>' + escapeHtml(item.sensitivity) + "</strong></div>" +
+        '<div><span>Culture</span><strong>' + escapeHtml(item.culture) + "</strong></div>" +
+        '<div><span>Region / country</span><strong>' + escapeHtml(item.region + " · " + item.country) + "</strong></div>" +
+      "</div>" +
+      '<div class="comparison-callout"><strong>What can be compared here?</strong><p>' +
+        escapeHtml(keyRelation) +
+        " The more useful comparison is the wording, cultural references, required knowledge, and how a model's saved response changes across languages." +
+      "</p></div>";
+  }
+
+  async function loadCcTask(task) {
+    if (explorerState.ccCache[task]) return explorerState.ccCache[task];
+
+    setStatus("Loading CC-Eval " + task + " from this GitHub repository…");
+    const text = await loadText(explorerConfig.cc[task]);
+    const rows = parseCsv(text);
+    explorerState.ccCache[task] = rows;
+    document.dispatchEvent(new CustomEvent("explorer-data-ready"));
+    return rows;
+  }
+
+
+  function ccTitle(task) {
+    const titles = {
+      bilingual: "Bilingual parallel value alignment",
+      aesthetics: "Chinese aesthetics & philosophy",
+      classical: "Classical Chinese",
+      folk: "Folk culture",
+      slang: "Modern Chinese internet slang",
+      pragmatic: "Pragmatic intent understanding"
+    };
+    return titles[task] || task;
+  }
+
+  function filteredCcRows(rows, task) {
+    const search = ccSearch.value.trim().toLowerCase();
+    if (!search) return rows;
+    return rows.filter((row) => Object.values(row).join(" ").toLowerCase().includes(search));
+  }
+
+  function renderCcList(rows, task) {
+    const items = filteredCcRows(rows, task);
+    explorerState.selectedCc = Math.min(explorerState.selectedCc, Math.max(items.length - 1, 0));
+
+    if (!items.length) {
+      ccList.innerHTML = '<div class="explorer-empty">No CC-Eval records match this search.</div>';
+      ccDetail.innerHTML = '<div class="explorer-empty">Try a broader search.</div>';
+      return;
+    }
+
+    ccList.innerHTML = items.map((row, index) => {
+      const label = task === "bilingual"
+        ? row["中文提示词"]
+        : task === "aesthetics"
+          ? row["中式美学概念"]
+          : task === "classical"
+            ? row["文言文原文"]
+            : task === "folk"
+              ? row["民俗文化场景"]
+              : task === "slang"
+                ? row["梗"]
+                : row["对话内容"];
+
+      return '<button type="button" class="question-row' +
+        (index === explorerState.selectedCc ? " active" : "") +
+        '" data-cc-index="' + index + '">' +
+        '<span class="question-row-id">' + escapeHtml(String(index + 1).padStart(3, "0")) + "</span>" +
+        '<strong>' + escapeHtml(label) + "</strong>" +
+        '<small>' + escapeHtml(ccTitle(task)) + "</small>" +
+        "</button>";
+    }).join("");
+
+    ccList.querySelectorAll("[data-cc-index]").forEach((button) => {
+      button.addEventListener("click", () => {
+        explorerState.selectedCc = Number(button.dataset.ccIndex);
+        renderCcList(rows, task);
+      });
+    });
+
+    renderCcDetail(items[explorerState.selectedCc], task);
+  }
+
+  function renderCcDetail(row, task) {
+    if (task === "bilingual") {
+      ccDetail.innerHTML =
+        "<div class=\"detail-kicker\">OPEN-ENDED BILINGUAL COMPARISON</div>" +
+        "<h3>Value-alignment prompt pair</h3>" +
+        "<div class=\"question-pair\">" +
+          "<article><span>Chinese prompt</span><p class=\"script-large\">" + escapeHtml(row["中文提示词"]) + "</p></article>" +
+          "<article><span>English prompt</span><p>" + escapeHtml(row["英文提示词"]) + "</p></article>" +
+        "</div>" +
+        "<div class=\"comparison-callout\"><strong>Possible use</strong><p>Run the same model under both prompts, save the two responses, and compare whether the model changes its reasoning or value framing when only the prompt language changes.</p></div>";
+      return;
+    }
+
+    const definitions = {
+      aesthetics: ["中式美学概念", "解读内容"],
+      classical: ["文言文原文", "通俗白话文翻译、文化内涵/价值观解释（核心）", "原文出处、所属思想流派", "现代应用解读（如有）"],
+      folk: ["民俗文化场景", "解读内容", "民俗文化类型", "民俗文化场景解释"],
+      slang: ["梗", "梗解释"],
+      pragmatic: ["对话内容", "真实意图"]
+    };
+
+    const fields = definitions[task];
+    if (!fields || !row) {
+      ccDetail.innerHTML = "<div class=\"explorer-empty\">No CC-Eval detail is available for this task.</div>";
+      return;
+    }
+
+    let useText = "Test whether a model can explain a culturally situated concept and distinguish it from a superficially similar English concept.";
+    if (task === "pragmatic") {
+      useText = "Test whether a model identifies indirect meaning rather than only translating the literal sentence.";
+    } else if (task === "slang") {
+      useText = "Test whether a model understands contemporary Chinese internet language and the social context behind a phrase.";
+    } else if (task === "classical") {
+      useText = "Test interpretation of classical language, references, and culturally situated concepts.";
+    } else if (task === "folk") {
+      useText = "Test whether a model can explain a cultural practice without reducing the practice to a generic translation.";
+    }
+
+    ccDetail.innerHTML =
+      "<div class=\"detail-kicker\">CHINESE-CONTEXT TASK · " + escapeHtml(ccTitle(task)) + "</div>" +
+      "<h3>" + escapeHtml(row[fields[0]]) + "</h3>" +
+      fields.slice(1).map((field) =>
+        "<div class=\"cc-field\"><span>" + escapeHtml(field) + "</span><p>" + escapeHtml(row[field]) + "</p></div>"
+      ).join("") +
+      "<div class=\"comparison-callout\"><strong>Possible use</strong><p>" +
+      escapeHtml(useText) +
+      "</p></div>";
+  }
+
+  async function refreshCc() {
+    try {
+      const rows = await loadCcTask(ccTask.value);
+      explorerState.selectedCc = 0;
+      renderCcList(rows, ccTask.value);
+      setStatus("Loaded " + rows.length + " CC-Eval records from " + ccTitle(ccTask.value) + ".");
+    } catch (error) {
+      setStatus(error.message, true);
+    }
+  }
+
+  async function loadImageComparison() {
+    try {
+      const text = await loadText(explorerConfig.imageComparison);
+      explorerState.imageComparisons = JSON.parse(text).responses || [];
+      document.dispatchEvent(new CustomEvent("explorer-image-comparison-ready"));
+    } catch (error) {
+      explorerState.imageComparisons = [];
+      console.warn("Image comparison data could not be loaded:", error);
+    }
+  }
+
+  function normalizeModelAnswer(modelName, item) {
+    const id = item.question_id || item.id;
+    let chinese = "";
+    let english = "";
+    let culturalNote = "";
+
+    if (item.answer && typeof item.answer === "object") {
+      chinese = item.answer.chinese || item.answer.zh || "";
+      english = item.answer.english || item.answer.en || "";
+    } else if (typeof item.answer === "string") {
+      const match = item.answer.match(/(?:^|\n)\s*English\s*:\s*/i);
+      if (match) {
+        const splitAt = match.index + match[0].length;
+        chinese = item.answer.slice(0, match.index).replace(/^中文\s*:\s*/i, "").trim();
+        english = item.answer.slice(splitAt).trim();
+      } else {
+        chinese = item.answer;
+      }
+    } else {
+      chinese = item.chinese || "";
+      english = item.english || "";
+    }
+
+    culturalNote = item.cultural_note || item.culturalNote || "";
+
+    return {
+      model: modelName,
+      modelVersion: item.model_version || "",
+      questionId: id,
+      category: item.category || "",
+      chinese: chinese.trim(),
+      english: english.trim(),
+      culturalNote: culturalNote.trim()
+    };
+  }
+
+  async function loadCcModelComparison() {
+    // Load the controlled 60-question set independently from the model
+    // response files. A missing/broken model file should never prevent the
+    // question selector from being populated.
+    try {
+      explorerState.ccModelComparison = JSON.parse(
+        await loadText(explorerConfig.ccModelComparison)
+      );
+      renderCcModelLab();
+    } catch (error) {
+      explorerState.ccModelComparison = null;
+      explorerState.ccModelResponses = [];
+      const status = document.getElementById("lab-status");
+      if (status) {
+        status.textContent = "CC-Eval question data could not be loaded: " + error.message;
+      }
+      return;
+    }
+
+    const results = await Promise.all(
+      explorerConfig.ccModelResponses.map(async (source) => {
+        try {
+          const data = JSON.parse(await loadText(source.path));
+          const items = data.records || data.responses || data.answers || [];
+          return items.map(item => normalizeModelAnswer(source.name, item));
+        } catch (error) {
+          console.warn("Could not load " + source.name + " model responses:", error);
+          return [];
+        }
+      })
+    );
+
+    explorerState.ccModelResponses = results.flat();
+    renderCcModelLab();
+  }
+
+  function labCategoryLabel(category) {
+    const labels = {
+      bilingual: "Bilingual value alignment",
+      classical: "Classical Chinese",
+      aesthetics: "Chinese aesthetics & philosophy",
+      folk: "Folk culture",
+      pragmatic: "Pragmatic intent",
+      slang: "Internet slang"
+    };
+    return labels[category] || category;
+  }
+
+  function labReferenceText(record) {
+    if (!record) return "";
+    if (typeof record.reference === "string") return record.reference;
+
+    const reference = record.reference || {};
+    return Object.entries(reference)
+      .map(([key, value]) => {
+        const label = key === "chinese_prompt" ? "Chinese prompt"
+          : key === "english_prompt" ? "English prompt"
+          : key === "source" ? "Source"
+          : key === "interpretation" ? "Interpretation"
+          : key;
+        return label + ": " + value;
+      })
+      .join("\n");
+  }
+
+  function renderLabQuestionOptions(records) {
+    const categorySelect = document.getElementById("lab-category");
+    const questionSelect = document.getElementById("lab-question");
+    if (!categorySelect || !questionSelect) return;
+
+    const category = categorySelect.value;
+    const filtered = category === "all"
+      ? records
+      : records.filter(record => record.category === category);
+
+    const currentValue = questionSelect.value;
+    questionSelect.innerHTML = filtered.map(record =>
+      '<option value="' + escapeHtml(record.id) + '">' +
+      escapeHtml(record.id + " · " + record.prompt) +
+      "</option>"
+    ).join("");
+
+    if (filtered.length) {
+      questionSelect.value = filtered.some(record => record.id === currentValue)
+        ? currentValue
+        : filtered[0].id;
+    }
+  }
+
+  function renderCcModelLab() {
+    const data = explorerState.ccModelComparison;
+    const status = document.getElementById("lab-status");
+    const prompt = document.getElementById("lab-prompt");
+    const reference = document.getElementById("lab-reference");
+    const grid = document.getElementById("lab-model-grid");
+    const title = document.getElementById("lab-response-title");
+    const count = document.getElementById("lab-response-count");
+    const categorySelect = document.getElementById("lab-category");
+    const questionSelect = document.getElementById("lab-question");
+
+    if (!data || !status || !prompt || !reference || !grid || !title || !count || !categorySelect || !questionSelect) return;
+
+    const records = data.records || [];
+    renderLabQuestionOptions(records);
+    const record = records.find(item => item.id === questionSelect.value) || records[0];
+    if (!record) return;
+
+    const matches = explorerState.ccModelResponses.filter(item => item.questionId === record.id);
+    const byModel = new Map(matches.map(item => [item.model, item]));
+    const modelNames = explorerConfig.ccModelResponses.map(item => item.name);
+    const availableModels = modelNames.filter(name => byModel.has(name));
+
+    status.innerHTML =
+      '<strong>' + availableModels.length + "/" + modelNames.length + ' models loaded</strong>' +
+      '<span> · ' + escapeHtml(labCategoryLabel(record.category)) + ' · ' +
+      escapeHtml(record.id) + '</span>';
+
+    prompt.innerHTML =
+      '<div class="lab-section-kicker">SHARED PROMPT</div>' +
+      '<div class="lab-question-text">' + escapeHtml(record.prompt) + '</div>' +
+      '<div class="lab-instruction">' + escapeHtml(record.response_instruction || "") + '</div>';
+
+    reference.innerHTML =
+      '<div class="lab-section-kicker">CC-EVAL REFERENCE CONTEXT</div>' +
+      '<div class="lab-reference-text">' + escapeHtml(labReferenceText(record)).replaceAll("\n", "<br>") + '</div>' +
+      '<div class="lab-reference-note">The reference is a cultural/contextual anchor. It is not treated as a single right answer or numeric score.</div>';
+
+    title.textContent = "AI model responses";
+    count.textContent = availableModels.length + " models";
+
+    grid.innerHTML = availableModels.map((modelName) => {
+      const response = byModel.get(modelName);
+      return '<article class="lab-model-card">' +
+        '<header><strong>' + escapeHtml(response.model) + '</strong>' +
+        (response.modelVersion ? '<span>' + escapeHtml(response.modelVersion) + '</span>' : '') +
+        '</header>' +
+        '<section><h4>中文 interpretation</h4><p class="lab-chinese">' +
+        escapeHtml(response.chinese || "No Chinese response recorded.") + '</p></section>' +
+        '<section><h4>English explanation</h4><p>' +
+        escapeHtml(response.english || "No English response recorded.") + '</p></section>' +
+        (response.culturalNote ? '<section><h4>Cultural note</h4><p>' +
+        escapeHtml(response.culturalNote) + '</p></section>' : '') +
+        '</article>';
+    }).join("");
+
+    if (!availableModels.length) {
+      grid.innerHTML = '<article class="lab-model-card missing"><header><strong>No saved responses</strong></header><section><p>No model responses were found for this question.</p></section></article>';
+    }
+  }
+
+  function refreshLabQuestions() {
+    explorerState.labModelIndex = 0;
+    renderCcModelLab();
+  }
+
+
+  if (splitSelect) splitSelect.addEventListener("change", () => {
+    explorerState.globalLoaded = false;
+    loadGlobal(splitSelect.value).catch((error) => setStatus(error.message, true));
+  });
+
+  [categorySelect, sensitivitySelect, searchInput].filter(Boolean).forEach((control) => {
+    control.addEventListener("input", renderGlobal);
+    control.addEventListener("change", renderGlobal);
+  });
+
+  if (ccTask) ccTask.addEventListener("change", () => {
+    explorerState.selectedCc = 0;
+    refreshCc().catch((error) => {
+    setStatus("CC-Eval loading failed: " + error.message, true);
+  });
+  });
+  if (ccSearch) ccSearch.addEventListener("input", async () => {
+    try {
+      const rows = await loadCcTask(ccTask.value);
+      renderCcList(rows, ccTask.value);
+    } catch (error) {
+      setStatus(error.message, true);
+    }
+  });
+
+  if (labCategory) labCategory.addEventListener("change", refreshLabQuestions);
+  if (labQuestion) labQuestion.addEventListener("change", () => { explorerState.labModelIndex = 0; renderCcModelLab(); });
+
+  loadGlobal("test").catch((error) => {
+    if (globalStatus) {
+      globalStatus.textContent = "Global-MMLU-Lite loading failed: " + error.message;
+      globalStatus.classList.add("explorer-error");
+    }
+  });
+  // Preload every CC-Eval task family so the Cultural Context Map can show
+  // the complete network immediately, while keeping the selector interactive.
+  Promise.all(Object.keys(explorerConfig.cc).map((task) => loadCcTask(task)))
+    .then(() => refreshCc())
+    .catch((error) => setStatus("CC-Eval loading failed: " + error.message, true));
+  // The lab waits for the same Global-MMLU load instead of starting a
+  // second competing request during page initialization.
+  loadImageComparison();
+  loadCcModelComparison();
+}
