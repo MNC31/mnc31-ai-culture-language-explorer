@@ -74,12 +74,6 @@
   }
 
   function openDatasetViewer(view, task) {
-    const datasetSelect = document.getElementById("dataset-select");
-    if (datasetSelect) {
-      datasetSelect.value = view;
-      datasetSelect.dispatchEvent(new Event("change"));
-    }
-
     if (view === "cc" && task) {
       const select = document.getElementById("cc-task");
       if (select) {
@@ -88,7 +82,9 @@
       }
     }
 
-    const explorer = document.getElementById("dataset-explorer");
+    const explorer = document.getElementById(
+      view === "global" ? "global-dataset-explorer" : "dataset-explorer"
+    );
     if (explorer) explorer.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
