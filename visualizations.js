@@ -51,12 +51,12 @@
   }
 
   const culturalNodes = [
-    {id:"classical", label:"Classical Chinese", task:"classical", x:22, y:18, axis:"Traditional · Cultural knowledge", description:"Classical-language interpretation, philosophical schools, cultural values and modern applications."},
-    {id:"aesthetics", label:"Aesthetics & Philosophy", task:"aesthetics", x:43, y:30, axis:"Traditional · Cultural knowledge", description:"Chinese aesthetic and philosophical concepts that require context beyond literal translation."},
-    {id:"folk", label:"Folk Culture", task:"folk", x:35, y:52, axis:"Cultural practice · Social context", description:"Rituals and everyday cultural practices, including their values, origins and modern continuation."},
-    {id:"pragmatic", label:"Pragmatic Intent", task:"pragmatic", x:63, y:58, axis:"Language use · Social interaction", description:"Indirect meaning, politeness and culturally situated conversational intent."},
-    {id:"slang", label:"Internet Slang", task:"slang", x:78, y:78, axis:"Modern · Social interaction", description:"Contemporary Chinese internet language, wordplay, tone and social context."},
-    {id:"bilingual", label:"Chinese ↔ English Value Alignment", task:"bilingual", x:70, y:28, axis:"Language comparison", description:"Parallel Chinese and English value-oriented prompts for examining language-conditioned response framing."}
+    {id:"classical", label:"Classical Chinese", task:"classical", x:22, y:18, z:18, axis:"Traditional · Cultural knowledge", description:"Classical-language interpretation, philosophical schools, cultural values and modern applications."},
+    {id:"aesthetics", label:"Aesthetics & Philosophy", task:"aesthetics", x:43, y:30, z:8, axis:"Traditional · Cultural knowledge", description:"Chinese aesthetic and philosophical concepts that require context beyond literal translation."},
+    {id:"folk", label:"Folk Culture", task:"folk", x:35, y:52, z:-4, axis:"Cultural practice · Social context", description:"Rituals and everyday cultural practices, including their values, origins and modern continuation."},
+    {id:"pragmatic", label:"Pragmatic Intent", task:"pragmatic", x:63, y:58, z:-10, axis:"Language use · Social interaction", description:"Indirect meaning, politeness and culturally situated conversational intent."},
+    {id:"slang", label:"Internet Slang", task:"slang", x:78, y:78, z:-20, axis:"Modern · Social interaction", description:"Contemporary Chinese internet language, wordplay, tone and social context."},
+    {id:"bilingual", label:"Chinese ↔ English Value Alignment", task:"bilingual", x:70, y:28, z:5, axis:"Language comparison", description:"Parallel Chinese and English value-oriented prompts for examining language-conditioned response framing."}
   ];
 
   const edges = [
