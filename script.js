@@ -306,6 +306,7 @@ if (explorerRoot) {
   const ccDetail = explorerRoot.querySelector("#cc-detail");
   const status = explorerRoot.querySelector("#explorer-status");
   const labDataset = explorerRoot.querySelector("#lab-dataset");
+  const labCategory = explorerRoot.querySelector("#lab-category");
   const labQuestion = explorerRoot.querySelector("#lab-question");
   const labConversation = explorerRoot.querySelector("#lab-conversation");
   const labReference = explorerRoot.querySelector("#lab-reference");
@@ -877,7 +878,7 @@ if (explorerRoot) {
 
     reference.innerHTML =
       '<div class="lab-section-kicker">CC-EVAL REFERENCE CONTEXT</div>' +
-      '<div class="lab-reference-text">' + escapeHtml(labReferenceText(record)).replaceAll("\\n", "<br>") + '</div>' +
+      '<div class="lab-reference-text">' + escapeHtml(labReferenceText(record)).replaceAll("\n", "<br>") + '</div>' +
       '<div class="lab-reference-note">The reference is a cultural/contextual anchor. It is not treated as a single right answer or numeric score.</div>';
 
     grid.innerHTML = modelNames.map(modelName => {
@@ -934,8 +935,6 @@ if (explorerRoot) {
     });
   });
 
-  const labCategory = explorerRoot.querySelector("#lab-category");
-  const labQuestion = explorerRoot.querySelector("#lab-question");
   if (labCategory) labCategory.addEventListener("change", refreshLabQuestions);
   if (labQuestion) labQuestion.addEventListener("change", renderCcModelLab);
 
