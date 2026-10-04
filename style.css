@@ -309,3 +309,37 @@ footer{border-top:1px solid var(--line);padding:25px 5vw;color:var(--muted);font
   .lab-model-tab{flex-basis:115px}
 }
 
+
+/* Lab model carousel: horizontal scrolling, matching the image-comparison carousel */
+.lab-carousel-scroll-hint{
+  font-size:.78rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding:0 0 10px;
+  text-align:center;
+}
+#lab-model-grid.lab-model-grid{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:18px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  padding:4px 4px 18px;
+  cursor:grab;
+  scrollbar-width:auto;
+}
+#lab-model-grid.lab-model-grid:active{cursor:grabbing}
+#lab-model-grid .lab-model-card{
+  flex:0 0 min(82%, 620px);
+  scroll-snap-align:start;
+  box-sizing:border-box;
+}
+#lab-model-grid::-webkit-scrollbar{height:12px}
+#lab-model-grid::-webkit-scrollbar-track{background:var(--surface-2, #eee)}
+#lab-model-grid::-webkit-scrollbar-thumb{background:var(--line-strong, #999);border-radius:8px}
+@media (max-width:700px){
+  #lab-model-grid .lab-model-card{flex-basis:88%}
+}
