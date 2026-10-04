@@ -355,12 +355,34 @@
       </p>
     </section>
     <section id="question-lab" class="question-lab">
-      <label>LAB QUESTIONS · PLACEHOLDER</label>
-      <h2>Model Comparison Lab</h2>
+      <label>LAB QUESTIONS · MODEL COMPARISON</label>
+      <h2>Compare the same cultural question across AI models.</h2>
       <p class="method-copy">
-        This area is reserved for the next stage of the project. It will eventually let you choose one of the 60 CC-Eval comparison questions, send the same prompt to different AI models, and place their interpretations side by side with the original CC-Eval reference.
+        Select one of the 60 controlled CC-Eval questions. The site keeps the original prompt and reference context visible, then places the saved responses from ChatGPT, Doubao, Perplexity, and Workbuddy side by side.
+        This is a comparison of interpretations, framing, omissions, cultural assumptions, and language choices—not a right/wrong score.
       </p>
-      <p class="idiom-note">For now, use <code>public/data/cc-eval/cc_eval_model_comparison_60.json</code> as the controlled question set.</p>
+
+      <div class="lab-controls">
+        <label for="lab-category">Category</label>
+        <select id="lab-category">
+          <option value="all">All categories</option>
+          <option value="bilingual">Bilingual value alignment</option>
+          <option value="classical">Classical Chinese</option>
+          <option value="aesthetics">Chinese aesthetics & philosophy</option>
+          <option value="folk">Folk culture</option>
+          <option value="pragmatic">Pragmatic intent</option>
+          <option value="slang">Internet slang</option>
+        </select>
+
+        <label for="lab-question">Question</label>
+        <select id="lab-question"></select>
+      </div>
+
+      <div id="lab-status" class="lab-status" aria-live="polite">Loading model responses…</div>
+
+      <div id="lab-prompt" class="lab-prompt"></div>
+      <div id="lab-reference" class="lab-reference"></div>
+      <div id="lab-model-grid" class="lab-model-grid"></div>
     </section>
 
   </main>
