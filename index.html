@@ -203,28 +203,17 @@
     <section id="dataset-explorer">
       <div class="heading">
         <div>
-          <label>04 · DATASET EXPLORER</label>
-          <h2>Compare what each dataset lets you ask.</h2>
+          <label>04 · CC-EVAL DATASET EXPLORER</label>
+          <h2>Explore the cultural-context records behind the visualization.</h2>
         </div>
-        <small id="explorer-status">Loading datasets…</small>
+        <small id="explorer-status">Loading CC-Eval…</small>
       </div>
 
       <p class="dataset-explorer-intro">
-        Use the interactive visualizations above as the entry point into the datasets. After selecting a cultural area, language relationship, or visual pattern, continue here to inspect the underlying records, matched questions, and documented model responses behind what you saw.
+        Use the interactive cultural visualizations above as the entry point into CC-Eval. Selecting a cultural area opens the corresponding task family here so you can inspect the actual prompts and records behind the visualization.
       </p>
 
       <div class="dataset-cards">
-        <article class="dataset-card">
-          <span class="dataset-type">MATCHED MULTIPLE CHOICE</span>
-          <h3>Global-MMLU-Lite</h3>
-          <p>English and Simplified Chinese versions of evaluation questions matched by <code>sample_id</code>.</p>
-          <ul>
-            <li>Best for language-to-language comparison</li>
-            <li>CS vs. CA cultural-sensitivity labels</li>
-            <li>Benchmark answer-key comparison</li>
-          </ul>
-        </article>
-
         <article class="dataset-card">
           <span class="dataset-type">BILINGUAL OPEN-ENDED</span>
           <h3>CC-Eval · value alignment</h3>
@@ -248,28 +237,60 @@
         </article>
       </div>
 
-      <p class="dataset-note">
-        <strong>Important:</strong> these datasets should not be collapsed into one
-        accuracy number. Their question formats, reference material, labels, and
-        evaluation purposes differ. The explorer keeps those structures visible.
-      </p>
-
-      <div class="dataset-selector">
-        <div class="explorer-control">
-          <label for="dataset-select">Explore dataset</label>
-          <select id="dataset-select">
-            <option value="global">Global-MMLU-Lite · matched questions</option>
-            <option value="cc">CC-Eval · Chinese-context tasks</option>
-          </select>
-        </div>
-        <div class="explorer-control">
-          <label>Research use</label>
-          <div id="explorer-use" class="dataset-note">
-            Compare equivalent questions in English and Simplified Chinese.
+      <div class="dataset-view" data-view="cc" hidden>
+        <div class="explorer-toolbar">
+          <div class="explorer-control">
+            <label for="cc-task">CC-Eval task</label>
+            <select id="cc-task">
+              <option value="bilingual">Bilingual parallel value alignment</option>
+              <option value="pragmatic">Pragmatic intent understanding</option>
+              <option value="classical">Classical Chinese</option>
+              <option value="folk">Folk culture</option>
+              <option value="aesthetics">Chinese aesthetics & philosophy</option>
+              <option value="slang">Modern Chinese internet slang</option>
+            </select>
           </div>
+          <div class="explorer-control">
+            <label for="cc-search">Search task records</label>
+            <input id="cc-search" type="search" placeholder="Search the selected CC-Eval task…">
+          </div>
+        </div>
+
+        <div class="explorer-layout">
+          <div id="cc-question-list" class="question-list" aria-label="CC-Eval records"></div>
+          <div id="cc-detail" class="explorer-detail" aria-live="polite"></div>
         </div>
       </div>
 
+    </section>
+
+    <section id="global-dataset-explorer">
+      <div class="heading">
+        <div>
+          <label>05 · GLOBAL-MMLU-LITE DATASET EXPLORER</label>
+          <h2>Explore the matched English–Chinese benchmark records.</h2>
+        </div>
+        <small id="global-explorer-status">Loading Global-MMLU-Lite…</small>
+      </div>
+
+      <p class="dataset-explorer-intro">
+        This dataset is kept separate from CC-Eval because it answers a different question: how matched evaluation items change between English and Simplified Chinese. Use the language-comparison visualizations above to jump here and inspect the exact paired records.
+      </p>
+
+      <div class="dataset-cards">
+        <article class="dataset-card">
+          <span class="dataset-type">MATCHED MULTIPLE CHOICE</span>
+          <h3>Global-MMLU-Lite</h3>
+          <p>English and Simplified Chinese versions of evaluation questions matched by <code>sample_id</code>.</p>
+          <ul>
+            <li>Best for language-to-language comparison</li>
+            <li>CS vs. CA cultural-sensitivity labels</li>
+            <li>Benchmark answer-key comparison</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="global-dataset-view">
       <div class="dataset-view" data-view="global">
         <div class="explorer-toolbar">
           <div class="explorer-control">
@@ -308,34 +329,12 @@
         </div>
       </div>
 
-      <div class="dataset-view" data-view="cc" hidden>
-        <div class="explorer-toolbar">
-          <div class="explorer-control">
-            <label for="cc-task">CC-Eval task</label>
-            <select id="cc-task">
-              <option value="bilingual">Bilingual parallel value alignment</option>
-              <option value="pragmatic">Pragmatic intent understanding</option>
-              <option value="classical">Classical Chinese</option>
-              <option value="folk">Folk culture</option>
-              <option value="aesthetics">Chinese aesthetics & philosophy</option>
-              <option value="slang">Modern Chinese internet slang</option>
-            </select>
-          </div>
-          <div class="explorer-control">
-            <label for="cc-search">Search task records</label>
-            <input id="cc-search" type="search" placeholder="Search the selected CC-Eval task…">
-          </div>
-        </div>
 
-        <div class="explorer-layout">
-          <div id="cc-question-list" class="question-list" aria-label="CC-Eval records"></div>
-          <div id="cc-detail" class="explorer-detail" aria-live="polite"></div>
-        </div>
       </div>
     </section>
 
     <section id="methodology">
-      <label>05 · DESIGN PRINCIPLE</label>
+      <label>06 · DESIGN PRINCIPLE</label>
       <h2>Translation should reveal context, not hide it.</h2>
       <p class="method-copy">
         A later version can connect this interaction to the project's multilingual
@@ -346,7 +345,7 @@
       </p>
     </section>
     <section id="question-lab" class="question-lab">
-      <label>LAB QUESTIONS · MODEL COMPARISON</label>
+      <label>07 · LAB QUESTIONS · MODEL COMPARISON</label>
       <h2>Compare the same cultural question across AI models.</h2>
       <p class="method-copy">
         Select one of the 60 controlled CC-Eval questions. The original prompt and reference context stay visible while the four saved responses are shown as one large model card at a time.
