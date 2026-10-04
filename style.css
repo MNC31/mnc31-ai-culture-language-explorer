@@ -364,3 +364,10 @@ footer{border-top:1px solid var(--line);padding:25px 5vw;color:var(--muted);font
 @media(max-width:700px){
   .visual-to-data-cta{flex-direction:column;align-items:flex-start}
 }
+
+
+/* Visualization cards open their corresponding dataset viewer. */
+.idiom-selectable{cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+.idiom-selectable:hover,.idiom-selectable:focus{outline:none;transform:translateY(-2px);box-shadow:0 5px 18px rgba(23,33,43,.08);border-color:var(--ink)}
+.visual-selection-note{margin-top:24px;padding:16px 18px;border:1px solid var(--line);background:var(--paper);color:var(--muted);font-size:12px;line-height:1.6}
+.visual-selection-note strong{color:var(--ink)}
