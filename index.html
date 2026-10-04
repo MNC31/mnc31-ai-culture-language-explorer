@@ -346,22 +346,23 @@
           <div class="idiom-note">This is a benchmark-key comparison, not a model-accuracy result.</div>
         </article>
 
-        <article class="idiom-card" id="idiom-network">
-          <div class="idiom-label">03 · NETWORK IDIOM</div>
-          <h3>Question → category → region</h3>
-          <p>Selected metadata relationships show how evaluation records connect subject areas to cultural regions.</p>
-          <div class="network-wrap" id="network-graph"></div>
-        </article>
-
-        <article class="idiom-card" id="idiom-spatial">
-          <div class="idiom-label">04 · SPATIAL IDIOM</div>
-          <h3>Where is the context distributed?</h3>
-          <p>A spatial proxy using the dataset's region metadata. It describes annotation distribution rather than assigning culture ownership.</p>
-          <div class="spatial-bars" id="spatial-bars"></div>
+        <article class="idiom-card idiom-wide" id="idiom-cultural-map">
+          <div class="idiom-label">03 · NETWORK + SPATIAL IDIOM</div>
+          <h3>Cultural Context Map</h3>
+          <p>CC-Eval categories are positioned in a conceptual cultural space, while connecting lines show relationships between cultural and language contexts. This is not a geographic map.</p>
+          <div class="cultural-map-legend">
+            <span><b>Vertical:</b> classical / traditional → modern / internet</span>
+            <span><b>Horizontal:</b> cultural knowledge → language & social interaction</span>
+          </div>
+          <div class="cultural-map-wrap" id="cultural-map"></div>
+          <div class="cultural-map-detail" id="cultural-map-detail">
+            <span class="detail-kicker">SELECT A NODE</span>
+            <p>Click a cultural area to filter the CC-Eval explorer and inspect representative records.</p>
+          </div>
         </article>
 
         <article class="idiom-card idiom-wide" id="idiom-interactive">
-          <div class="idiom-label">05 · INTERACTIVE VIEW</div>
+          <div class="idiom-label">04 · INTERACTIVE VIEW</div>
           <h3>Follow one record through the project.</h3>
           <p>Use the controls below to move from dataset → language → cultural dimension → question → reference. The existing explorer remains the main interaction surface.</p>
           <div class="idiom-path" id="interactive-path">
@@ -378,9 +379,9 @@
         </article>
 
         <article class="idiom-card idiom-wide" id="idiom-advanced">
-          <div class="idiom-label">06 · ADVANCED REPRESENTATION</div>
-          <h3>Category × cultural sensitivity × language</h3>
-          <p>Each cell counts matched records in a subject category and sensitivity label; the language pair remains available inside each record for direct inspection.</p>
+          <div class="idiom-label">05 · ADVANCED REPRESENTATION</div>
+          <h3>Cultural context × language × evidence</h3>
+          <p>Use this as a structural view of the datasets: cultural task families on one axis and the language/evidence available on the other. It does not claim model accuracy where model scores are not yet present.</p>
           <div class="heatmap-wrap" id="advanced-heatmap"></div>
         </article>
       </div>
