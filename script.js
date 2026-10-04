@@ -268,7 +268,13 @@ const explorerConfig = {
     slang: "public/data/cc-eval/data/Chinese-context_task/modern_Chinese_internet_slang.csv",
     pragmatic: "public/data/cc-eval/data/Chinese-context_task/pragmatic_intent_understanding.csv"
   },
-  modelResponses: "public/data/model_responses.json",
+  ccModelComparison: "public/data/cc-eval/cc_eval_model_comparison_60.json",
+  ccModelResponses: [
+    { name: "ChatGPT", path: "public/data/cc-eval/ChatGPT_cc_eval_response.json" },
+    { name: "Doubao", path: "public/data/cc-eval/Doubao_cc_eval_response.json" },
+    { name: "Perplexity", path: "public/data/cc-eval/Perplexity_cc_eval_response.json" },
+    { name: "Workbuddy", path: "public/data/cc-eval/Workbuddy_cc_eval_response.json" }
+  ],
   imageComparison: "public/data/ai_image_comparison.json"
 };
 
@@ -278,7 +284,9 @@ const explorerState = {
   ccCache: {},
   selectedGlobal: 0,
   selectedCc: 0,
-  imageComparisons: []
+  imageComparisons: [],
+  ccModelComparison: null,
+  ccModelResponses: []
 };
 
 const explorerRoot = document.getElementById("dataset-explorer");
@@ -730,84 +738,170 @@ if (explorerRoot) {
     }
   }
 
-  async function loadModelResponses() {
-    try {
-      const text = await loadText(explorerConfig.modelResponses);
-      return JSON.parse(text).responses || [];
-    } catch {
-      return [];
-    }
-  }
+  function normalizeModelAnswer(modelName, item) {
+    const id = item.question_id || item.id;
+    let chinese = "";
+    let english = "";
+    let culturalNote = "";
 
-  async function refreshLabQuestions() {
-    const dataset = labDataset.value;
-    labQuestion.innerHTML = '<option value="">Loading questions…</option>';
-    labConversation.innerHTML = "";
-    labReference.innerHTML = "";
-    labResponseStatus.textContent = "";
-
-    if (dataset === "global") {
-      if (!explorerState.globalLoaded) {
-        await loadGlobal("test");
+    if (item.answer && typeof item.answer === "object") {
+      chinese = item.answer.chinese || item.answer.zh || "";
+      english = item.answer.english || item.answer.en || "";
+    } else if (typeof item.answer === "string") {
+      const match = item.answer.match(/(?:^|\\n)\\s*English\\s*:\\s*/i);
+      if (match) {
+        const splitAt = match.index + match[0].length;
+        chinese = item.answer.slice(0, match.index).replace(/^中文\\s*:\\s*/i, "").trim();
+        english = item.answer.slice(splitAt).trim();
+      } else {
+        chinese = item.answer;
       }
-      labQuestion.innerHTML = explorerState.globalPairs.map((item, index) =>
-        '<option value="' + index + '">' +
-          escapeHtml(item.en.question) +
-        "</option>"
-      ).join("");
     } else {
-      const task = "pragmatic";
-      const rows = await loadCcTask(task);
-      labQuestion.innerHTML = rows.map((row, index) =>
-        '<option value="' + index + '">' + escapeHtml(row["对话内容"]) + "</option>"
-      ).join("");
+      chinese = item.chinese || "";
+      english = item.english || "";
     }
 
-    await renderLabQuestion();
+    culturalNote = item.cultural_note || item.culturalNote || "";
+
+    return {
+      model: modelName,
+      modelVersion: item.model_version || "",
+      questionId: id,
+      category: item.category || "",
+      chinese: chinese.trim(),
+      english: english.trim(),
+      culturalNote: culturalNote.trim()
+    };
   }
 
-  async function renderLabQuestion() {
-    const dataset = labDataset.value;
-    const responses = await loadModelResponses();
+  async function loadCcModelComparison() {
+    try {
+      const dataset = JSON.parse(await loadText(explorerConfig.ccModelComparison));
+      const loaded = await Promise.all(explorerConfig.ccModelResponses.map(async (source) => {
+        const data = JSON.parse(await loadText(source.path));
+        const items = data.records || data.responses || data.answers || [];
+        return items.map(item => normalizeModelAnswer(source.name, item));
+      }));
 
-    if (dataset === "global") {
-      const item = explorerState.globalPairs[Number(labQuestion.value)];
-      if (!item) return;
-
-      labConversation.innerHTML =
-        '<div class="chat-bubble user-bubble"><span>Selected benchmark question · English</span><p>' + escapeHtml(item.en.question) + "</p></div>" +
-        '<div class="chat-bubble user-bubble chinese"><span>Selected benchmark question · Simplified Chinese</span><p>' + escapeHtml(item.zh.question) + "</p></div>";
-
-      labReference.innerHTML =
-        '<div class="reference-answer-box"><span>Dataset benchmark answer</span><strong>' + escapeHtml(item.en.answer) + "</strong>" +
-        '<p>' + escapeHtml(item.en["option_" + item.en.answer.toLowerCase()]) + "</p></div>" +
-        '<div class="reference-answer-box"><span>Chinese benchmark answer</span><strong>' + escapeHtml(item.zh.answer) + "</strong>" +
-        '<p>' + escapeHtml(item.zh["option_" + item.zh.answer.toLowerCase()]) + "</p></div>";
-
-      const response = responses.find((entry) => entry.dataset === "global_mmlu_lite" && entry.sample_id === item.id);
-      labResponseStatus.textContent = response
-        ? "Saved model response available · " + response.model
-        : "No saved model response is attached to this record yet. This panel is ready for documented model outputs.";
-      return;
+      explorerState.ccModelComparison = dataset;
+      explorerState.ccModelResponses = loaded.flat();
+      renderCcModelLab();
+    } catch (error) {
+      explorerState.ccModelComparison = null;
+      explorerState.ccModelResponses = [];
+      const status = document.getElementById("lab-status");
+      if (status) status.textContent = "Model comparison data could not be loaded: " + error.message;
     }
-
-    const rows = await loadCcTask("pragmatic");
-    const row = rows[Number(labQuestion.value)];
-    if (!row) return;
-
-    labConversation.innerHTML =
-      '<div class="chat-bubble user-bubble"><span>Selected cultural-language prompt</span><p>' + escapeHtml(row["对话内容"]) + "</p></div>";
-
-    labReference.innerHTML =
-      '<div class="reference-answer-box"><span>Dataset reference / intended meaning</span><p>' +
-      escapeHtml(row["真实意图"]) +
-      "</p></div>";
-
-    const response = responses.find((entry) => entry.dataset === "cc_eval_pragmatic" && entry.id === String(Number(labQuestion.value)));
-    labResponseStatus.textContent = response
-      ? "Saved model response available · " + response.model
-      : "No saved model response is attached to this record yet. Add a documented response file before treating this as an AI comparison.";
   }
+
+  function labCategoryLabel(category) {
+    const labels = {
+      bilingual: "Bilingual value alignment",
+      classical: "Classical Chinese",
+      aesthetics: "Chinese aesthetics & philosophy",
+      folk: "Folk culture",
+      pragmatic: "Pragmatic intent",
+      slang: "Internet slang"
+    };
+    return labels[category] || category;
+  }
+
+  function labReferenceText(record) {
+    if (!record) return "";
+    if (typeof record.reference === "string") return record.reference;
+
+    const reference = record.reference || {};
+    return Object.entries(reference)
+      .map(([key, value]) => {
+        const label = key === "chinese_prompt" ? "Chinese prompt"
+          : key === "english_prompt" ? "English prompt"
+          : key === "source" ? "Source"
+          : key === "interpretation" ? "Interpretation"
+          : key;
+        return label + ": " + value;
+      })
+      .join("\\n");
+  }
+
+  function renderLabQuestionOptions(records) {
+    const categorySelect = explorerRoot.querySelector("#lab-category");
+    const questionSelect = explorerRoot.querySelector("#lab-question");
+    if (!categorySelect || !questionSelect) return;
+
+    const category = categorySelect.value;
+    const filtered = category === "all"
+      ? records
+      : records.filter(record => record.category === category);
+
+    questionSelect.innerHTML = filtered.map(record =>
+      '<option value="' + escapeHtml(record.id) + '">' +
+      escapeHtml(record.id + " · " + record.prompt) +
+      "</option>"
+    ).join("");
+
+    if (filtered.length) {
+      questionSelect.value = filtered[0].id;
+    }
+  }
+
+  function renderCcModelLab() {
+    const data = explorerState.ccModelComparison;
+    const status = document.getElementById("lab-status");
+    const prompt = document.getElementById("lab-prompt");
+    const reference = document.getElementById("lab-reference");
+    const grid = document.getElementById("lab-model-grid");
+    const categorySelect = document.getElementById("lab-category");
+    const questionSelect = document.getElementById("lab-question");
+
+    if (!data || !status || !prompt || !reference || !grid || !categorySelect || !questionSelect) return;
+
+    const records = data.records || [];
+    renderLabQuestionOptions(records);
+    const record = records.find(item => item.id === questionSelect.value) || records[0];
+    if (!record) return;
+
+    const matches = explorerState.ccModelResponses.filter(item => item.questionId === record.id);
+    const byModel = new Map(matches.map(item => [item.model, item]));
+    const modelNames = explorerConfig.ccModelResponses.map(item => item.name);
+    const available = modelNames.filter(name => byModel.has(name)).length;
+
+    status.innerHTML =
+      '<strong>' + available + "/" + modelNames.length + ' models loaded</strong>' +
+      '<span> · ' + escapeHtml(labCategoryLabel(record.category)) + ' · ' +
+      escapeHtml(record.id) + '</span>';
+
+    prompt.innerHTML =
+      '<div class="lab-section-kicker">SHARED PROMPT</div>' +
+      '<div class="lab-question-text">' + escapeHtml(record.prompt) + '</div>' +
+      '<div class="lab-instruction">' + escapeHtml(record.response_instruction || "") + '</div>';
+
+    reference.innerHTML =
+      '<div class="lab-section-kicker">CC-EVAL REFERENCE CONTEXT</div>' +
+      '<div class="lab-reference-text">' + escapeHtml(labReferenceText(record)).replaceAll("\\n", "<br>") + '</div>' +
+      '<div class="lab-reference-note">The reference is a cultural/contextual anchor. It is not treated as a single right answer or numeric score.</div>';
+
+    grid.innerHTML = modelNames.map(modelName => {
+      const response = byModel.get(modelName);
+      if (!response) {
+        return '<article class="lab-model-card missing"><header><strong>' + escapeHtml(modelName) +
+          '</strong><span>Response unavailable</span></header><p>No saved response was found for this question.</p></article>';
+      }
+
+      return '<article class="lab-model-card">' +
+        '<header><strong>' + escapeHtml(modelName) + '</strong>' +
+        (response.modelVersion ? '<span>' + escapeHtml(response.modelVersion) + '</span>' : '') +
+        '</header>' +
+        '<section><h4>中文 interpretation</h4><p class="lab-chinese">' + escapeHtml(response.chinese || "No Chinese response recorded.") + '</p></section>' +
+        '<section><h4>English explanation</h4><p>' + escapeHtml(response.english || "No English response recorded.") + '</p></section>' +
+        (response.culturalNote ? '<section><h4>Cultural note</h4><p>' + escapeHtml(response.culturalNote) + '</p></section>' : '') +
+      '</article>';
+    }).join("");
+  }
+
+  function refreshLabQuestions() {
+    renderCcModelLab();
+  }
+
 
   splitSelect.addEventListener("change", () => {
     explorerState.globalLoaded = false;
@@ -840,8 +934,10 @@ if (explorerRoot) {
     });
   });
 
-  labDataset.addEventListener("change", refreshLabQuestions);
-  labQuestion.addEventListener("change", renderLabQuestion);
+  const labCategory = explorerRoot.querySelector("#lab-category");
+  const labQuestion = explorerRoot.querySelector("#lab-question");
+  if (labCategory) labCategory.addEventListener("change", refreshLabQuestions);
+  if (labQuestion) labQuestion.addEventListener("change", renderCcModelLab);
 
   explorerRoot.querySelectorAll(".dataset-view").forEach((view) => {
     view.hidden = view.dataset.view !== datasetSelect.value;
@@ -857,6 +953,6 @@ if (explorerRoot) {
     .catch((error) => setStatus("CC-Eval loading failed: " + error.message, true));
   // The lab waits for the same Global-MMLU load instead of starting a
   // second competing request during page initialization.
-  refreshLabQuestions().catch((error) => setStatus(error.message, true));
   loadImageComparison();
+  loadCcModelComparison();
 }
