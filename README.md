@@ -6,13 +6,13 @@ An interactive website for exploring how multilingual AI evaluation datasets rep
 
 ## Demo
 
-> **Placeholder notice:** The current `media/demo.gif` and `media/demo.mp4` are temporary placeholders generated from the screen recording attached during development. They are **not the final project preview** and will be replaced with the actual preview/demo video once it is ready.
+The video below is the current project demonstration.
 
-[![Short animated preview of our visualization](media/demo.gif)](media/demo.mp4)
+<video src="./Demo_Prototype_video%20%281%29.mp4" controls width="100%">
+  Your browser does not support the video player. [Watch the demo video](./Demo_Prototype_video%20%281%29.mp4).
+</video>
 
-[Watch the placeholder demo video](media/demo.mp4)
-
-> **Note:** The GIF shown above is the current placeholder preview generated from the attached screen recording. It is **not the final project preview**. The MP4 is provided as the full placeholder recording.
+[**Watch the demo video directly**](./Demo_Prototype_video%20%281%29.mp4)
 
 ## Research questions
 
