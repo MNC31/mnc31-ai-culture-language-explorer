@@ -774,23 +774,39 @@ if (explorerRoot) {
   }
 
   async function loadCcModelComparison() {
+    // Load the controlled 60-question set independently from the model
+    // response files. A missing/broken model file should never prevent the
+    // question selector from being populated.
     try {
-      const dataset = JSON.parse(await loadText(explorerConfig.ccModelComparison));
-      const loaded = await Promise.all(explorerConfig.ccModelResponses.map(async (source) => {
-        const data = JSON.parse(await loadText(source.path));
-        const items = data.records || data.responses || data.answers || [];
-        return items.map(item => normalizeModelAnswer(source.name, item));
-      }));
-
-      explorerState.ccModelComparison = dataset;
-      explorerState.ccModelResponses = loaded.flat();
+      explorerState.ccModelComparison = JSON.parse(
+        await loadText(explorerConfig.ccModelComparison)
+      );
       renderCcModelLab();
     } catch (error) {
       explorerState.ccModelComparison = null;
       explorerState.ccModelResponses = [];
       const status = document.getElementById("lab-status");
-      if (status) status.textContent = "Model comparison data could not be loaded: " + error.message;
+      if (status) {
+        status.textContent = "CC-Eval question data could not be loaded: " + error.message;
+      }
+      return;
     }
+
+    const results = await Promise.all(
+      explorerConfig.ccModelResponses.map(async (source) => {
+        try {
+          const data = JSON.parse(await loadText(source.path));
+          const items = data.records || data.responses || data.answers || [];
+          return items.map(item => normalizeModelAnswer(source.name, item));
+        } catch (error) {
+          console.warn("Could not load " + source.name + " model responses:", error);
+          return [];
+        }
+      })
+    );
+
+    explorerState.ccModelResponses = results.flat();
+    renderCcModelLab();
   }
 
   function labCategoryLabel(category) {
