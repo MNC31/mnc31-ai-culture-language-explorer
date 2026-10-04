@@ -226,7 +226,7 @@ footer{border-top:1px solid var(--line);padding:25px 5vw;color:var(--muted);font
 .cultural-3d-stage svg{display:block;width:100%;height:auto;min-height:400px;cursor:grab;user-select:none}
 .cultural-3d-stage svg:active{cursor:grabbing}
 .culture-plane{fill:none;stroke:currentColor;stroke-opacity:.08;stroke-dasharray:5 7}
-.culture-edge{stroke:currentColor;stroke-opacity:.25;stroke-width:2}
+.culture-edge{stroke:currentColor;stroke-opacity:.52;stroke-width:2.5;filter:drop-shadow(0 0 1px rgba(0,0,0,.16))}
 .culture-axis{stroke:currentColor;stroke-opacity:.08;stroke-width:1}
 .culture-node{cursor:pointer;outline:none}
 .culture-node-circle{fill:var(--paper);stroke:var(--ink);stroke-width:1.5;transition:fill .15s,stroke-width .15s}
