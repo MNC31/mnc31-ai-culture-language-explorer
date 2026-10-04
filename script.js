@@ -284,6 +284,7 @@ const explorerState = {
   ccCache: {},
   selectedGlobal: 0,
   selectedCc: 0,
+  labModelIndex: 0,
   imageComparisons: [],
   ccModelComparison: null,
   ccModelResponses: []
@@ -831,6 +832,7 @@ if (explorerRoot) {
       ? records
       : records.filter(record => record.category === category);
 
+    const currentValue = questionSelect.value;
     questionSelect.innerHTML = filtered.map(record =>
       '<option value="' + escapeHtml(record.id) + '">' +
       escapeHtml(record.id + " · " + record.prompt) +
@@ -838,7 +840,9 @@ if (explorerRoot) {
     ).join("");
 
     if (filtered.length) {
-      questionSelect.value = filtered[0].id;
+      questionSelect.value = filtered.some(record => record.id === currentValue)
+        ? currentValue
+        : filtered[0].id;
     }
   }
 
@@ -848,10 +852,15 @@ if (explorerRoot) {
     const prompt = document.getElementById("lab-prompt");
     const reference = document.getElementById("lab-reference");
     const grid = document.getElementById("lab-model-grid");
+    const tabs = document.getElementById("lab-model-tabs");
+    const title = document.getElementById("lab-response-title");
+    const count = document.getElementById("lab-response-count");
+    const prev = document.getElementById("lab-prev");
+    const next = document.getElementById("lab-next");
     const categorySelect = document.getElementById("lab-category");
     const questionSelect = document.getElementById("lab-question");
 
-    if (!data || !status || !prompt || !reference || !grid || !categorySelect || !questionSelect) return;
+    if (!data || !status || !prompt || !reference || !grid || !tabs || !title || !count || !prev || !next || !categorySelect || !questionSelect) return;
 
     const records = data.records || [];
     renderLabQuestionOptions(records);
@@ -861,10 +870,15 @@ if (explorerRoot) {
     const matches = explorerState.ccModelResponses.filter(item => item.questionId === record.id);
     const byModel = new Map(matches.map(item => [item.model, item]));
     const modelNames = explorerConfig.ccModelResponses.map(item => item.name);
-    const available = modelNames.filter(name => byModel.has(name)).length;
+    const availableModels = modelNames.filter(name => byModel.has(name));
+    const currentIndex = Math.max(0, Math.min(
+      Number(explorerState.labModelIndex || 0),
+      Math.max(availableModels.length - 1, 0)
+    ));
+    explorerState.labModelIndex = currentIndex;
 
     status.innerHTML =
-      '<strong>' + available + "/" + modelNames.length + ' models loaded</strong>' +
+      '<strong>' + availableModels.length + "/" + modelNames.length + ' models loaded</strong>' +
       '<span> · ' + escapeHtml(labCategoryLabel(record.category)) + ' · ' +
       escapeHtml(record.id) + '</span>';
 
@@ -878,25 +892,65 @@ if (explorerRoot) {
       '<div class="lab-reference-text">' + escapeHtml(labReferenceText(record)).replaceAll("\n", "<br>") + '</div>' +
       '<div class="lab-reference-note">The reference is a cultural/contextual anchor. It is not treated as a single right answer or numeric score.</div>';
 
-    grid.innerHTML = modelNames.map(modelName => {
-      const response = byModel.get(modelName);
-      if (!response) {
-        return '<article class="lab-model-card missing"><header><strong>' + escapeHtml(modelName) +
-          '</strong><span>Response unavailable</span></header><p>No saved response was found for this question.</p></article>';
-      }
-
-      return '<article class="lab-model-card">' +
-        '<header><strong>' + escapeHtml(modelName) + '</strong>' +
-        (response.modelVersion ? '<span>' + escapeHtml(response.modelVersion) + '</span>' : '') +
-        '</header>' +
-        '<section><h4>中文 interpretation</h4><p class="lab-chinese">' + escapeHtml(response.chinese || "No Chinese response recorded.") + '</p></section>' +
-        '<section><h4>English explanation</h4><p>' + escapeHtml(response.english || "No English response recorded.") + '</p></section>' +
-        (response.culturalNote ? '<section><h4>Cultural note</h4><p>' + escapeHtml(response.culturalNote) + '</p></section>' : '') +
-      '</article>';
+    tabs.innerHTML = modelNames.map((modelName) => {
+      const available = byModel.has(modelName);
+      return '<button class="lab-model-tab' + (available && availableModels[currentIndex] === modelName ? ' is-active' : '') +
+        '" type="button" data-lab-model="' + escapeHtml(modelName) + '"' +
+        (available ? '' : ' disabled') + '>' + escapeHtml(modelName) + '</button>';
     }).join("");
+
+    const activeModel = availableModels[currentIndex];
+    const response = activeModel ? byModel.get(activeModel) : null;
+
+    title.textContent = activeModel || "No model response";
+    count.textContent = availableModels.length
+      ? (currentIndex + 1) + " / " + availableModels.length
+      : "0 / 0";
+
+    prev.disabled = currentIndex <= 0;
+    next.disabled = currentIndex >= availableModels.length - 1;
+
+    if (!response) {
+      grid.innerHTML = '<article class="lab-model-card missing"><header><strong>No saved response</strong><span>Unavailable</span></header><section><p>No saved response was found for this question.</p></section></article>';
+    } else {
+      grid.innerHTML =
+        '<article class="lab-model-card">' +
+          '<header><strong>' + escapeHtml(response.model) + '</strong>' +
+          (response.modelVersion ? '<span>' + escapeHtml(response.modelVersion) + '</span>' : '') +
+          '</header>' +
+          '<section><h4>中文 interpretation</h4><p class="lab-chinese">' + escapeHtml(response.chinese || "No Chinese response recorded.") + '</p></section>' +
+          '<section><h4>English explanation</h4><p>' + escapeHtml(response.english || "No English response recorded.") + '</p></section>' +
+          (response.culturalNote ? '<section><h4>Cultural note</h4><p>' + escapeHtml(response.culturalNote) + '</p></section>' : '') +
+        '</article>';
+    }
+
+    tabs.querySelectorAll(".lab-model-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const modelIndex = availableModels.indexOf(tab.dataset.labModel);
+        if (modelIndex >= 0) {
+          explorerState.labModelIndex = modelIndex;
+          renderCcModelLab();
+        }
+      });
+    });
+
+    prev.onclick = () => {
+      if (explorerState.labModelIndex > 0) {
+        explorerState.labModelIndex -= 1;
+        renderCcModelLab();
+      }
+    };
+
+    next.onclick = () => {
+      if (explorerState.labModelIndex < availableModels.length - 1) {
+        explorerState.labModelIndex += 1;
+        renderCcModelLab();
+      }
+    };
   }
 
   function refreshLabQuestions() {
+    explorerState.labModelIndex = 0;
     renderCcModelLab();
   }
 
@@ -933,7 +987,7 @@ if (explorerRoot) {
   });
 
   if (labCategory) labCategory.addEventListener("change", refreshLabQuestions);
-  if (labQuestion) labQuestion.addEventListener("change", renderCcModelLab);
+  if (labQuestion) labQuestion.addEventListener("change", () => { explorerState.labModelIndex = 0; renderCcModelLab(); });
 
   explorerRoot.querySelectorAll(".dataset-view").forEach((view) => {
     view.hidden = view.dataset.view !== datasetSelect.value;
