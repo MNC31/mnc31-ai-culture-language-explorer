@@ -50,65 +50,135 @@
       '<div><strong>'+changed+'</strong><span>different key</span></div></div>';
   }
 
-  function renderNetwork(pairs) {
-    const wrap = document.getElementById("network-graph");
-    const categories = sortedEntries(countBy(pairs,p=>p.category),5);
-    const regions = sortedEntries(countBy(pairs,p=>p.region),5);
-    const width=700, height=270, leftX=120, midX=350, rightX=590;
-    const nodes=[];
-    categories.forEach(([name],i)=>nodes.push({id:"c"+i,label:name,x:leftX,y:35+i*48}));
-    regions.forEach(([name],i)=>nodes.push({id:"r"+i,label:name,x:rightX,y:35+i*48}));
-    const links=[];
-    categories.forEach(([cat],ci)=>{
-      regions.forEach(([region],ri)=>{
-        const n=pairs.filter(p=>p.category===cat && p.region===region).length;
-        if(n) links.push({a:categories[ci][0],b:regions[ri][0],n,ci,ri});
-      });
+  const culturalNodes = [
+    {id:"classical", label:"Classical Chinese", task:"classical", x:22, y:18, axis:"Traditional · Cultural knowledge", description:"Classical-language interpretation, philosophical schools, cultural values and modern applications."},
+    {id:"aesthetics", label:"Aesthetics & Philosophy", task:"aesthetics", x:43, y:30, axis:"Traditional · Cultural knowledge", description:"Chinese aesthetic and philosophical concepts that require context beyond literal translation."},
+    {id:"folk", label:"Folk Culture", task:"folk", x:35, y:52, axis:"Cultural practice · Social context", description:"Rituals and everyday cultural practices, including their values, origins and modern continuation."},
+    {id:"pragmatic", label:"Pragmatic Intent", task:"pragmatic", x:63, y:58, axis:"Language use · Social interaction", description:"Indirect meaning, politeness and culturally situated conversational intent."},
+    {id:"slang", label:"Internet Slang", task:"slang", x:78, y:78, axis:"Modern · Social interaction", description:"Contemporary Chinese internet language, wordplay, tone and social context."},
+    {id:"bilingual", label:"Chinese ↔ English Value Alignment", task:"bilingual", x:70, y:28, axis:"Language comparison", description:"Parallel Chinese and English value-oriented prompts for examining language-conditioned response framing."}
+  ];
+
+  const edges = [
+    ["classical","aesthetics"],["classical","folk"],["classical","bilingual"],
+    ["aesthetics","folk"],["aesthetics","bilingual"],["folk","pragmatic"],
+    ["pragmatic","slang"],["pragmatic","bilingual"],["bilingual","slang"]
+  ];
+
+  function ccRows(task) {
+    return state().ccCache?.[task] || [];
+  }
+
+  function nodeCount(node) {
+    return ccRows(node.task).length;
+  }
+
+  function selectCcTask(task) {
+    const select = document.getElementById("cc-task");
+    if (!select) return;
+    select.value = task;
+    select.dispatchEvent(new Event("change"));
+    const explorer = document.getElementById("dataset-explorer");
+    if (explorer) explorer.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+
+  function renderCulturalMap() {
+    const wrap = document.getElementById("cultural-map");
+    if (!wrap) return;
+
+    const loaded = culturalNodes.filter(n => ccRows(n.task).length);
+    const width = 900, height = 480;
+    const pos = n => ({x: 50 + (n.x/100)*800, y: 45 + (n.y/100)*370});
+    const maxCount = Math.max(...loaded.map(nodeCount), 1);
+
+    const lines = edges.map(([a,b]) => {
+      const A=culturalNodes.find(n=>n.id===a), B=culturalNodes.find(n=>n.id===b);
+      if (!A || !B) return "";
+      const p=pos(A), q=pos(B);
+      return '<line x1="'+p.x+'" y1="'+p.y+'" x2="'+q.x+'" y2="'+q.y+'" class="culture-edge"/>';
+    }).join("");
+
+    const nodes = culturalNodes.map(n => {
+      const p=pos(n), count=nodeCount(n);
+      const r=12 + 12*(count/maxCount);
+      return '<g class="culture-node" tabindex="0" role="button" data-task="'+n.task+'" aria-label="'+esc(n.label)+'">'+
+        '<circle cx="'+p.x+'" cy="'+p.y+'" r="'+r+'" class="culture-node-circle"/>'+
+        '<text x="'+p.x+'" y="'+(p.y+r+17)+'" text-anchor="middle" class="culture-node-label">'+esc(n.label)+'</text>'+
+        '<text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle" class="culture-node-count">'+count+'</text>'+
+      '</g>';
+    }).join("");
+
+    wrap.innerHTML =
+      '<svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="Interactive CC-Eval cultural context network map">'+
+        '<line x1="50" y1="415" x2="850" y2="415" class="culture-axis"/>'+
+        '<line x1="50" y1="415" x2="50" y2="45" class="culture-axis"/>'+
+        '<text x="450" y="455" text-anchor="middle" class="culture-axis-label">Cultural knowledge ←──────────────→ Language & social interaction</text>'+
+        '<text x="25" y="235" text-anchor="middle" transform="rotate(-90 25 235)" class="culture-axis-label">Classical / traditional ←──────────────→ Modern / internet</text>'+
+        lines + nodes +
+      '</svg>';
+
+    wrap.querySelectorAll(".culture-node").forEach(node => {
+      const activate=()=>showNodeDetail(node.dataset.task);
+      node.addEventListener("click",activate);
+      node.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();activate();}});
     });
-    const svg='<svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="Category to region network">'+
-      links.map(l=>{
-        const y1=35+l.ci*48, y2=35+l.ri*48;
-        return '<line x1="'+leftX+'" y1="'+y1+'" x2="'+rightX+'" y2="'+y2+'" stroke="currentColor" stroke-opacity="'+Math.min(.55,.12+l.n/.5/100)+'" stroke-width="'+Math.min(5,1+l.n/20)+'"/>';
+  }
+
+  function showNodeDetail(task) {
+    const node=culturalNodes.find(n=>n.task===task);
+    const rows=ccRows(task);
+    const detail=document.getElementById("cultural-map-detail");
+    if(!node || !detail) return;
+
+    const examples = rows.slice(0,3).map(row => {
+      if(task==="bilingual") return row["中文提示词"];
+      if(task==="classical") return row["文言文原文"];
+      if(task==="folk") return row["民俗文化场景"];
+      if(task==="slang") return row["梗"];
+      if(task==="pragmatic") return row["对话内容"];
+      return row["中式美学概念"] || Object.values(row)[0];
+    }).filter(Boolean);
+
+    detail.innerHTML =
+      '<div><span class="detail-kicker">SELECTED CULTURAL AREA</span><h4>'+esc(node.label)+'</h4>'+
+      '<p>'+esc(node.description)+'</p>'+
+      '<div class="culture-detail-meta"><strong>'+rows.length+'</strong><span>records in repository</span><strong>'+esc(node.axis)+'</strong></div></div>'+
+      '<div><span class="detail-kicker">REPRESENTATIVE RECORDS</span><ul>'+examples.map(e=>'<li>'+esc(e).slice(0,240)+'</li>').join("")+'</ul>'+
+      '<button type="button" class="map-explore-button" data-map-task="'+task+'">Explore this area in CC-Eval →</button></div>';
+
+    const button=detail.querySelector("[data-map-task]");
+    if(button) button.addEventListener("click",()=>selectCcTask(task));
+  }
+
+  function renderAdvanced(pairs) {
+    const wrap=document.getElementById("advanced-heatmap");
+    if(!wrap) return;
+    const ccCounts=culturalNodes.map(n=>({label:n.label,task:n.task,count:nodeCount(n)}));
+    const max=Math.max(...ccCounts.map(x=>x.count),1);
+    wrap.innerHTML =
+      '<div class="evidence-grid">'+
+      '<div class="evidence-head">Cultural task family</div><div class="evidence-head">Chinese context records</div><div class="evidence-head">Language comparison</div>'+
+      ccCounts.map(n=>{
+        const bilingual=n.task==="bilingual" ? n.count : 0;
+        const context=n.task==="bilingual" ? "Paired Chinese + English prompts" : n.count+" Chinese-context examples";
+        const alpha=.12+.72*(n.count/max);
+        return '<div class="evidence-label">'+esc(n.label)+'</div>'+
+          '<div class="evidence-cell" style="--cell-alpha:'+alpha+'"><strong>'+n.count+'</strong><small>'+esc(context)+'</small></div>'+
+          '<div class="evidence-cell secondary"><strong>'+ (bilingual || "—") +'</strong><small>'+ (bilingual ? "parallel prompts" : "not a bilingual subset") +'</small></div>';
       }).join("")+
-      nodes.map(n=>'<circle cx="'+n.x+'" cy="'+n.y+'" r="6" fill="currentColor"/><text x="'+(n.x+(n.x<350?12:-12))+'" y="'+(n.y+4)+'" text-anchor="'+(n.x<350?"start":"end")+'">'+esc(n.label.slice(0,28))+'</text>').join("")+
-      '<text x="'+leftX+'" y="15" text-anchor="middle">Categories</text><text x="'+rightX+'" y="15" text-anchor="middle">Regions</text></svg>';
-    wrap.innerHTML=svg;
-  }
-
-  function renderSpatial(pairs) {
-    const entries=sortedEntries(countBy(pairs,p=>p.region),8);
-    const max=Math.max(...entries.map(x=>x[1]),1);
-    document.getElementById("spatial-bars").innerHTML=entries.map(([label,value]) =>
-      '<div class="spatial-row"><span>'+esc(label)+'</span><div><i style="width:'+((value/max)*100)+'%"></i></div><b>'+value+'</b></div>'
-    ).join("");
-  }
-
-  function renderHeatmap(pairs) {
-    const rows=sortedEntries(countBy(pairs,p=>p.category),8).map(x=>x[0]);
-    const cols=["CS","CA"];
-    const max=Math.max(...rows.flatMap(cat=>cols.map(s=>pairs.filter(p=>p.category===cat&&p.sensitivity===s).length)),1);
-    const html='<div class="heatmap-grid" style="grid-template-columns:180px repeat(2,1fr)">'+
-      '<div class="heatmap-corner"></div>'+cols.map(c=>'<div class="heatmap-head">'+c+'</div>').join("")+
-      rows.map(cat=>'<div class="heatmap-label">'+esc(cat)+'</div>'+cols.map(s=>{
-        const n=pairs.filter(p=>p.category===cat&&p.sensitivity===s).length;
-        const alpha=.12+.72*(n/max);
-        return '<div class="heatmap-cell" style="--cell-alpha:'+alpha+'"><strong>'+n+'</strong><small>'+s+'</small></div>';
-      }).join("")).join("")+'</div>';
-    document.getElementById("advanced-heatmap").innerHTML=html;
+      '</div><p class="evidence-note">These are dataset-structure counts, not model-performance scores. Actual AI performance requires saved model responses and a disclosed evaluation rubric.</p>';
   }
 
   function render() {
     const pairs=state().globalPairs || [];
-    if (!pairs.length) {
-      status.textContent="Waiting for Global-MMLU-Lite rows…";
-      return;
-    }
     renderBasic(pairs);
     renderSimple(pairs);
-    renderNetwork(pairs);
-    renderSpatial(pairs);
-    renderHeatmap(pairs);
-    status.textContent="Visualizations are using "+pairs.length+" matched Global-MMLU-Lite records currently loaded in the browser.";
+    renderCulturalMap();
+    renderAdvanced(pairs);
+    const loadedCc=Object.keys(state().ccCache||{}).filter(k=>Array.isArray(state().ccCache[k]));
+    status.textContent = loadedCc.length
+      ? "CC-Eval cultural map is using the repository's local CC-Eval files; Global-MMLU remains available for language/benchmark comparison."
+      : "Waiting for CC-Eval rows…";
   }
 
   root.querySelectorAll("[data-scroll-target]").forEach(button => {
