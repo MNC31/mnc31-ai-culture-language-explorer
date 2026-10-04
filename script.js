@@ -749,7 +749,7 @@ if (explorerRoot) {
       chinese = item.answer.chinese || item.answer.zh || "";
       english = item.answer.english || item.answer.en || "";
     } else if (typeof item.answer === "string") {
-      const match = item.answer.match(/(?:^|\\n)\\s*English\\s*:\\s*/i);
+      const match = item.answer.match(/(?:^|\n)\\s*English\\s*:\\s*/i);
       if (match) {
         const splitAt = match.index + match[0].length;
         chinese = item.answer.slice(0, match.index).replace(/^中文\\s*:\\s*/i, "").trim();
@@ -821,7 +821,7 @@ if (explorerRoot) {
           : key;
         return label + ": " + value;
       })
-      .join("\\n");
+      .join("\n");
   }
 
   function renderLabQuestionOptions(records) {
