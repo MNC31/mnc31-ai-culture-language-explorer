@@ -291,21 +291,22 @@ const explorerState = {
 };
 
 const explorerRoot = document.getElementById("dataset-explorer");
+const globalExplorerRoot = document.getElementById("global-dataset-explorer");
 window.aiCultureExplorer = explorerState;
 
-if (explorerRoot) {
-  const datasetSelect = explorerRoot.querySelector("#dataset-select");
-  const splitSelect = explorerRoot.querySelector("#global-split");
-  const categorySelect = explorerRoot.querySelector("#global-category");
-  const sensitivitySelect = explorerRoot.querySelector("#global-sensitivity");
-  const searchInput = explorerRoot.querySelector("#global-search");
-  const globalList = explorerRoot.querySelector("#global-question-list");
-  const globalDetail = explorerRoot.querySelector("#global-detail");
-  const ccTask = explorerRoot.querySelector("#cc-task");
-  const ccSearch = explorerRoot.querySelector("#cc-search");
-  const ccList = explorerRoot.querySelector("#cc-question-list");
-  const ccDetail = explorerRoot.querySelector("#cc-detail");
-  const status = explorerRoot.querySelector("#explorer-status");
+if (explorerRoot || globalExplorerRoot) {
+  const splitSelect = document.getElementById("global-split");
+  const categorySelect = document.getElementById("global-category");
+  const sensitivitySelect = document.getElementById("global-sensitivity");
+  const searchInput = document.getElementById("global-search");
+  const globalList = document.getElementById("global-question-list");
+  const globalDetail = document.getElementById("global-detail");
+  const ccTask = document.getElementById("cc-task");
+  const ccSearch = document.getElementById("cc-search");
+  const ccList = document.getElementById("cc-question-list");
+  const ccDetail = document.getElementById("cc-detail");
+  const status = document.getElementById("explorer-status");
+  const globalStatus = document.getElementById("global-explorer-status");
   // The Lab section is a sibling of #dataset-explorer, not a child of it.
   // Use document-level lookups so the Lab controls can actually be populated.
   const labCategory = document.getElementById("lab-category");
@@ -313,8 +314,14 @@ if (explorerRoot) {
   const labReference = document.getElementById("lab-reference");
 
   function setStatus(message, isError = false) {
-    status.textContent = message;
-    status.classList.toggle("explorer-error", isError);
+    if (status) {
+      status.textContent = message;
+      status.classList.toggle("explorer-error", isError);
+    }
+    if (globalStatus && message.includes("Global-MMLU")) {
+      globalStatus.textContent = message;
+      globalStatus.classList.toggle("explorer-error", isError);
+    }
   }
 
   async function loadText(path) {
@@ -931,23 +938,23 @@ if (explorerRoot) {
   }
 
 
-  splitSelect.addEventListener("change", () => {
+  if (splitSelect) splitSelect.addEventListener("change", () => {
     explorerState.globalLoaded = false;
     loadGlobal(splitSelect.value).catch((error) => setStatus(error.message, true));
   });
 
-  [categorySelect, sensitivitySelect, searchInput].forEach((control) => {
+  [categorySelect, sensitivitySelect, searchInput].filter(Boolean).forEach((control) => {
     control.addEventListener("input", renderGlobal);
     control.addEventListener("change", renderGlobal);
   });
 
-  ccTask.addEventListener("change", () => {
+  if (ccTask) ccTask.addEventListener("change", () => {
     explorerState.selectedCc = 0;
     refreshCc().catch((error) => {
     setStatus("CC-Eval loading failed: " + error.message, true);
   });
   });
-  ccSearch.addEventListener("input", async () => {
+  if (ccSearch) ccSearch.addEventListener("input", async () => {
     try {
       const rows = await loadCcTask(ccTask.value);
       renderCcList(rows, ccTask.value);
@@ -956,21 +963,14 @@ if (explorerRoot) {
     }
   });
 
-  datasetSelect.addEventListener("change", () => {
-    explorerRoot.querySelectorAll(".dataset-view").forEach((view) => {
-      view.hidden = view.dataset.view !== datasetSelect.value;
-    });
-  });
-
   if (labCategory) labCategory.addEventListener("change", refreshLabQuestions);
   if (labQuestion) labQuestion.addEventListener("change", () => { explorerState.labModelIndex = 0; renderCcModelLab(); });
 
-  explorerRoot.querySelectorAll(".dataset-view").forEach((view) => {
-    view.hidden = view.dataset.view !== datasetSelect.value;
-  });
-
   loadGlobal("test").catch((error) => {
-    setStatus("Dataset loading failed: " + error.message, true);
+    if (globalStatus) {
+      globalStatus.textContent = "Global-MMLU-Lite loading failed: " + error.message;
+      globalStatus.classList.add("explorer-error");
+    }
   });
   // Preload every CC-Eval task family so the Cultural Context Map can show
   // the complete network immediately, while keeping the selector interactive.
