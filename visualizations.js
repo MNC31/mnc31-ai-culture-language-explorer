@@ -150,6 +150,32 @@
     if(button) button.addEventListener("click",()=>selectCcTask(task));
   }
 
+  function renderVisualBridge() {
+    const wrap=document.getElementById("visual-bridge");
+    const rows=state().imageComparisons || [];
+    if(!wrap) return;
+    if(!rows.length){
+      wrap.innerHTML='<div class="explorer-empty">Visual comparison records are still loading.</div>';
+      return;
+    }
+    const models=[...new Set(rows.map(r=>r.ai))];
+    const images=[...new Set(rows.map(r=>r.image))].sort((a,b)=>a-b);
+    const cards=models.map(model=>{
+      const modelRows=rows.filter(r=>r.ai===model);
+      const unique=[...new Set(modelRows.map(r=>r.standardized))].length;
+      return '<article class="visual-model-card"><span>'+esc(model)+'</span><strong>'+modelRows.length+'</strong><small>stored image readings</small><em>'+unique+' distinct standardized readings</em></article>';
+    }).join("");
+    const cells=images.map(image=>{
+      const imageRows=rows.filter(r=>r.image===image);
+      const unique=[...new Set(imageRows.map(r=>r.standardized))].length;
+      const title=imageRows[0]?.image_title || ("Image "+(image+1));
+      return '<div class="visual-image-card"><div><strong>'+esc(title)+'</strong><span>'+unique+' distinct readings across '+imageRows.length+' AI systems</span></div>'+
+        imageRows.map(r=>'<div class="visual-reading"><b>'+esc(r.ai)+'</b><span>'+esc(r.standardized)+'</span></div>').join("")+
+      '</div>';
+    }).join("");
+    wrap.innerHTML='<div class="visual-models">'+cards+'</div><div class="visual-image-grid">'+cells+'</div>';
+  }
+
   function renderAdvanced(pairs) {
     const wrap=document.getElementById("advanced-heatmap");
     if(!wrap) return;
@@ -175,6 +201,7 @@
     renderSimple(pairs);
     renderCulturalMap();
     renderAdvanced(pairs);
+    renderVisualBridge();
     const loadedCc=Object.keys(state().ccCache||{}).filter(k=>Array.isArray(state().ccCache[k]));
     status.textContent = loadedCc.length
       ? "CC-Eval cultural map is using the repository's local CC-Eval files; Global-MMLU remains available for language/benchmark comparison."
@@ -189,5 +216,6 @@
   });
 
   document.addEventListener("explorer-data-ready", render);
+  document.addEventListener("explorer-image-comparison-ready", render);
   render();
 })();
