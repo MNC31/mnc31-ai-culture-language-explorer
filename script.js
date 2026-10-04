@@ -305,12 +305,9 @@ if (explorerRoot) {
   const ccList = explorerRoot.querySelector("#cc-question-list");
   const ccDetail = explorerRoot.querySelector("#cc-detail");
   const status = explorerRoot.querySelector("#explorer-status");
-  const labDataset = explorerRoot.querySelector("#lab-dataset");
   const labCategory = explorerRoot.querySelector("#lab-category");
   const labQuestion = explorerRoot.querySelector("#lab-question");
-  const labConversation = explorerRoot.querySelector("#lab-conversation");
   const labReference = explorerRoot.querySelector("#lab-reference");
-  const labResponseStatus = explorerRoot.querySelector("#lab-response-status");
 
   function setStatus(message, isError = false) {
     status.textContent = message;
