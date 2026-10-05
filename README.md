@@ -9,7 +9,7 @@ An interactive website for exploring how multilingual AI evaluation datasets rep
 The video below is the current project demonstration.
 
 <video src="./media/Team7_INFOSCI301_DemoVideo.mp4" controls width="100%">
-  Your browser does not support the video player. [Watch the demo video](./Demo_Prototype_video%20%281%29.mp4).
+  Your browser does not support the video player. [Watch the demo video](./media/Team7_INFOSCI301_DemoVideo.mp4).
 </video>
 
 [**Watch the demo video directly**](./Demo_Prototype_video%20%281%29.mp4)
