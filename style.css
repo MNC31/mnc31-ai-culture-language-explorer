@@ -375,3 +375,36 @@ footer{border-top:1px solid var(--line);padding:25px 5vw;color:var(--muted);font
 .idiom-selectable:hover,.idiom-selectable:focus{outline:none;transform:translateY(-2px);box-shadow:0 5px 18px rgba(23,33,43,.08);border-color:var(--ink)}
 .visual-selection-note{margin-top:24px;padding:16px 18px;border:1px solid var(--line);background:var(--paper);color:var(--muted);font-size:12px;line-height:1.6}
 .visual-selection-note strong{color:var(--ink)}
+
+
+/* Bridge real-world image observations to dataset evidence */
+.evidence-bridge-intro{
+  max-width:850px;
+  margin:-8px 0 30px;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.75;
+}
+.evidence-bridge-steps{margin-top:0}
+.evidence-bridge-steps>article{display:flex;flex-direction:column;align-items:flex-start}
+.evidence-bridge-steps>article>b{font-size:11px;letter-spacing:.08em;color:var(--accent)}
+.evidence-bridge-steps>article h3{margin:24px 0 10px;font-size:21px}
+.evidence-bridge-steps>article p{flex:1;font-size:13px;line-height:1.7}
+.evidence-step-link{
+  display:inline-flex;gap:12px;align-items:center;
+  margin-top:18px;padding:10px 12px;
+  color:var(--ink);border:1px solid var(--line);
+  text-decoration:none;font-size:12px;font-weight:700;
+  background:#fffdf9;
+}
+.evidence-step-link:hover{border-color:var(--accent);color:var(--accent)}
+.evidence-bridge-note{
+  margin-top:18px;padding:18px 20px;
+  border-left:3px solid var(--blue);
+  background:#eef1f1;
+}
+.evidence-bridge-note strong{font-size:12px}
+.evidence-bridge-note p{
+  max-width:900px;margin:6px 0 0;
+  color:#53616b;font-size:12px;line-height:1.7;
+}
