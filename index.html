@@ -125,33 +125,30 @@
         </div>
       </div>
       <p class="evidence-bridge-intro">
-        First, observe how AI systems interpret real photographs. Then investigate datasets that document language and cultural knowledge, including resources used for model development or evaluation. Together, these views help us ask what information is represented, what may be missing, and what the evidence can—and cannot—tell us.
+        The image demo shows where AI interpretations of real-world Chinese text can differ or become uncertain. The datasets that follow offer a second perspective: they show examples and evaluation tasks researchers can use to examine language and cultural understanding. They do not, by themselves, reveal exactly what a deployed AI was trained on.
       </p>
 
       <div class="methods evidence-bridge-steps">
         <article>
           <b>01 · OBSERVE</b>
           <h3>Start with a real image</h3>
-          <p>Explore photographs of inscriptions, signboards, and other visual text where handwriting, historical forms, or cultural context can make translation difficult.</p>
-          <a href="#image-demo" class="evidence-step-link">Compare AI readings <span aria-hidden="true">↗</span></a>
+          <p>Photographs of inscriptions, signboards, and other visual text can contain stylized characters, historical forms, or cultural references that make interpretation difficult. The demo compares saved AI readings of selected images.</p>
         </article>
         <article>
-          <b>02 · TRACE THE EVIDENCE</b>
-          <h3>Explore existing datasets</h3>
-          <p>Inspect what language and cultural evaluation datasets contain: example questions, labels, language coverage, source notes, and the kinds of knowledge they represent.</p>
-          <a href="#dataset-explorer" class="evidence-step-link">Explore CC-Eval <span aria-hidden="true">↗</span></a>
+          <b>02 · EXAMINE PROMPTS</b>
+          <h3>CC-Eval: possible tests</h3>
+          <p>CC-Eval provides prompts and tasks for evaluating cultural and language understanding. It can help frame future tests, but the prompts alone are not a dataset of model-training examples and do not show how a model was trained.</p>
         </article>
         <article>
-          <b>03 · COMPARE, DON'T ASSUME</b>
-          <h3>Ask what the data can explain</h3>
-          <p>Compare observed AI responses with dataset examples and reference material. Look for possible gaps in representation without assuming a dataset caused a particular model response.</p>
-          <a href="#global-dataset-explorer" class="evidence-step-link">Explore Global-MMLU-Lite <span aria-hidden="true">↗</span></a>
+          <b>03 · EXAMINE BENCHMARK DATA</b>
+          <h3>Global-MMLU-Lite: language comparisons</h3>
+          <p>The available English and Simplified Chinese records allow comparisons between matched benchmark questions, labels, and answer keys. The current view does not compare live AI responses, so it cannot show how a particular model answered those questions.</p>
         </article>
       </div>
 
       <div class="evidence-bridge-note">
-        <strong>Important distinction</strong>
-        <p>A dataset can be used to train a model, fine-tune it, or evaluate it—or it may simply be a resource that could be used in future research. Unless a model provider documents its training sources, this project cannot establish that a specific dataset was used to train a specific AI system.</p>
+        <strong>What this project can—and cannot—show</strong>
+        <p>These resources help describe what researchers can test and what information is represented in the available records. Because this project does not include verified training-data provenance or a complete set of reference materials, it cannot establish that either dataset trained a specific AI, explain why a particular response occurred, or judge every translation as correct. Those are questions for further testing and documented evidence.</p>
       </div>
     </section>
 
