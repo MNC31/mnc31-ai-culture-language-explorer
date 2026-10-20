@@ -117,29 +117,41 @@
       <p class="prototype-note"><b>Prototype note:</b> these are hand-defined demonstration hotspots, not automatic OCR. The next version can let a visitor draw a box around any text region and send that crop through an OCR/translation pipeline.</p>
     </section>
 
-    <section id="explore">
+    <section id="explore" class="evidence-bridge">
       <div class="heading">
         <div>
-          <label>02 · NEXT DATA LAYER</label>
-          <h2>Connect the image to evidence.</h2>
+          <label>02 · FROM REAL-WORLD OBSERVATIONS TO DATA</label>
+          <h2>Connect the image to the data behind AI.</h2>
         </div>
       </div>
-      <div class="methods">
-        <div>
-          <b>01</b>
-          <h3>Visual text</h3>
-          <p>The visitor starts with a photograph rather than a clean dataset row.</p>
-        </div>
-        <div>
-          <b>02</b>
-          <h3>Standardized reading</h3>
-          <p>Traditional, stylized, or handwritten-looking characters can be normalized for an international learner.</p>
-        </div>
-        <div>
-          <b>03</b>
-          <h3>Cultural context</h3>
-          <p>The explanation should distinguish literal translation from the cultural meaning or use of a phrase.</p>
-        </div>
+      <p class="evidence-bridge-intro">
+        First, observe how AI systems interpret real photographs. Then investigate datasets that document language and cultural knowledge, including resources used for model development or evaluation. Together, these views help us ask what information is represented, what may be missing, and what the evidence can—and cannot—tell us.
+      </p>
+
+      <div class="methods evidence-bridge-steps">
+        <article>
+          <b>01 · OBSERVE</b>
+          <h3>Start with a real image</h3>
+          <p>Explore photographs of inscriptions, signboards, and other visual text where handwriting, historical forms, or cultural context can make translation difficult.</p>
+          <a href="#image-demo" class="evidence-step-link">Compare AI readings <span aria-hidden="true">↗</span></a>
+        </article>
+        <article>
+          <b>02 · TRACE THE EVIDENCE</b>
+          <h3>Explore existing datasets</h3>
+          <p>Inspect what language and cultural evaluation datasets contain: example questions, labels, language coverage, source notes, and the kinds of knowledge they represent.</p>
+          <a href="#dataset-explorer" class="evidence-step-link">Explore CC-Eval <span aria-hidden="true">↗</span></a>
+        </article>
+        <article>
+          <b>03 · COMPARE, DON'T ASSUME</b>
+          <h3>Ask what the data can explain</h3>
+          <p>Compare observed AI responses with dataset examples and reference material. Look for possible gaps in representation without assuming a dataset caused a particular model response.</p>
+          <a href="#global-dataset-explorer" class="evidence-step-link">Explore Global-MMLU-Lite <span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+
+      <div class="evidence-bridge-note">
+        <strong>Important distinction</strong>
+        <p>A dataset can be used to train a model, fine-tune it, or evaluate it—or it may simply be a resource that could be used in future research. Unless a model provider documents its training sources, this project cannot establish that a specific dataset was used to train a specific AI system.</p>
       </div>
     </section>
 
