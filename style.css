@@ -408,3 +408,31 @@ footer{border-top:1px solid var(--line);padding:25px 5vw;color:var(--muted);font
   max-width:900px;margin:6px 0 0;
   color:#53616b;font-size:12px;line-height:1.7;
 }
+
+
+/* Keep the evidence bridge as an explanation, not a set of navigation CTAs. */
+.evidence-bridge-steps{background:var(--line);gap:1px}
+.evidence-bridge-steps>article{
+  background:var(--paper);
+  padding:25px;
+  min-height:225px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.evidence-bridge-steps>article>b{
+  color:var(--accent);
+  font-size:11px;
+  letter-spacing:.08em;
+}
+.evidence-bridge-steps>article h3{margin:30px 0 12px}
+.evidence-bridge-steps>article p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}
+@media(max-width:620px){
+  .evidence-bridge-steps{grid-template-columns:1fr}
+  .evidence-bridge-steps>article{min-height:0}
+}
